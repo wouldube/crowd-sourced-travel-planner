@@ -6,11 +6,11 @@ All changes to the project so far.
 
 ### Added
 
-- [Add new stuff here]
+- Hannah added the React App File.
 
 ### Changes
 
-- [If stuff was changed, add it here]
+- Hannah updated the Changelog file.
 
 ## Date of the changes after being pushed to main
 
