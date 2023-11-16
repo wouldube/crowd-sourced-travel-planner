@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Morgan added backend folder with express and mongoose stuff
 
 ### Changed
+- Updated `README.md` with the overview from the EECS Project Portal.
 - Expanded `paths.js` with additional placeholder routes.
 - Made changes to `CHANGELOG.md` to fit more with [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
