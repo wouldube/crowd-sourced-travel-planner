@@ -4,11 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+---
+
 ## Unreleased
 
 ### Added
 
-
+- Raneem added UX & Front-End components, screens, and integrations.
 - Placeholder routes in `paths.js` for User, Experience, Trip, and Review CRUD operations.
 - Community Engagement and Content Enrichment endpoints added to `paths.js`, including endpoints for contribution, local spotlight, badge rewards, feedback, and engagement metrics.
 - Geo-Location Services and Mapping Endpoints added to `paths.js` for enhanced functionality.
@@ -16,9 +18,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Morgan added backend folder with express and mongoose stuff
 
 ### Changed
+- Updated `README.md` with further objectives & overview.
 - Updated `README.md` with the overview from the EECS Project Portal.
 - Expanded `paths.js` with additional placeholder routes.
+- Hannah updated the Changelog file.
+- Morgan updated Changelog file
 - Made changes to `CHANGELOG.md` to fit more with [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+
+---
 
 ## [0.0.1] - 11/16/2023
 
@@ -26,6 +33,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - [Update this section with the unreleased additions when ready to submit the due v.0.0.1].
 =======
+- Raneem added UX & Front-End components, screens, and integrations.
 - Hannah added the React App File.
 - Morgan added backend folder with express and mongoose stuff
 
@@ -35,9 +43,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - [Update this section with the unreleased changes when ready to submit the due v.0.0.1].
 =======
+- Raneem updated the `README.md` & `CHANGELOG.md`.
 - Hannah updated the Changelog file.
 - Morgan updated Changelog file
 
+---
 
 ## [0.0.0] - 11/14/2023
 
