@@ -1,17 +1,19 @@
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-// pages and components
-import Home from './pages/Home'
+// screens and components
+import Exploration from './screens/Exploration'
+import Experience from './components/Experience';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <div className="pages">
+        <div className="screens">
           <Routes>
             <Route
               path="/"
-              element={ <Home /> }
+              element={ <Exploration/> }
             />
           </Routes>
         </div>
