@@ -3,6 +3,12 @@ import { Experience } from '../models/schema'
 // experience CRUD functions
 
 //Create
+const createExperience = async(title, description, location, images, owner) => {
+    // left out reviews for now
+    const experience = new Experience({ title: title, description: description, 
+        location: location, images: images, owner: owner });
+    return experience.save()
+}
 
 
 //Read
@@ -30,4 +36,4 @@ const deleteExperience = async(filter) => {
 
 }
 
-export { updateExperience, deleteExperience }
+export { createExperience, updateExperience, deleteExperience }
