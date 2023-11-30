@@ -1,9 +1,9 @@
-import { Experience } from '../models/schema'
+const { Experience } = require('../models/schema')
 
 // experience CRUD functions
 
 //Create
-const createExperience = async(title, description, location, images, owner) => {
+const createExperience = async (title, description, location, images, owner) => {
     // left out reviews for now
     const experience = new Experience({ title: title, description: description, 
         location: location, images: images, owner: owner });
@@ -11,16 +11,8 @@ const createExperience = async(title, description, location, images, owner) => {
 }
 
 
-//Read
-
-
 //Update
 const updateExperience = async(filter, update) => {
-
-    // filter: {"_id": document_id}
-    // update: {"property to update": updated value}
-    // returns 0 if update fails, 1 if update succeeds
-
     const result = await Experience.updateOne(filter, update);
     return result.modifiedCount;
 }
@@ -36,4 +28,4 @@ const deleteExperience = async(filter) => {
 
 }
 
-export { createExperience, updateExperience, deleteExperience }
+module.exports =  { createExperience, updateExperience, deleteExperience, getExperience }

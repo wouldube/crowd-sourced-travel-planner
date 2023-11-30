@@ -11,7 +11,7 @@ app.use('/', paths)
 
 // connect to db
 mongoose.connect(process.env.DB_LINK)
-    .then(() => {})
+    .then(() => {console.log("Connection Established")})
     .catch((error) => {
         console.log(error)
     })
