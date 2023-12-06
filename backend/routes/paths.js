@@ -13,6 +13,20 @@ router.get('/', (req, res) => {
     res.json('hello world');
 });
 
+// ---- Experience CRUD Operations ----
+
+router.post('/create-exp', (req, res) => {
+    // Create a new experience
+});
+
+router.put('/update-exp/:experience_id', (req, res) => {
+    // Update an existing experience
+});
+
+router.delete('/delete-exp/:experience_id', (req, res) => {
+    // Delete an experience
+});
+
 // ---- User CRUD Operations ----
 
 router.post('/login', (req, res) => {
@@ -31,24 +45,8 @@ router.post('/user-info', (req, res) => {
     // Handle updating user info here
 });
 
-// ---- Experience CRUD Operations ----
-router.get('/exp/:experience_id', (req, res) => {
-    // Fetch specific experience details
-});
-
-router.post('/create-exp', (req, res) => {
-    // Create a new experience
-});
-
-router.put('/update-exp/:experience_id', (req, res) => {
-    // Update an existing experience
-});
-
-router.delete('/delete-exp/:experience_id', (req, res) => {
-    // Delete an experience
-});
-
 // ---- Trip CRUD Operations ----
+
 router.get('/trip/:trip_id', (req, res) => {
     // Fetch specific trip details
 });

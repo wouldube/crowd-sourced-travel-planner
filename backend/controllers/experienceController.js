@@ -1,6 +1,30 @@
 import { Experience } from '../models/schema'
 
+
 // experience CRUD functions
+
+//Retrieve
+// Experiences
+const experiences = async(res) => {
+    try {
+        const experiences = await Experience.find({});
+        return res.status(200).experiences;
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send({ message: error.message });
+    }
+}
+
+// Specific Experience
+const retrieveExperience = async(req, res) => {
+    try {
+        const experience = await Experience.findById({req});
+        return res.status(200).experience;
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send({ message: error.message });
+    }
+}
 
 //Create
 const createExperience = async(title, description, location, images, owner) => {
@@ -9,9 +33,6 @@ const createExperience = async(title, description, location, images, owner) => {
         location: location, images: images, owner: owner });
     return experience.save()
 }
-
-
-//Read
 
 
 //Update
