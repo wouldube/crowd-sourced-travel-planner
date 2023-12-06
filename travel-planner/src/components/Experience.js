@@ -6,7 +6,10 @@ const Experience = () => {
   const [experience, setExperience] = useState([])
 
   useEffect(() => {
-    fetch("http://localhost:5000/experiences")
+    fetch("http://localhost:5000/experiences", {
+      method: "GET",
+      body: response
+    })
       .then(response => response.json())
       .then(experience => setExperience(experience))
       .catch(error => console.error('Error fetching data:', error));
@@ -15,7 +18,7 @@ const Experience = () => {
   return (
     <div className='experience'>
       {Object.entries(experience).map(([key,value]) => (
-        <p>{value}</p>
+        <p>{key}</p>
       ))}
     </div>
   );
