@@ -1,12 +1,14 @@
-import React, { Component, useState, useEffect, Link } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AddExperience = () => {
+    const navigate = useNavigate();
     const handleClick = () => {
-        <Link to="/create-exp">LINK</Link>
+        navigate('/create-exp');
     };
   return (
     <button onClick={handleClick}>
-        Click!!
+        ADD
     </button>
   );
 }
