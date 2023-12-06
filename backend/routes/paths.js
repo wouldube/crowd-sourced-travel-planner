@@ -1,12 +1,16 @@
-
+const mongoose = require("mongoose");
 const express = require('express');
-// Import models - uncomment when needed
-// import { User, Experience, Trip, Review } from '../models/schema';
+const cors = require("cors");
 
-// Import controller functions - uncomment when they are created
-// const { controllerFunctionNames } = require('../controllers/controllerFileName');
+const { createExperience } = require("../controllers/experienceController");
+
+const corsOptions = {
+  origin: "http://localhost:3000", 
+};
 
 const router = express.Router();
+router.use(cors(corsOptions));
+router.use(express.json());
 
 // Basic test route
 router.get('/', (req, res) => {
@@ -36,8 +40,38 @@ router.get('/exp/:experience_id', (req, res) => {
     // Fetch specific experience details
 });
 
-router.post('/create-exp', (req, res) => {
+router.post("/create-exp", async (req, res) => {
     // Create a new experience
+    console.log("backend")
+    
+    let { title, description, coordinates, image } = req.body;
+    
+    coordinates = [Number(coordinates['latitude']), Number(coordinates['longitude'])];
+
+    console.log('Title:', title);
+    console.log('Description:', description);
+    console.log('Coordinates:', coordinates);
+    console.log('Image:', image);
+    //Checking missing fields
+        
+    if (!title || !description || !coordinates || !image ) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
+    
+    //converting string to mongoose Object
+    const location = { type: "Point", coordinates: coordinates };
+    const result = await createExperience(
+      title,
+      description,
+      location,
+      image,
+    );
+    
+    console.log(result)
+
+    res
+      .status(200)
+      .json({ message: "Experience created successfully", result: result });
 });
 
 router.put('/update-exp/:experience_id', (req, res) => {
