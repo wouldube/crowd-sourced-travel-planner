@@ -6,7 +6,7 @@ const Experience = () => {
   const [experience, setExperience] = useState([])
 
   useEffect(() => {
-    fetch("/paths/experiences")
+    fetch("http://localhost:5000/experiences")
       .then(response => response.json())
       .then(experience => setExperience(experience))
       .catch(error => console.error('Error fetching data:', error));
