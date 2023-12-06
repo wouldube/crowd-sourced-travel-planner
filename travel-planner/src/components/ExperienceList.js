@@ -4,7 +4,7 @@ import './experiencelist.css';
 const ExperienceList = () => {
     return (
         <div class="experinceListBody">
-             <div><strong>More Experiences to Explore...</strong></div>
+            <strong>More Experiences to Explore...</strong>
              <div class="experienceListContainer">
                  <div class="experienceListImage">
                      <img src="https://media.istockphoto.com/id/687441014/photo/senior-man-trail-hiking-on-high-mountain.jpg?s=612x612&w=0&k=20&c=mh3f53o-d9cJ4nR_MJZz9CO5msKpV2M-o3gWbGCDfFU=" alt=" "></img>
