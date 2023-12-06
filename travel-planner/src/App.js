@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // screens and components
 import Exploration from './screens/Exploration'
+import CreateExperience from './screens/CreateExperience'
 import Experience from './components/Experience';
 
 function App() {
@@ -14,6 +15,10 @@ function App() {
             <Route
               path="/"
               element={ <Exploration/> }
+            />
+            <Route
+              path="/create-exp"
+              element={ <CreateExperience/> }
             />
           </Routes>
         </div>

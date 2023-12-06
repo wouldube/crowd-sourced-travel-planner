@@ -32,7 +32,7 @@ const experienceSchema = mongoose.Schema({
     },
 
     images: [{ type: String, required: true }],
-    owner: { type: mongoose.Types.ObjectId, required: true }, // User id
+    owner: { type: mongoose.Types.ObjectId, required: false }, // User id
     reviews: [{ type: mongoose.Types.ObjectId, required: false }], // list of Review ids
 });
 
@@ -59,4 +59,4 @@ const Experience = mongoose.model('Experience', experienceSchema);
 const Trip = mongoose.model('Trip', tripSchema);
 const Review = mongoose.model('Review', reviewSchema);
 
-export { User, Experience, Trip, Review }
+module.exports = { User, Experience, Trip, Review }
