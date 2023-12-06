@@ -1,14 +1,16 @@
+const mongoose = require("mongoose");
 const express = require('express');
-// Import models - uncomment when needed
+const cors = require("cors");
 
-const { User, Experience, Trip, Review } = require('../models/schema');
+const { createExperience } = require("../controllers/experienceController");
 
-// import { User, Experience, Trip, Review } from '../models/schema';
-
-// Import controller functions - uncomment when they are created
-// const { controllerFunctionNames } = require('../controllers/controllerFileName');
+const corsOptions = {
+  origin: "http://localhost:3000", 
+};
 
 const router = express.Router();
+router.use(cors(corsOptions));
+router.use(express.json());
 
 // Basic test route
 router.get('/', (req, res) => {
@@ -21,6 +23,16 @@ router.get('/', (req, res) => {
 router.get('/experiences', async (req, res) => {
     try {
         const experiences = await Experience.find(); 
+        res.json(experiences);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+	
+// Route to get all experiences
+router.get('/experiences', async (req, res) => {
+    try {
+        const experiences = await Experience.find();
         res.json(experiences);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -48,8 +60,38 @@ router.get('/exp/:experience_id', (req, res) => {
     // Fetch specific experience details
 });
 
-router.post('/create-exp', (req, res) => {
+router.post("/create-exp", async (req, res) => {
     // Create a new experience
+    console.log("backend")
+    
+    let { title, description, coordinates, image } = req.body;
+    
+    coordinates = [Number(coordinates['latitude']), Number(coordinates['longitude'])];
+
+    console.log('Title:', title);
+    console.log('Description:', description);
+    console.log('Coordinates:', coordinates);
+    console.log('Image:', image);
+    //Checking missing fields
+        
+    if (!title || !description || !coordinates || !image ) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
+    
+    //converting string to mongoose Object
+    const location = { type: "Point", coordinates: coordinates };
+    const result = await createExperience(
+      title,
+      description,
+      location,
+      image,
+    );
+    
+    console.log(result)
+
+    res
+      .status(200)
+      .json({ message: "Experience created successfully", result: result });
 });
 
 router.put('/update-exp/:experience_id', (req, res) => {
@@ -189,22 +231,3 @@ router.post('/api/maps/annotations', (req, res) => {
 });
 
 module.exports = router;
-=======
-const express = require('express')
-import { User, Experience, Trip, Review } from '../models/schema'
-
-// uncomment when controller functions have been created
-// const { CRUD func names } = require('../controllers/{controller.js name})
-
-const router = express.Router()
-
-router.get('/', (req, res) => {
-    //code here for GET req to '/'
-    res.json('hello world')
-})
-
-router.post('/', (req, res) => {
-    //code here for POST req to '/'
-})
-
-module.exports = router
