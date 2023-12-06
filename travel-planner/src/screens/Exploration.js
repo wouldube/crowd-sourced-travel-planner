@@ -9,6 +9,9 @@ const Exploration = () => {
             <Experience></Experience>
             <AddExperience></AddExperience>
         </div>
+        <div className="experienceListBody">
+            <ExperienceList></ExperienceList>
+        </div>
     )
 }
 

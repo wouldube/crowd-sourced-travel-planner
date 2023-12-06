@@ -1,0 +1,47 @@
+.experinceListBody {
+    overflow: hidden;
+   }
+  
+.experienceListContainer {
+color: rgb(2, 116, 165);
+background-color: white;
+display: grid;
+width: 100%;
+text-align: left;
+grid-auto-columns: 500px;
+grid-auto-flow: column;
+grid-gap: 20px;
+overflow-x: scroll;
+scrollbar-width: thin;
+}
+
+.experience-title-list {
+    text-align: left;
+}
+
+.experience-other-listtext {
+    text-align: left;
+}
+
+.experienceListColumn {
+flex: 50%;
+width: 400px;
+height: 700px;
+padding: 0 4px;
+}
+
+.experienceListImage img {
+margin-top: 8px;
+float: left; 
+height: 200px;
+width: 200px;
+margin: 0 10px 0 0;
+}
+
+.ratingImage img {
+/* margin-top: 8px; */
+float: left; 
+height: 30px;
+width: 90px;
+margin: 0 10px 0 0;
+}
