@@ -59,4 +59,4 @@ const Experience = mongoose.model('Experience', experienceSchema);
 const Trip = mongoose.model('Trip', tripSchema);
 const Review = mongoose.model('Review', reviewSchema);
 
-export { User, Experience, Trip, Review }
+module.exports = { User, Experience, Trip, Review };
