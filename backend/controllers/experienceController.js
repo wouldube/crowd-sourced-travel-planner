@@ -50,4 +50,4 @@ const deleteExperience = async(filter) => {
 
 }
 
-module.exports = { createExperience, updateExperience, deleteExperience }
+module.exports = { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience }
