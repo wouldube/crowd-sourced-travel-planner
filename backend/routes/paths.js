@@ -19,6 +19,16 @@ router.get('/', (req, res) => {
 
 // ---- User CRUD Operations ----
 
+// Route to get all experiences
+router.get('/experiences', async (req, res) => {
+    try {
+        const experiences = await Experience.find();
+        res.json(experiences);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 router.post('/login', (req, res) => {
     // Handle login logic here
 });
@@ -176,8 +186,17 @@ router.post('/api/experiences', (req, res) => {
     res.json({ message: "Create experience endpoint placeholder" });
 });
 
-router.get('/api/experiences/:id', (req, res) => {
-    res.json({ message: "Experience detail endpoint placeholder" });
+// Route to get a specific experience by its ID
+router.get('/experiences/:id', async (req, res) => {
+    try {
+        const experience = await Experience.findById(req.params.id);
+        if (!experience) {
+            return res.status(404).json({ message: "Experience not found" });
+        }
+        res.json(experience);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
 router.put('/api/experiences/:id/location', (req, res) => {
