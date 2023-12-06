@@ -1,0 +1,11 @@
+.experience:hover{
+    color: black;
+    border: 10px solid #f5e4b0;
+    border-radius: 50px;
+    background-color: #f5e4b0;
+}
+.experience{
+    border: 10px solid #f6e1a1;
+    border-radius: 50px;
+    background-color: #f6e1a1;
+}

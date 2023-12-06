@@ -5,6 +5,25 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  display: flex;
+  align-items: center; justify-content: center;
+  height: 100vh; margin: 0;
+
+  background-color: #93d7ed;
+  color: #f3f2ed;
+}
+
+.exploration{
+  border: 10px solid #f6d984;
+  border-radius: 50px;
+  background-color: #f6d984;
+}
+div {
+  margin: auto;
+  width: 75%;
+  padding: 10px;
+  text-align: center;
 }
 
 code {
