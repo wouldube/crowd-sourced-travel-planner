@@ -1,19 +1,17 @@
 import React from 'react';
-import Experience from '../components/Experience.js';
+import ExperiencesMap from '../components/ExperiencesMap.js';
 import ExperienceList from '../components/ExperienceList.js';
-import AddExperience from '../components/AddExperience.js';
+import Buttons from '../components/Buttons.js';
 
 const Exploration = () => {
     return (
         <div>
-            <div className="exploration">
+            <div class="logo">
                 <h2>Travel-Planner</h2>
-                <Experience></Experience>
-                <AddExperience></AddExperience>
             </div>
-            <div>
-                <ExperienceList></ExperienceList>
-            </div>
+            <Buttons/>
+            <ExperiencesMap/>
+            <ExperienceList/>
         </div>
     )
 }
