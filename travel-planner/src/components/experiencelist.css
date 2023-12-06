@@ -1,6 +1,6 @@
 .experinceListBody {
     overflow: hidden;
-   }
+}
   
 .experienceListContainer {
 color: rgb(2, 116, 165);
@@ -10,9 +10,8 @@ width: 100%;
 text-align: left;
 grid-auto-columns: 500px;
 grid-auto-flow: column;
-grid-gap: 20px;
+grid-gap: 10px;
 overflow-x: scroll;
-scrollbar-width: thin;
 }
 
 .experience-title-list {
@@ -39,9 +38,6 @@ margin: 0 10px 0 0;
 }
 
 .ratingImage img {
-/* margin-top: 8px; */
-float: left; 
 height: 30px;
 width: 90px;
-margin: 0 10px 0 0;
 }
