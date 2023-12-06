@@ -19,7 +19,7 @@ const Experience = () => {
         <p>Title: {exp.title}</p>
         <p>Description: {exp.description}</p>
         <p>Geolocation: {exp.location.coordinates[0]}, {exp.location.coordinates[1]}</p>
-        <p>Image: {exp.image}</p>
+        <p>Image: {exp.images[0]}</p>
       </div>
     ))}
   </div>
