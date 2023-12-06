@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 // screens and components
 import Exploration from './screens/Exploration'
 import Experience from './components/Experience';
+import ExperienceList from './components/ExperienceList';
 
 function App() {
   return (

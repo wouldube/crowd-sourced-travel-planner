@@ -1,10 +1,16 @@
 import Experience from '../components/Experience';
+import ExperienceList from '../components/ExperienceList';
 
 const Exploration = () => {
     return (
-        <div className="exploration">
-            <h2>Hello World!!</h2>
-            <Experience></Experience>
+        <div>
+            <div className="exploration">
+                <h2>Hello World!!</h2>
+                <Experience></Experience>
+            </div>
+            <div className="experienceListBody">
+                <ExperienceList></ExperienceList>
+            </div>
         </div>
     )
 }
