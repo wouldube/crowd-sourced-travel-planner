@@ -22,16 +22,6 @@ router.get('/', (req, res) => {
 // Route to get all experiences
 router.get('/experiences', async (req, res) => {
     try {
-        const experiences = await Experience.find(); 
-        res.json(experiences);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-	
-// Route to get all experiences
-router.get('/experiences', async (req, res) => {
-    try {
         const experiences = await Experience.find();
         res.json(experiences);
     } catch (error) {

@@ -32,7 +32,7 @@ const experienceSchema = mongoose.Schema({
     },
 
     images: [{ type: String, required: true }],
-    owner: { type: mongoose.Types.ObjectId, required: true }, // User id
+    owner: { type: mongoose.Types.ObjectId, required: false }, // User id
     reviews: [{ type: mongoose.Types.ObjectId, required: false }], // list of Review ids
 });
 
