@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const express = require('express');
 const cors = require("cors");
 
-const { experiences, retrieveExperience, createExperience, updateExperience, deleteExperience } = require('../controllers/experienceController');
+const { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience } = require('../controllers/experienceController');
 
 const corsOptions = {
   origin: "http://localhost:3000", 
