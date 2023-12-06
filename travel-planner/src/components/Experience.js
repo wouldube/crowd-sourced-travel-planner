@@ -10,16 +10,20 @@ const Experience = () => {
       .then(response => response.json())
       .then(experience => setExperience(experience))
       .catch(error => console.error('Error fetching data:', error));
-      console.log('hey!')
   }, [])
 
   return (
     <div className='experience'>
-      {Object.entries(experience).map(([key,value]) => (
-        <p>{value}</p>
-      ))}
-    </div>
-  );
+      {experience.map((exp, index) => (
+        <div key={index}>
+        <p>Title: {exp.title}</p>
+        <p>Description: {exp.description}</p>
+        <p>Geolocation: {exp.location.coordinates[0]}, {exp.location.coordinates[1]}</p>
+        <p>Image: {exp.image}</p>
+      </div>
+    ))}
+  </div>
+);
 }
 
 export default Experience;
