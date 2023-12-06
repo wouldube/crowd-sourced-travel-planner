@@ -7,7 +7,7 @@ export const CreateExperience = () => {
   const [description, setDescription] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   //   const [rating, setRating] = useState("");
   //   const [review, setReview] = useState("");
 
@@ -37,60 +37,55 @@ export const CreateExperience = () => {
   return (
     <div>
       <h2>Create New Experience</h2>
-      <div class="title">
-        <label for="title">Title: </label>
+      <div className="title">
+        <label htmlFor="title">Title: </label>
         <input
           type="text"
           id="title"
-          name="title"
-          required="true"
+          required
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
       </div>
 
-      <div class="description">
-        <label for="description">Description: </label>
+      <div className="description">
+        <label htmlFor="description">Description: </label>
         <input
           type="text"
           id="description"
-          name="description"
-          required="true"
+          required
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
 
-      <div class="geolocation">
+      <div className="geolocation">
         <span>Geolocation: </span> <br />
-        <label for="lat">Latitude: </label>
+        <label htmlFor="lat">Latitude: </label>
         <input
           type="number"
           id="lat"
-          name="lat"
-          required="true"
+          required
           value={latitude}
           onChange={(e) => setLatitude(e.target.value)}
         />
-        <label for="long"> Longitude: </label>
+        <label htmlFor="long"> Longitude: </label>
         <input
           type="number"
           id="long"
-          name="long"
-          required="true"
+          required
           value={longitude}
           onChange={(e) => setLongitude(e.target.value)}
         />
       </div>
 
-      <div class="image">
-        <label for="image">Image: </label>
+      <div className="image">
+        <label htmlFor="image">Image: </label>
         <input
           type="file"
           id="image"
-          name="image"
           accept="image/*"
-          value={image}
+          required
           onChange={(e) => setImage(e.target.value)}
         />
       </div>
