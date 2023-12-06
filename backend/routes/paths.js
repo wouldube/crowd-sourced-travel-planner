@@ -38,8 +38,16 @@ router.post('/user-info', (req, res) => {
 
 // ---- Experience CRUD Operations ----
 // Route to get all experiences
-router.get('/experiences', experiences); // The functions in experienceController.js contain all the necessary logic to handle the requests.
-
+router.get('/experiences', async (req, res) => {
+    try {
+        console.log("GET request to /experiences");
+        const allExperiences = await getAllExperiences();
+        res.json(allExperiences);
+    } catch (error) {
+        console.error("Error in GET /experiences:", error);
+        res.status(500).json({ message: error.message });
+    }
+});
 
 router.post("/create-exp", async (req, res) => {
     // Create a new experience
@@ -179,7 +187,19 @@ router.post('/api/experiences', (req, res) => {
 });
 
 // Route to get a specific experience by its ID
-router.get('/experiences/:id', retrieveExperience); // The functions in experienceController.js contain all the necessary logic to handle the requests.
+router.get('/experiences/:id', async (req, res) => {
+    try {
+        console.log(`GET request to /experiences/${req.params.id}`);
+        const experience = await getExperienceById(req.params.id);
+        if (!experience) {
+            return res.status(404).json({ message: "Experience not found" });
+        }
+        res.json(experience);
+    } catch (error) {
+        console.error(`Error in GET /experiences/${req.params.id}:`, error);
+        res.status(500).json({ message: error.message });
+    }
+});
 
 
 router.put('/api/experiences/:id/location', (req, res) => {
