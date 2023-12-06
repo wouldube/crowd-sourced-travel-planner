@@ -17,11 +17,16 @@ const Experience = () => {
 
   return (
     <div className='experience'>
-      {Object.entries(experience).map(([key,value]) => (
-        <p>{key}</p>
-      ))}
-    </div>
-  );
+      {experience.map((exp, index) => (
+        <div key={index}>
+        <p>Title: {exp.title}</p>
+        <p>Description: {exp.description}</p>
+        <p>Geolocation: {exp.location.coordinates[0]}, {exp.location.coordinates[1]}</p>
+        <p>Image: {exp.images[0]}</p>
+      </div>
+    ))}
+  </div>
+);
 }
 
 export default Experience;
