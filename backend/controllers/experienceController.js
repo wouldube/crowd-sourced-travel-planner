@@ -7,10 +7,9 @@ const { Experience } = require('../models/schema')
 // Experiences
 const experiences = async(res) => {
     try {
-        const experiences = await Experience.find({});
-        return res.status(200).experiences;
+        const experiences = await Experience.find();
+        return res.json(experiences);
     } catch (error) {
-        console.log(error.message);
         res.status(500).send({ message: error.message });
     }
 }
@@ -18,10 +17,12 @@ const experiences = async(res) => {
 // Specific Experience
 const retrieveExperience = async(req, res) => {
     try {
-        const experience = await Experience.findById({req});
-        return res.status(200).experience;
+        const experience = await Experience.findById(req.params.id);
+        if (!experience) {
+            return res.status(404).json({ message: "Experience not found" });
+        }
+        return res.json(experience);
     } catch (error) {
-        console.log(error.message);
         res.status(500).send({ message: error.message });
     }
 }
