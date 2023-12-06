@@ -1,6 +1,31 @@
 const { Experience } = require('../models/schema')
 
+
 // experience CRUD functions
+
+//Retrieve
+// Experiences
+const experiences = async(res) => {
+    try {
+        const experiences = await Experience.find();
+        return res.json(experiences);
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+    }
+}
+
+// Specific Experience
+const retrieveExperience = async(req, res) => {
+    try {
+        const experience = await Experience.findById(req.params.id);
+        if (!experience) {
+            return res.status(404).json({ message: "Experience not found" });
+        }
+        return res.json(experience);
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+    }
+}
 
 //Create
 const createExperience = async (title, description, location, images) => {
@@ -9,9 +34,6 @@ const createExperience = async (title, description, location, images) => {
         location: location, images: images });
     return experience.save()
 }
-
-
-//Read
 
 
 //Update

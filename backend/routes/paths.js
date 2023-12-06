@@ -17,17 +17,8 @@ router.get('/', (req, res) => {
     res.json('hello world');
 });
 
-// ---- User CRUD Operations ----
 
-// Route to get all experiences
-router.get('/experiences', async (req, res) => {
-    try {
-        const experiences = await Experience.find();
-        res.json(experiences);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
+// ---- User CRUD Operations ----
 
 router.post('/login', (req, res) => {
     // Handle login logic here
@@ -46,8 +37,27 @@ router.post('/user-info', (req, res) => {
 });
 
 // ---- Experience CRUD Operations ----
-router.get('/exp/:experience_id', (req, res) => {
-    // Fetch specific experience details
+// Route to get all experiences
+router.get('/experiences', async (req, res) => {
+    try {
+        const experiences = await Experience.find();
+        res.json(experiences);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Route to get a specific experience by its ID
+router.get('/experiences/:id', async (req, res) => {
+    try {
+        const experience = await Experience.findById(req.params.id);
+        if (!experience) {
+            return res.status(404).json({ message: "Experience not found" });
+        }
+        res.json(experience);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
 router.post("/create-exp", async (req, res) => {
@@ -93,6 +103,7 @@ router.delete('/delete-exp/:experience_id', (req, res) => {
 });
 
 // ---- Trip CRUD Operations ----
+
 router.get('/trip/:trip_id', (req, res) => {
     // Fetch specific trip details
 });
