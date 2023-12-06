@@ -1,4 +1,4 @@
-import { Experience } from '../models/schema'
+const { Experience } = require('../models/schema')
 
 
 // experience CRUD functions
@@ -27,10 +27,10 @@ const retrieveExperience = async(req, res) => {
 }
 
 //Create
-const createExperience = async(title, description, location, images, owner) => {
+const createExperience = async (title, description, location, images) => {
     // left out reviews for now
     const experience = new Experience({ title: title, description: description, 
-        location: location, images: images, owner: owner });
+        location: location, images: images });
     return experience.save()
 }
 
@@ -57,4 +57,4 @@ const deleteExperience = async(filter) => {
 
 }
 
-export { createExperience, updateExperience, deleteExperience }
+module.exports = { createExperience, updateExperience, deleteExperience }
