@@ -16,7 +16,7 @@ const ImageCarousel = () => {
   };
 
   return (
-    <div className="carousel-container" onClick={goToNextImage}>
+    <div className="carousel-container" onMouseOver={goToNextImage}>
       <img src={images[currentImageIndex]} alt="Travel destination" />
     </div>
   );

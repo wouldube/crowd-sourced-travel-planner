@@ -1,0 +1,249 @@
+/* Basics */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  display: flex;
+  align-items: center; justify-content: center;
+
+  background-color: #93d7ed;
+  color: #020a1e;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+div {
+  font: #02142e; text-align: center;
+  opacity: 0%;
+  animation: glow 2s forwards;
+  width: fit-content; height: fit-content;
+  margin-bottom: 1%; margin-top: 1%;
+  padding: 1%;   margin: auto;
+}
+@keyframes glow {
+  100%{
+      opacity: 100%;
+  }
+}
+
+.Initial{
+  animation: InitialA 3s forwards;
+  font-size: 10px; opacity: 10%;
+  border-radius: 500px;
+  box-shadow: 0px 5px 10px rgb(255, 255, 255, 0.8);
+  background-color: #f1cc5c;
+  min-width:100px;min-height:100px;
+  width:10px;height:10px;
+  display:inline-block;
+}
+@keyframes InitialA {
+  100%{
+      font-size: 30px; opacity: 100%;
+      width: 300px; height: 300px;
+      background-color: #f9e8b5;
+      margin:1px;
+  }
+}
+
+.logo{
+  border-radius: 50px;
+  box-shadow: 0px 5px 10px rgb(255, 255, 255, 0.8);
+  background-color: #f6e1a1;
+  width: 20%; height: 20%;
+}
+.button{
+  border-radius: 30px;
+  box-shadow: 0px 5px 10px rgb(255, 255, 255, 0.8);
+  background-color: #f9e8b5;
+  width: 30px; height: 30px;
+  padding: 1%; margin-inline: 5%;
+}
+.button:hover{
+  background-color: #f7eed6;
+}
+.Buttons{
+  border-radius: 150px;
+  box-shadow: 0px 5px 10px rgb(255, 255, 255, 0.8);
+  background-color: #f6e1a1;
+  width: 30%; height: 30%;
+  padding: 1%; margin-bottom: 2%; margin-top: 2%;
+}
+
+
+/* Welcoming */
+.welcoming {
+  text-align: center;
+  border-radius: 30px;
+  box-shadow: 0px 5px 10px rgb(255, 255, 255, 0.8);
+  background: linear-gradient(to right, #a6c7f1, #87aedf);
+  padding: 40px; margin: 20px;
+}
+
+.explore-button:hover {
+  background-color: #f4e5bb;
+}
+.explore-button {
+  color: white; font-size: 18px;
+  cursor: pointer; transition: 0.3s;
+  border-radius: 20px; border: none;
+  box-shadow: 0px 3px 5px rgb(255, 255, 255, 0.8);
+  background-color: #f1cc5c;
+  padding: 10px 20px; margin: 2%;
+}
+
+.welcome-container h1 {
+  margin-bottom: 15px;
+}
+.welcome-container p {
+  margin-bottom: 20px;
+}
+
+.carousel-container{
+  border-radius: 100px;
+  transition: 0.3;
+}
+.carousel-container:hover{
+  animation: images 1s forwards;
+}
+@keyframes images {
+  100% {
+    opacity: 100%;
+  }
+}
+
+
+/* Experiences Map */
+.Experience{
+  font-size: 8px; opacity:100%;
+  border-radius: 200px;
+  border: solid #f1cc5c 5px;
+  box-shadow: 3px 5px 25px rgb(255, 255, 255, 0.3);
+  background-color: #f6e1a1;
+  width: 150px; height: 150px;
+  padding: 3%; margin: 5%;
+}
+.Experience h3{
+  margin: 15%;
+}
+.Experience:hover{
+  box-shadow: 3px 5px 25px rgb(255, 255, 255, 0.9);
+  animation: ExperienceInteraction 1s forwards;
+}
+@keyframes ExperienceInteraction {
+  100% {
+      font-size: 10px;
+      width: 180px; height: 180px;
+  }
+}
+
+.AnExperience{
+  background: linear-gradient(#f6e1a155, #f6e1a155),
+  url("https://media.istockphoto.com/id/1205214235/photo/path-through-sunlit-forest.jpg?s=612x612&w=0&k=20&c=-AS1aTz85kcZ2X7E8n2iFlm6dsdIMyWGWrSDQ1o-f_0=");
+}
+.AnExperience:hover{
+  background: linear-gradient(#f6e1a1AA, #f6e1a1AA),
+  url("https://media.istockphoto.com/id/1205214235/photo/path-through-sunlit-forest.jpg?s=612x612&w=0&k=20&c=-AS1aTz85kcZ2X7E8n2iFlm6dsdIMyWGWrSDQ1o-f_0=");
+}
+
+.ExperiencesMap{
+  border-radius: 50px;
+  box-shadow: 0px 5px 10px rgb(255, 255, 255, 0.8);
+  background-color: #b3cef1;
+  background: linear-gradient(#b3cef155, #b3cef155), url("./components/ExperiencesMap.png");
+  background-size: contain;
+  width: 1100px; height: 500px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  display: grid;
+
+}
+
+
+/* ExperiencesList */
+.experinceListBody {
+  border-radius: 30px;
+  background-color: #87aedf;
+  overflow: hidden;
+  width: 1000px;
+  padding: 1%; margin: 2%;
+}
+
+.experienceListContainer {
+  text-align: left;
+  overflow-y: scroll;
+  width: 80%; height:80%;
+  grid-gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  display: grid;
+}
+
+.experience-title-list {
+  text-align: left;
+}
+.experience-other-listtext {
+  text-align: left;
+}
+
+.ratingImage img {
+  float: left; 
+  width: 90px; height: 30px;
+  margin: 1 10px 1 1;
+}
+
+.experienceListImage img {
+  float: left; 
+  border-radius: 30px;
+  width: 30%; height: 60%;
+  margin-top: 8px; margin: 0 10px 0 0;
+}
+
+.experienceListImage {
+  border-radius: 50px;
+  background-color: #a6c7f1;
+  width: 80%; height: 80%;
+  padding: 5%; margin: 1%;
+}
+
+
+/* Add Experience */
+.AddExperience input{
+  font-size: medium;
+  border-radius: 30px;
+  background-color: #d9c590;
+  width: 80%; height: 50%;
+  padding: 1%; margin-bottom: 1%; margin-top: 1%;
+}
+.AddExperience div{
+  font-size: large;
+  border-radius: 50px;
+  background-color: #f9e8b5;
+  width: 80%; height: 10%;
+  padding: 2%; margin-bottom: 2%; margin-top: 2%;
+}
+.AddExperience{
+  width: 900px; height: 100%;
+  border-radius: 80px;
+  box-shadow: 0px 5px 10px rgb(255, 255, 255, 0.8);
+  background-color: #f6e1a1;
+}
+
+
+.carousel-container {
+  width: 100%;
+  height: 400px; /* Adjust as needed */
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease;
+}

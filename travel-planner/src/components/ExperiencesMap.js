@@ -1,5 +1,4 @@
 import React, { Component, useState, useEffect } from 'react';
-import './experience.css';
 
 const ExperiencesMap = () => {
   const [experiences, setExperiences] = useState([])
@@ -10,10 +9,15 @@ const ExperiencesMap = () => {
       .then(experiences => setExperiences(experiences))
       .catch(error => console.error('Error fetching data:', error));
   }, [])
-            /*<p>Image: {exp.images[0]}</p>*/
 
   return (
     <div className="ExperiencesMap">
+      <div class="Experience AnExperience">
+        <h3>Hoh Rainforest Hike</h3>
+        <p>Hike the Hoh Rainforest in Olympic National Park on this mesmerizing trail. The towering trees draped in lush moss 
+          create a magical and serene trail experience.</p>
+        <p>Y,X</p>
+      </div>
       {experiences.map((exp, index) => (
         <div key={index} class="Experience">
           <h3>{exp.title}</h3>

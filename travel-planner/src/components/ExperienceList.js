@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './experiencelist.css';
 
 const ExperienceList = () => {
     return (
