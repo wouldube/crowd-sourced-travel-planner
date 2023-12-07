@@ -1,17 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Welcome from '../components/Welcome';
 import ExperiencesMap from '../components/ExperiencesMap.js';
 import ExperienceList from '../components/ExperienceList.js';
 import Buttons from '../components/Buttons.js';
-import ImageCarousel from '../components/ImageCarousel.js';
 
 const Exploration = () => {
+    const [initial, isInitial] = useState(0);
+    const [component, which] = useState(0);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            isInitial(1);
+        }, 3000);
+
+        return () => clearTimeout(timeoutId)
+    }, []);
+
     return (
         <div>
-            <Welcome />
-            <Buttons />
-            <ExperiencesMap />
-            <ExperienceList />
+            {initial === 0 && (
+                <div class="Initial">
+                    <h2>Travel</h2>
+                    <h2>Planner</h2>
+                </div>
+            )}
+
+            {initial != 0 && (
+                <>
+                <div class="logo">
+                    <h2>Travel-Planner</h2>
+                </div>
+                <Buttons/>
+
+                {component === 0 && (
+                    <>
+                    <div class="welcoming">
+                        <Welcome/>
+                        <button onClick={()=>which(1)} className="explore-button">Explore Now!</button>
+                    </div>
+                    </>
+                )}
+
+                {component === 1 && (
+                    <>
+                    <button onClick={()=>which(2)} className="explore-button">More Experiences?</button>
+                    <ExperiencesMap/>
+                    </>
+                )}
+
+                {component === 2 && (
+                    <>
+                    <ExperienceList/>
+                    </>
+                )}
+                </>
+            )}
         </div>
     )
 }

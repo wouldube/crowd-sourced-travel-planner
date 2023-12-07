@@ -1,7 +1,6 @@
-//import { MdOutlineStarBorder, MdOutlineStarHalf, MdOutlineStar } from "react-icons/md";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import '../components/experience.css';
+//import { MdOutlineStarBorder, MdOutlineStarHalf, MdOutlineStar } from "react-icons/md";
 
 export const CreateExperience = () => {
   const [title, setTitle] = useState("");
@@ -69,7 +68,7 @@ export const CreateExperience = () => {
           required
           value={latitude}
           onChange={(e) => setLatitude(e.target.value)}
-        />
+        /><br/>
         <label htmlFor="long">Longitude</label><br/>
         <input
           type="number"
@@ -111,7 +110,7 @@ export const CreateExperience = () => {
             </div> */}
 
       <br />
-      <button onClick={createExperience}>Create</button>
+      <button onClick={createExperience} className="explore-button">Create</button>
     </div>
   );
 };
