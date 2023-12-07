@@ -11,14 +11,9 @@ body {
   height: 100vh; margin: 0;
 
   background-color: #93d7ed;
-  color: #f3f2ed;
+  color: #020a1e;
 }
 
-.exploration{
-  border: 10px solid #f6d984;
-  border-radius: 50px;
-  background-color: #f6d984;
-}
 div {
   margin: auto;
   width: 97%;

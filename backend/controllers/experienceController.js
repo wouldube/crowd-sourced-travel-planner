@@ -4,27 +4,19 @@ const { Experience } = require('../models/schema')
 // experience CRUD functions
 
 //Retrieve
-// Experiences
-const experiences = async(res) => {
-    try {
-        const experiences = await Experience.find();
-        return res.json(experiences);
-    } catch (error) {
-        res.status(500).send({ message: error.message });
-    }
+
+// Retrieve all experiences
+const getAllExperiences = async () => {
+    console.log("Fetching all experiences");
+    const experiences = await Experience.find();
+    return experiences;
 }
 
-// Specific Experience
-const retrieveExperience = async(req, res) => {
-    try {
-        const experience = await Experience.findById(req.params.id);
-        if (!experience) {
-            return res.status(404).json({ message: "Experience not found" });
-        }
-        return res.json(experience);
-    } catch (error) {
-        res.status(500).send({ message: error.message });
-    }
+// Retrieve a specific experience by ID
+const getExperienceById = async (id) => {
+    console.log(`Fetching experience with ID: ${id}`);
+    const experience = await Experience.findById(id);
+    return experience;
 }
 
 //Create
@@ -58,4 +50,4 @@ const deleteExperience = async(filter) => {
 
 }
 
-module.exports = { createExperience, updateExperience, deleteExperience }
+module.exports = { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience }

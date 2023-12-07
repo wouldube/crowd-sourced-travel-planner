@@ -1,11 +1,96 @@
-.experience:hover{
-    color: black;
-    border: 10px solid #f5e4b0;
-    border-radius: 50px;
-    background-color: #f5e4b0;
+/* Basics */
+.body{
+    font: #02142e;
+    padding: 1%; margin-bottom: 2%; margin-top: 2%;
 }
-.experience{
-    border: 10px solid #f6e1a1;
+.logo{
     border-radius: 50px;
     background-color: #f6e1a1;
+    width: 20%; height: 20%;
+}
+.button{
+    font: #f5f1e6;
+    border-radius: 30px;
+    background-color: #f1cc5c;
+    width: 30px; height: 30px;
+    padding: 1%; margin-inline: 5%;
+}
+.button:hover{
+    background-color: #f4e5bb;
+}
+.Buttons{
+    border-radius: 150px;
+    background-color: #f6e1a1;
+    width: 30%; height: 30%;
+    padding: 1%; margin-bottom: 2%; margin-top: 2%;
+}
+
+/* Experiences Map */
+.Experience{
+    font-size: 8px;
+    border-radius: 200px;
+    border: outset #ddc377 5px;
+    width: 130px; height: 130px;
+    background-color: #f6e1a1;
+    padding: 3%; margin: 5%;
+}
+.Experience h3{
+    margin: 15%;
+}
+.Experience:hover{
+    animation: ExperienceInteraction 1s forwards;
+}
+@keyframes ExperienceInteraction {
+    100% {
+        font-size: 10px;
+        width: 180px; height: 180px;
+    }
+}
+.AnExperience{
+    background: linear-gradient(#f6e1a155, #f6e1a155),
+    url("https://media.istockphoto.com/id/1205214235/photo/path-through-sunlit-forest.jpg?s=612x612&w=0&k=20&c=-AS1aTz85kcZ2X7E8n2iFlm6dsdIMyWGWrSDQ1o-f_0=");
+}
+.AnExperience:hover{
+    background: linear-gradient(#f6e1a1AA, #f6e1a1AA),
+    url("https://media.istockphoto.com/id/1205214235/photo/path-through-sunlit-forest.jpg?s=612x612&w=0&k=20&c=-AS1aTz85kcZ2X7E8n2iFlm6dsdIMyWGWrSDQ1o-f_0=");
+}
+.ExperiencesMap{
+    border-radius: 50px;
+    background-color: #b3cef1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    background: linear-gradient(#b3cef155, #b3cef155), url("./ExperiencesMap.png");
+    background-size: cover;
+}
+
+/* Add Experience */
+.AddExperience input{
+    font-size: medium;
+    width: 80%; height: 80%;
+    border-radius: 80px;
+    background-color: #d9c590;
+    padding: 1%; margin-bottom: 1%; margin-top: 1%;
+}
+.AddExperience div{
+    font-size: large;
+    width: 30%; height: 30%;
+    border-radius: 80px;
+    background-color: #f7e8be;
+    padding: 3%; margin-bottom: 2%; margin-top: 2%;
+}
+.AddExperience button{
+    font: #f5f1e6;
+    font-size: xx-large;
+    border-radius: 30px;
+    background-color: #f1cc5c;
+    width: 50%; height: 50%;
+    padding: 1%; margin-inline: 5%;
+}
+.AddExperience{
+    border-radius: 80px;
+    background-color: #f6e1a1;
+}
+.button:hover{
+    background-color: #f4e5bb;
 }

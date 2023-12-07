@@ -1,6 +1,7 @@
-// import { MdOutlineStarBorder, MdOutlineStarHalf, MdOutlineStar } from "react-icons/md";
+//import { MdOutlineStarBorder, MdOutlineStarHalf, MdOutlineStar } from "react-icons/md";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import '../components/experience.css';
 
 export const CreateExperience = () => {
   const [title, setTitle] = useState("");
@@ -35,10 +36,10 @@ export const CreateExperience = () => {
   };
 
   return (
-    <div>
-      <h2>Create New Experience</h2>
+    <div class="AddExperience">
+      <h2>Create New Experience!</h2>
       <div className="title">
-        <label htmlFor="title">Title: </label>
+        <label htmlFor="title">Title</label><br/>
         <input
           type="text"
           id="title"
@@ -49,7 +50,7 @@ export const CreateExperience = () => {
       </div>
 
       <div className="description">
-        <label htmlFor="description">Description: </label>
+        <label htmlFor="description">Description</label><br/>
         <input
           type="text"
           id="description"
@@ -60,8 +61,8 @@ export const CreateExperience = () => {
       </div>
 
       <div className="geolocation">
-        <span>Geolocation: </span> <br />
-        <label htmlFor="lat">Latitude: </label>
+        <span>Geolocation</span> <br />
+        <label htmlFor="lat">Latitude</label><br/>
         <input
           type="number"
           id="lat"
@@ -69,7 +70,7 @@ export const CreateExperience = () => {
           value={latitude}
           onChange={(e) => setLatitude(e.target.value)}
         />
-        <label htmlFor="long"> Longitude: </label>
+        <label htmlFor="long">Longitude</label><br/>
         <input
           type="number"
           id="long"
@@ -80,7 +81,7 @@ export const CreateExperience = () => {
       </div>
 
       <div className="image">
-        <label htmlFor="image">Image: </label>
+        <label htmlFor="image">Image</label><br/>
         <input
           type="file"
           id="image"
@@ -90,7 +91,7 @@ export const CreateExperience = () => {
         />
       </div>
 
-      <br />
+      <br/>
       {/* <div class="review">
             <div>
                 <span>Rating: </span>

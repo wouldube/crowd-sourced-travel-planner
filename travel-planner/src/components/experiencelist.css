@@ -3,15 +3,26 @@
 }
   
 .experienceListContainer {
-color: rgb(2, 116, 165);
-background-color: white;
-display: grid;
-width: 100%;
-text-align: left;
-grid-auto-columns: 500px;
-grid-auto-flow: column;
-grid-gap: 10px;
-overflow-x: scroll;
+    color: rgb(2, 116, 165);
+    background-color: white;
+    display: grid;
+    width: 100%;
+    text-align: left;
+    grid-auto-columns: 500px;
+    grid-auto-flow: column;
+    grid-gap: 10px;
+    overflow-x: scroll;
+    font: #02142e;
+    border-radius: 30px;
+    padding: 1%; margin: 2%;
+}
+
+.experienceListContainer {
+    display: grid;
+    text-align: left;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 30px;
+    overflow-y: scroll;
 }
 
 .experience-title-list {
@@ -22,22 +33,23 @@ overflow-x: scroll;
     text-align: left;
 }
 
-.experienceListColumn {
-flex: 50%;
-width: 400px;
-height: 700px;
-padding: 0 4px;
+.experienceListImage {
+    width: 300px; height: 280px;
+    border-radius: 50px;
+    background-color: #a6c7f1;
+    padding: 5%;
 }
 
 .experienceListImage img {
-margin-top: 8px;
-float: left; 
-height: 200px;
-width: 200px;
-margin: 0 10px 0 0;
+    margin-top: 8px;
+    float: left; 
+    height: 60%;
+    width: 60%;
+    margin: 0 10px 0 0;
+    border-radius: 30px;
 }
 
 .ratingImage img {
-height: 30px;
-width: 90px;
+    height: 30px;
+    width: 90px;
 }
