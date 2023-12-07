@@ -1,27 +1,16 @@
 .experinceListBody {
-    overflow: hidden;
-}
-  
-.experienceListContainer {
-    color: rgb(2, 116, 165);
-    background-color: white;
-    display: grid;
-    width: 100%;
-    text-align: left;
-    grid-auto-columns: 500px;
-    grid-auto-flow: column;
-    grid-gap: 10px;
-    overflow-x: scroll;
     font: #02142e;
     border-radius: 30px;
+    background-color: #87aedf;
     padding: 1%; margin: 2%;
+    overflow: hidden;
 }
 
 .experienceListContainer {
     display: grid;
     text-align: left;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 30px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
     overflow-y: scroll;
 }
 
@@ -34,22 +23,25 @@
 }
 
 .experienceListImage {
-    width: 300px; height: 280px;
+    width: 80%; height: 80%;
     border-radius: 50px;
     background-color: #a6c7f1;
     padding: 5%;
 }
 
 .experienceListImage img {
-    margin-top: 8px;
-    float: left; 
-    height: 60%;
-    width: 60%;
-    margin: 0 10px 0 0;
-    border-radius: 30px;
+margin-top: 8px;
+float: left; 
+height: 60%;
+width: 60%;
+margin: 0 10px 0 0;
+border-radius: 30px;
 }
 
 .ratingImage img {
-    height: 30px;
-    width: 90px;
+/* margin-top: 8px; */
+float: left; 
+height: 30px;
+width: 90px;
+margin: 0 10px 0 0;
 }
