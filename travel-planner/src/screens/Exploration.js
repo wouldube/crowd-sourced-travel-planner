@@ -11,7 +11,7 @@ const Exploration = () => {
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             isInitial(1);
-        }, 3000);
+        }, 100); //3000
 
         return () => clearTimeout(timeoutId)
     }, []);
@@ -27,9 +27,6 @@ const Exploration = () => {
 
             {initial != 0 && (
                 <>
-                <div class="logo">
-                    <h2>Travel-Planner</h2>
-                </div>
                 <Buttons/>
 
                 {component === 0 && (
