@@ -49,10 +49,26 @@ router.get('/experiences', async (req, res) => {
     }
 });
 
+// Route to get a specific experience by its ID
+router.get('/experiences/:id', async (req, res) => {
+    try {
+        console.log(`GET request to /experiences/${req.params.id}`);
+        const experience = await getExperienceById(req.params.id);
+        if (!experience) {
+            return res.status(404).json({ message: "Experience not found" });
+        }
+        res.json(experience);
+    } catch (error) {
+        console.error(`Error in GET /experiences/${req.params.id}:`, error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 router.post("/create-exp", async (req, res) => {
     // Create a new experience
     console.log("backend")
     
+    console.log(req.body)
     let { title, description, coordinates, image } = req.body;
     
     coordinates = [Number(coordinates['latitude']), Number(coordinates['longitude'])];
@@ -185,22 +201,6 @@ router.get('/api/experiences/nearby', (req, res) => {
 router.post('/api/experiences', (req, res) => {
     res.json({ message: "Create experience endpoint placeholder" });
 });
-
-// Route to get a specific experience by its ID
-router.get('/experiences/:id', async (req, res) => {
-    try {
-        console.log(`GET request to /experiences/${req.params.id}`);
-        const experience = await getExperienceById(req.params.id);
-        if (!experience) {
-            return res.status(404).json({ message: "Experience not found" });
-        }
-        res.json(experience);
-    } catch (error) {
-        console.error(`Error in GET /experiences/${req.params.id}:`, error);
-        res.status(500).json({ message: error.message });
-    }
-});
-
 
 router.put('/api/experiences/:id/location', (req, res) => {
     res.json({ message: "Update experience location endpoint placeholder" });
