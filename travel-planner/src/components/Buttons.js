@@ -4,25 +4,31 @@ import { useNavigate } from 'react-router-dom';
 const AddExperience = () => {
     const navigate = useNavigate();
     const add = () => {
-        navigate('/create-exp');
+        navigate('/trips');
     };
     const profile = () => {
-        navigate('/create-exp');
+        navigate('/profile');
     };
     const search = () => {
       navigate('/create-exp');
     };
   return (
-    <div class="Buttons">
-      <button onClick={add} class="button">
-          +
-      </button>
-      <button onClick={profile} class="button">
-          o
-      </button>
-      <button onClick={search} class="button">
-          -
-      </button>
+    <div>
+        <div class="logo">
+          <h2>Travel-Planner</h2>
+        </div>
+
+        <div className="Buttons">
+          <button onClick={add} class="button">
+              +
+          </button>
+          <button onClick={profile} class="button">
+              o
+          </button>
+          <button onClick={search} class="button">
+              -
+          </button>
+        </div>
     </div>
   );
 }
