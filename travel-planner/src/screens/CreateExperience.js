@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+const firebase = require("firebase/app")
+const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
+const { firebaseConfig } = require("../firebase/firebase-config");
 //import { MdOutlineStarBorder, MdOutlineStarHalf, MdOutlineStar } from "react-icons/md";
 
 export const CreateExperience = () => {
@@ -7,14 +11,26 @@ export const CreateExperience = () => {
   const [description, setDescription] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [image, setImage] = useState(null);
+  let [image, setImage] = useState(null);
   //   const [rating, setRating] = useState("");
   //   const [review, setReview] = useState("");
 
   const navigate = useNavigate();
 
   const createExperience = async () => {
+    try{
     const coordinates = { latitude, longitude };
+
+    const fb_app = firebase.initializeApp(firebaseConfig);
+    const storage = getStorage(fb_app)
+
+    const imgFile = document.getElementById('image');
+    const imgRef = ref(storage, image);
+    const upload = await uploadBytesResumable(imgRef, imgFile.files[0], { contentType: 'image/png' })
+    const downloadURL = await getDownloadURL(imgRef);
+    image = downloadURL
+    console.log(downloadURL)
+
     const newExperience = { title, description, coordinates, image };
     const response = await fetch("http://localhost:5000/create-exp", {
       method: "POST",
@@ -32,10 +48,12 @@ export const CreateExperience = () => {
       console.log("error");
     }
     navigate("/");
-  };
+  } catch (error) {
+    console.log(error)
+  }};
 
   return (
-    <div class="AddExperience">
+    <div className="AddExperience">
       <h2>Create New Experience!</h2>
       <div className="title">
         <label htmlFor="title">Title</label><br/>
@@ -91,7 +109,7 @@ export const CreateExperience = () => {
       </div>
 
       <br/>
-      {/* <div class="review">
+      {/* <div className="review">
             <div>
                 <span>Rating: </span>
                 <span>

@@ -19,7 +19,7 @@ const Exploration = () => {
     return (
         <div>
             {initial === 0 && (
-                <div class="Initial">
+                <div className="Initial">
                     <h2>Travel</h2>
                     <h2>Planner</h2>
                 </div>
@@ -27,14 +27,14 @@ const Exploration = () => {
 
             {initial != 0 && (
                 <>
-                <div class="logo">
+                <div className="logo">
                     <h2>Travel-Planner</h2>
                 </div>
                 <Buttons/>
 
                 {component === 0 && (
                     <>
-                    <div class="welcoming">
+                    <div className="welcoming">
                         <Welcome/>
                         <button onClick={()=>which(1)} className="explore-button">Explore Now!</button>
                     </div>
