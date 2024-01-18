@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require("cors");
 
 const { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience } = require('../controllers/experienceController');
+const { createReview, getReviewsByExperienceId, getReviewById, updateReview, deleteReview } = require('../controllers/reviewController');
+
 
 const corsOptions = {
   origin: "http://localhost:3000", 
@@ -126,13 +128,71 @@ router.delete('/delete-trip/:trip_id', (req, res) => {
 });
 
 // ---- Review CRUD Operations ----
-router.post('/create-review', (req, res) => {
-    // Create a new review
+// Create a new review
+router.post('/reviews', async (req, res) => {
+    try {
+        const { rating, description, owner, experience } = req.body;
+        const newReview = await createReview(rating, description, owner, experience);
+        res.status(201).json(newReview);
+    } catch (error) {
+        console.error("Error in POST /reviews:", error);
+        res.status(500).json({ message: error.message });
+    }
 });
 
-router.delete('/delete-review/:review_id', (req, res) => {
-    // Delete a review
+// Get all reviews for a specific experience
+router.get('/experiences/:id/reviews', async (req, res) => {
+    try {
+        const reviews = await getReviewsByExperienceId(req.params.id);
+        res.json(reviews);
+    } catch (error) {
+        console.error(`Error in GET /experiences/${req.params.id}/reviews:`, error);
+        res.status(500).json({ message: error.message });
+    }
 });
+
+// Get a specific review by ID
+router.get('/reviews/:id', async (req, res) => {
+    try {
+        const review = await getReviewById(req.params.id);
+        if (!review) {
+            return res.status(404).json({ message: "Review not found" });
+        }
+        res.json(review);
+    } catch (error) {
+        console.error(`Error in GET /reviews/${req.params.id}:`, error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Update a specific review
+router.put('/reviews/:id', async (req, res) => {
+    try {
+        const { rating, description } = req.body;
+        const reviewUpdate = { rating, description };
+        const updatedReview = await updateReview(req.params.id, reviewUpdate);
+        res.json(updatedReview);
+    } catch (error) {
+        console.error(`Error in PUT /reviews/${req.params.id}:`, error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Delete a specific review
+router.delete('/reviews/:id', async (req, res) => {
+    try {
+        const result = await deleteReview(req.params.id);
+        if (result) {
+            res.json({ message: "Review deleted successfully" });
+        } else {
+            res.status(404).json({ message: "Review not found" });
+        }
+    } catch (error) {
+        console.error(`Error in DELETE /reviews/${req.params.id}:`, error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 
 // ---- User Specific Pages ----
 
