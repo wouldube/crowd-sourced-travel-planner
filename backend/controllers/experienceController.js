@@ -29,23 +29,21 @@ const createExperience = async (title, description, location, images) => {
 
 
 //Update
-const updateExperience = async(filter, update) => {
+const updateExperience = async(id, update) => {
 
-    // filter: {"_id": document_id}
     // update: {"property to update": updated value}
     // returns 0 if update fails, 1 if update succeeds
 
-    const result = await Experience.updateOne(filter, update);
+    const result = await Experience.updateOne({"_id": id}, update);
     return result.modifiedCount;
 }
 
 //Delete
-const deleteExperience = async(filter) => {
+const deleteExperience = async(id) => {
 
-    // filter: {"_id": document_id}
     // returns 0 if delete fails, 1 if delete succeeds
 
-    const result = await Experience.deleteOne(filter);
+    const result = await Experience.deleteOne({"_id": id});
     return result.deletedCount;
 
 }
