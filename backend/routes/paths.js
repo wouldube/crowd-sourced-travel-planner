@@ -102,7 +102,24 @@ router.post("/create-exp", async (req, res) => {
 });
 
 router.put('/update-exp/:experience_id', (req, res) => {
-    // Update an existing experience
+    filter = {"_id": experience_id}
+    update = {}
+    if (newTitle = req.body.title){
+        update["title"] = newTitle
+    }
+    if (newDescription = req.body.description){
+        update["description"] = newDescription
+    }
+    if (newLocation = req.body.location){
+        update["location"] = newLocation
+    }
+    if (newImage = req.body.image){
+        update["image"] = newImage
+    }
+    experience.updateExperience(req.filter, req.update)
+    res
+        .status(200)
+        .json({ message: "Experience updated successfully"});
 });
 
 router.delete('/delete-exp/:experience_id', (req, res) => {

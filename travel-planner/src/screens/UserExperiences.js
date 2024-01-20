@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const UserExperiences = () => {
-
+const UserExperiences = ({ setExperienceToUpdate }) => {
+    // const [experiences, setExperience] = useState([]);
+    // const navigate = useNavigate();
     return (
         <div className="UserExperiences">
 
