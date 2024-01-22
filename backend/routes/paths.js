@@ -101,25 +101,34 @@ router.post("/create-exp", async (req, res) => {
       .json({ message: "Experience created successfully", result: result });
 });
 
-router.put('/update-exp/:experience_id', (req, res) => {
-    filter = {"_id": experience_id}
-    update = {}
+router.put('/update-exp/:experience_id', async (req, res) => {
+    const experience_id = req.params.experience_id;
+    const filter = {"_id": experience_id};
+    const update = {};
     if (newTitle = req.body.title){
-        update["title"] = newTitle
+        update["title"] = newTitle;
     }
     if (newDescription = req.body.description){
-        update["description"] = newDescription
+        update["description"] = newDescription;
     }
     if (newLocation = req.body.location){
-        update["location"] = newLocation
+        update["location"] = newLocation;
     }
     if (newImage = req.body.image){
-        update["image"] = newImage
+        update["image"] = newImage;
     }
-    experience.updateExperience(req.filter, req.update)
-    res
-        .status(200)
-        .json({ message: "Experience updated successfully"});
+    try {
+        const modifiedCount = await updateExperience(filter, update);
+        
+        if (modifiedCount > 0) {
+            res.status(200).json({ message: "Experience updated successfully" });
+        } else {
+            res.status(404).json({ message: "Experience not found or no update needed" });
+        }
+    } catch (error) {
+        console.error(`Error in PUT /update-exp/${experience_id}:`, error);
+        res.status(500).json({ message: error.message });
+    }
 });
 
 router.delete('/delete-exp/:experience_id', (req, res) => {
