@@ -29,12 +29,13 @@ const createExperience = async (title, description, location, images) => {
 
 
 //Update
-const updateExperience = async(id, update) => {
+const updateExperience = async(filter, update) => {
 
+    // filter: {"_id": document_id}
     // update: {"property to update": updated value}
     // returns 0 if update fails, 1 if update succeeds
 
-    const result = await Experience.updateOne({"_id": id}, update);
+    const result = await Experience.updateOne(filter, update);
     return result.modifiedCount;
 }
 

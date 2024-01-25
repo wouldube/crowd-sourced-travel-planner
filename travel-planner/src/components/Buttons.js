@@ -19,14 +19,15 @@ const AddExperience = () => {
         </div>
 
         <div className="Buttons">
+          {/* switched these from button to explore-button */}
           <button onClick={add} class="button">
-              +
+              Trips
           </button>
           <button onClick={profile} class="button">
-              o
+              Profile
           </button>
           <button onClick={search} class="button">
-              -
+              Add Experience
           </button>
         </div>
     </div>
