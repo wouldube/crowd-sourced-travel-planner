@@ -2,12 +2,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const userSchema =  mongoose.Schema({
-    uid: String, // Firebase UID
+    uid: { type: String, required: true }, // Firebase UID
     email: { type: String, required: true },
-    username: { type: String, required: true },
-    name: { type: String },
-    bio: { type: String },
-    profile_img: { type: String },
+    username: { type: String, required: true, unique: true },
+    name: { type: String, required: false },
+    bio: { type: String, required: false },
+    profile_img: { type: String, required: false },
     experiences: [{ type: mongoose.Types.ObjectId, required: false }], // list of Experience ids
     trips: [{ type: mongoose.Types.ObjectId, required: false }], // list of Trip ids
     reviews: [{ type: mongoose.Types.ObjectId, required: false }], // list of Review ids

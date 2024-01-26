@@ -40,12 +40,11 @@ const updateExperience = async(filter, update) => {
 }
 
 //Delete
-const deleteExperience = async(filter) => {
+const deleteExperience = async(id) => {
 
-    // filter: {"_id": document_id}
     // returns 0 if delete fails, 1 if delete succeeds
 
-    const result = await Experience.deleteOne(filter);
+    const result = await Experience.deleteOne({"_id": id});
     return result.deletedCount;
 
 }
