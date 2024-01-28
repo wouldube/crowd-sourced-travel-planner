@@ -5,6 +5,8 @@ const cors = require("cors");
 const { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience } = require('../controllers/experienceController');
 const { createReview, getReviewsByExperienceId, getReviewById, updateReview, deleteReview } = require('../controllers/reviewController');
 const tripController = require("../controllers/tripController");
+const { getUserById, getUserExperiences, getUserReviews, getUserTrips, createUser, updateUser, deleteUser } = require('../controllers/userController');
+
 
 const corsOptions = {
   origin: "http://localhost:3000", 
@@ -30,12 +32,60 @@ router.post('/register', (req, res) => {
     // Handle registration logic here
 });
 
-router.get('/user-info', (req, res) => {
-    // Handle fetching user info here
+router.get('/user-info/:id', async (req, res) => {
+    // Get User
+    try {
+        const user = await getUserById(req.params.id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.json(user);
+        
+    } catch(error) {
+        console.error(`Error in GET /user-info/${req.params.id}:`, error);
+        res.status(500).json({ message: error.message });
+    }
 });
 
-router.post('/user-info', (req, res) => {
-    // Handle updating user info here
+router.post('/new-user', async (req, res) => {
+    // Create User (will be moved into register route when firebase is set up)
+    try {
+        const { email, username, name, bio, img } = req.body;
+        const numCreated = await createUser("firebase_uid", email, username, name, bio, img);
+        res.status(201).json(numCreated); // if numCreated = 0 -> create unsuccessful
+    } catch (error) {
+        console.error("Error in POST /new-user:", error);
+        res.status(500).json({ message: error.message });
+    }
+
+});
+
+router.put('/user-info/:id', async (req, res) => {
+    // Update User
+    try {
+        const { email, username, name, bio, img } = req.body;
+        const userUpdate = { email, username, name, bio, img };
+        const numUpdated = await updateUser(req.params.id, userUpdate);
+        res.json(numUpdated); // if numUpdated = 0 -> update unsuccessful
+    } catch (error) {
+        console.error(`Error in PUT /user-info/${req.params.id}:`, error);
+        res.status(500).json({ message: error.message });
+    }
+
+});
+
+router.delete('/user-info/:id', async (req, res) => {
+    // Delete User
+    try {
+        const numDeleted = await deleteUser(req.params.id);
+        // TODO: delete User's Experiences, Ratings, Trips? or assign to a default User?
+        res.json(numDeleted); // if numDeleted = 0 -> delete unsuccessful
+
+    } catch (error) {
+        console.error(`Error in DELETE /user-info/${req.params.id}:`, error);
+        res.status(500).json({ message: error.message });
+    }
+
 });
 
 // ---- Experience CRUD Operations ----
@@ -206,6 +256,8 @@ router.post('/reviews', async (req, res) => {
     try {
         const { rating, description, owner, experience } = req.body;
         const newReview = await createReview(rating, description, owner, experience);
+        // TODO: add review to User's list of ratings
+        // TODO: add review to Experience's list of ratings
         res.status(201).json(newReview);
     } catch (error) {
         console.error("Error in POST /reviews:", error);
@@ -255,6 +307,8 @@ router.put('/reviews/:id', async (req, res) => {
 router.delete('/reviews/:id', async (req, res) => {
     try {
         const result = await deleteReview(req.params.id);
+        // TODO: delete review from User's list of ratings
+        // TODO: delete review from Experience's list of ratings
         if (result) {
             res.json({ message: "Review deleted successfully" });
         } else {
