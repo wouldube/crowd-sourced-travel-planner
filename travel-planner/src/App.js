@@ -10,6 +10,7 @@ import UserExperiences from './screens/UserExperiences.js';
 import Favorites from './screens/Favorites.js';
 import Ratings from './screens/Ratings.js';
 import Trips from './screens/Trips.js';
+import Trip from './components/Trip.js';
 
 function App() {
   return (
@@ -48,6 +49,10 @@ function App() {
                 <Route
                   path="/trips"
                   element={ <Trips/> }
+                />
+                <Route
+                  path="/sometrip"
+                  element={ <Trip/> }
                 />
           </Routes>
         </div>

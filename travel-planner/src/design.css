@@ -132,7 +132,7 @@ div {
   font-size: 8px; opacity:100%;
   border-radius: 200px;
   border: solid #f1cc5c 5px;
-  box-shadow: 3px 5px 25px rgb(255, 255, 255, 0.3);
+  box-shadow: 0px 1px 30px 20px rgba(255, 255, 255, 0.3);
   background-color: #f6e1a1;
   width: 150px; height: 150px;
   padding: 3%; margin: 5%;
@@ -141,12 +141,12 @@ div {
   margin: 15%;
 }
 .Experience:hover{
-  box-shadow: 3px 5px 25px rgb(255, 255, 255, 0.9);
   animation: ExperienceInteraction 1s forwards;
 }
 @keyframes ExperienceInteraction {
   100% {
       font-size: 10px;
+      box-shadow: 0px 1px 35px 25px rgba(255, 255, 255, 0.9);
       width: 180px; height: 180px;
   }
 }
@@ -187,8 +187,7 @@ div {
   text-align: left;
   overflow-y: scroll;
   width: 80%; height:80%;
-  grid-gap: 10px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px; grid-template-columns: repeat(2, 1fr);
   display: grid;
 }
 
@@ -214,6 +213,7 @@ div {
 
 .experienceListImage {
   border-radius: 50px;
+  box-shadow: 0px 0px 15px 5px rgba(255, 255, 255, 0.7);
   background-color: #a6c7f1;
   width: 80%; height: 80%;
   padding: 5%; margin: 1%;
@@ -280,7 +280,7 @@ div {
   font-size: 8px; opacity:100%;
   border-radius: 30px;
   border: solid #f1cc5c 5px;
-  box-shadow: 3px 5px 25px rgb(255, 255, 255, 0.3);
+  box-shadow: 0px 1px 30px 20px rgba(255, 255, 255, 0.3);
   background-color: #f6e1a1;
   width: 600px; height: 70px;
 }
@@ -289,17 +289,17 @@ div {
   font-size: 8px; opacity:100%;
   border-radius: 100px;
   border: solid #f1cc5c 5px;
-  box-shadow: 3px 5px 25px rgb(255, 255, 255, 0.3);
+  box-shadow: 0px 1px 30px 20px rgba(255, 255, 255, 0.3);
   background-color: #f6e1a1;
   width: 50px; height: 50px;
 }
-.ProfileAccountButton:hover{
-  box-shadow: 3px 5px 25px rgb(255, 255, 255, 0.9);
+.ProfileAccountButton:hover{  
   animation: ProfileAccountButtonInteraction 1s forwards;
 }
 @keyframes ProfileAccountButtonInteraction {
   100% {
       font-size: 10px;
+      box-shadow: 0px 1px 35px 25px rgba(255, 255, 255, 0.9);
       width: 55px; height: 55px;
   }
 }
@@ -309,7 +309,7 @@ div {
   font-size: 8px; opacity:100%;
   border-radius: 10%;
   border: solid #f1cc5c 5px;
-  box-shadow: 3px 5px 25px rgb(255, 255, 255, 0.3);
+  box-shadow: 0px 1px 30px 20px rgba(255, 255, 255, 0.3);
   background-color: #f6e1a1;
   width: 90%; height: 90%;
 }
@@ -318,7 +318,7 @@ div {
   font-size: 8px; opacity:100%;
   border-radius: 5%;
   border: solid #f1cc5c 5px;
-  box-shadow: 3px 5px 25px rgb(255, 255, 255, 0.3);
+  box-shadow: 0px 1px 30px 20px rgba(255, 255, 255, 0.3);
   background-color: #f6e1a1;
   width: 80%; height: 50%;
 }
@@ -329,7 +329,7 @@ div {
   font-size: 8px; opacity:100%;
   border-radius: 5%;
   border: solid #f1cc5c 5px;
-  box-shadow: 3px 5px 25px rgb(255, 255, 255, 0.3);
+  box-shadow: 0px 1px 30px 20px rgba(255, 255, 255, 0.3);
   background-color: #f6e1a1;
   width: 90%; height: 90%;
 }
@@ -342,7 +342,7 @@ div {
   font-size: 8px; opacity:100%;
   border-radius: 20%;
   border: solid #f1cc5c 5px;
-  box-shadow: 3px 5px 25px rgb(255, 255, 255, 0.3);
+  box-shadow: 0px 1px 30px 20px rgba(255, 255, 255, 0.3);
   background-color: #f6e1a1;
   width: 250px; height: 150px;
   margin-inline: 3%;
@@ -354,7 +354,7 @@ div {
   font-size: 8px; opacity:100%;
   border-radius: 20%;
   border: solid #f1cc5c 5px;
-  box-shadow: 3px 5px 25px rgb(255, 255, 255, 0.3);
+  box-shadow: 0px 1px 30px 20px rgba(255, 255, 255, 0.3);
   background-color: #f6e1a1;
   width: 90%; height: 90%;
 }
@@ -363,7 +363,7 @@ div {
   font-size: 8px; opacity:100%;
   border-radius: 20%;
   border: solid #f1cc5c 5px;
-  box-shadow: 3px 5px 25px rgb(255, 255, 255, 0.3);
+  box-shadow: 0px 1px 30px 20px rgba(255, 255, 255, 0.3);
   background-color: #f6e1a1;
   width: 250px; height: 150px;
 }
@@ -374,7 +374,58 @@ div {
   font-size: 8px; opacity:100%;
   border-radius: 20%;
   border: solid #f1cc5c 5px;
-  box-shadow: 3px 5px 25px rgb(255, 255, 255, 0.3);
+  box-shadow: 0px 1px 30px 20px rgba(255, 255, 255, 0.3);
   background-color: #f6e1a1;
   width: 90%; height: 90%;
+}
+
+/* Trips */
+.TripMap div{
+  font-size: 8px; opacity:100%;
+  border-radius: 200px;
+  border: solid #f1cc5c 5px;
+  box-shadow: 0px 1px 30px 20px rgba(255, 255, 255, 0.3);
+  background: radial-gradient(#FFF, #f6e1a1);
+  width: 150px; height: 150px;
+}
+.TripMap div:hover{
+  animation: TripComponentInteraction 1s forwards;
+}
+@keyframes TripComponentInteraction {
+  100% {
+      font-size: 10px;
+      box-shadow: 0px 1px 35px 25px rgba(255, 255, 255, 0.7);
+      width: 180px; height: 180px;
+  }
+}
+.TripComponent1{
+  margin-left: 300px;
+}
+.TripComponent2 {
+  margin-right: 300px;
+}
+
+.TripMap{
+
+}
+
+
+.TripsTrip{
+  font-size: 8px; opacity:100%;
+  border-radius: 200px;
+  border: solid #f1cc5c 5px;
+  box-shadow: 0px 1px 30px 20px rgba(255, 255, 255, 0.3);
+  background: radial-gradient(#FFF, #f6e1a1);
+  width: 150px; height: 150px;
+  padding: 3%; margin: 5%;
+}
+.TripsTrip:hover{
+  animation: TripsTripInteraction 1s forwards;
+}
+@keyframes TripsTripInteraction {
+  100% {
+      font-size: 10px;
+      box-shadow: 0px 1px 35px 25px rgba(255, 255, 255, 0.9);
+      width: 180px; height: 180px;
+  }
 }
