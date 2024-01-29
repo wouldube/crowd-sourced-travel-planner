@@ -1,4 +1,5 @@
 const { User } = require('../models/schema')
+const { getExperienceById } = require("../controllers/experienceController");
 // user CRUD functions
 
 // Read
@@ -14,9 +15,13 @@ const getUserExperiences = async (id) => {
     
     // id: document id
     // returns a list of experience ids
-
     const user = await User.findById(id);
-    return user.experiences
+    let expList = [];
+    for (let i = 0; i < user.experiences.length; i++) {
+        expList.push(await getExperienceById(user.experiences[i]));
+        console.log(expList);
+    }
+    return expList;
 
 }
 

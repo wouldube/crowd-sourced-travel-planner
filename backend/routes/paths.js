@@ -284,10 +284,20 @@ router.post('/profile/:username', (req, res) => {
     // Update user profile information
 });
 
-// My Experiences Page
-router.get('/my-experiences', (req, res) => {
+// My Experiences Page-------------------------------------------------
+router.get('/my-experiences/:id', async (req, res) => {
     // Fetch and display experiences created by the user
+    console.log(req.params.id)
+    try {
+        const experiences = await getUserExperiences(req.params.id);
+        console.log(experiences)
+        res.json(experiences);
+    } catch (error) {
+        console.error(`Error in retrieving user experiences`, error);
+        res.status(500).json({ message: error.message });
+    }
 });
+// ------------------------------------------------------------------------
 
 // My Trips Page
 router.get('/my-trips', (req, res) => {
