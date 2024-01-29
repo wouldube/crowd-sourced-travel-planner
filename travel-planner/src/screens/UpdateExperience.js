@@ -6,18 +6,25 @@ import { useNavigate } from "react-router-dom";
 // const { firebaseConfig } = require("../firebase/firebase-config");
 //import { MdOutlineStarBorder, MdOutlineStarHalf, MdOutlineStar } from "react-icons/md";
 
-export const UpdateExperience = ({ experienceToUpdate }) => {
+export const UpdateExperience = ({ ExperienceToUpdate }) => {
 
-  const [title, setTitle] = useState(experienceToUpdate.title);
-  const [description, setDescription] = useState(experienceToUpdate.description);
-  const [latitude, setLatitude] = useState(experienceToUpdate.latitude);
-  const [longitude, setLongitude] = useState(experienceToUpdate.longitude);
-  let [image, setImage] = useState(experienceToUpdate.image);
+  const [title, setTitle] = useState(ExperienceToUpdate.title);
+  const [description, setDescription] = useState(ExperienceToUpdate.description);
+  const [latitude, setLatitude] = useState(ExperienceToUpdate.latitude);
+  const [longitude, setLongitude] = useState(ExperienceToUpdate.longitude);
+  let [image, setImage] = useState(ExperienceToUpdate.image);
 
   const navigate = useNavigate();
 
   const updateExperience = async () => {
-    const response = await fetch(`/UserExperiences/${experienceToUpdate.experience_id}`, { // need to check link
+    // const response = await fetch(`/my-experiences/${userExperienceToUpdate.experience_id}`, { // need to check link
+    //   method: "PUT",
+    //   body: JSON.stringify(response),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    const response = await fetch(`http://localhost:5000/update-exp/65729e8085891cfdbfb12faa`, { // need to check link
       method: "PUT",
       body: JSON.stringify(response),
       headers: {

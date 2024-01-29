@@ -10,8 +10,12 @@ import UserExperiences from './screens/UserExperiences.js';
 import Favorites from './screens/Favorites.js';
 import Ratings from './screens/Ratings.js';
 import Trips from './screens/Trips.js';
+import { UpdateExperience } from './screens/UpdateExperience.js';
 
 function App() {
+
+  // const [experiences, setUserExperiences] = useState([])
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -37,6 +41,10 @@ function App() {
                   path="/UserExperiences"
                   element={ <UserExperiences/> }
                 />
+                    <Route
+                      path="/updateexperience"
+                      element={ <UpdateExperience/> }
+                    />
                 <Route
                   path="/favorites"
                   element={ <Favorites/> }
