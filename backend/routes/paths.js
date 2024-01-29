@@ -332,7 +332,6 @@ router.post('/profile/:username', (req, res) => {
     // Update user profile information
 });
 
-// My Experiences Page-------------------------------------------------
 router.get('/my-experiences/:id', async (req, res) => {
     // Fetch and display experiences created by the user
     console.log(req.params.id)
@@ -345,7 +344,6 @@ router.get('/my-experiences/:id', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-// ------------------------------------------------------------------------
 
 // My Trips Page
 router.get('/my-trips', (req, res) => {
