@@ -11,6 +11,7 @@ import Favorites from './screens/Favorites.js';
 import Ratings from './screens/Ratings.js';
 import Trips from './screens/Trips.js';
 import { UpdateExperience } from './screens/UpdateExperience.js';
+import Trip from './components/Trip.js';
 
 function App() {
 
@@ -56,6 +57,10 @@ function App() {
                 <Route
                   path="/trips"
                   element={ <Trips/> }
+                />
+                <Route
+                  path="/sometrip"
+                  element={ <Trip/> }
                 />
           </Routes>
         </div>
