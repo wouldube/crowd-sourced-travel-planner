@@ -43,9 +43,7 @@ const Profile = () => {
     }, []);*/
 
     return (
-        <div>
-            <Buttons/>
-            
+        <div>           
             <div className="Profile">
                 {login === 0 && (
                     <div className="loginblur"></div>

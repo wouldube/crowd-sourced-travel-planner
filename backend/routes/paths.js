@@ -290,6 +290,18 @@ router.get('/reviews/:id', async (req, res) => {
     }
 });
 
+// Get all reviews created by a specific user
+router.get('/user/:userId/reviews', async (req, res) => {
+    try {
+        const reviews = await getReviewsByUserId(req.params.userId);
+        res.json(reviews);
+    } catch (error) {
+        console.error(`Error in GET /user/${req.params.userId}/reviews:`, error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
 // Update a specific review
 router.put('/reviews/:id', async (req, res) => {
     try {
