@@ -15,6 +15,7 @@ const getUserExperiences = async (id) => {
     
     // id: document id
     // returns a list of experience ids
+    
     const user = await User.findById(id);
     let expList = [];
     for (let i = 0; i < user.experiences.length; i++) {
