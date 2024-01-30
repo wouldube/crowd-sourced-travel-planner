@@ -1,37 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const AddExperience = () => {
+const Buttons = () => {
     const navigate = useNavigate();
-    const add = () => {
-        navigate('/trips');
-    };
-    const profile = () => {
-        navigate('/profile');
-    };
-    const search = () => {
-      navigate('/create-exp');
-    };
-  return (
-    <div>
-        <div class="logo">
-          <h2>Travel-Planner</h2>
-        </div>
 
-        <div className="Buttons">
-          {/* switched these from button to explore-button */}
-          <button onClick={add} class="button">
-              Trips
-          </button>
-          <button onClick={profile} class="button">
-              Profile
-          </button>
-          <button onClick={search} class="button">
-              Add Experience
-          </button>
+    const navigateTo = (path) => {
+        navigate(path);
+    };
+
+    return (
+        <div>
+            <div className="logo" onClick={() => navigateTo('/')}>
+                <h2>Travel-Planner</h2>
+            </div>
+
+            <div className="Buttons">
+                <button onClick={() => navigateTo('/trips')} className="button">
+                    Trips
+                </button>
+                <button onClick={() => navigateTo('/profile')} className="button">
+                    Profile
+                </button>
+                <button onClick={() => navigateTo('/create-exp')} className="button">
+                    Add Experience
+                </button>
+                {/* Add additional buttons here */}
+                <button onClick={() => navigateTo('/UserExperiences')} className="button">
+                    My Experiences
+                </button>
+                <button onClick={() => navigateTo('/favorites')} className="button">
+                    Favorites
+                </button>
+                <button onClick={() => navigateTo('/ratings')} className="button">
+                    Ratings
+                </button>
+                {/* ... more buttons as needed */}
+            </div>
         </div>
-    </div>
-  );
+    );
 }
 
-export default AddExperience;
+export default Buttons;

@@ -12,6 +12,7 @@ import Ratings from './screens/Ratings.js';
 import Trips from './screens/Trips.js';
 import { UpdateExperience } from './screens/UpdateExperience.js';
 import Trip from './components/Trip.js';
+import Buttons from './components/Buttons.js';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+      <Buttons />
         <div className="screens">
           <Routes>
             <Route

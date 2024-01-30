@@ -27,8 +27,6 @@ const Exploration = () => {
 
             {initial != 0 && (
                 <>
-                <Buttons/>
-
                 {component === 0 && (
                     <>
                     <div className="welcoming">

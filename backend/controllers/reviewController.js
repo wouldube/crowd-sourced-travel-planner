@@ -25,6 +25,13 @@ const getReviewById = async (id) => {
     return review;
 };
 
+// Retrieve all reviews created by a specific user
+const getReviewsByUserId = async (userId) => {
+    const reviews = await Review.find({ owner: userId });
+    return reviews;
+};
+
+
 // Update a review
 const updateReview = async (id, update) => {
     const result = await Review.findByIdAndUpdate(id, update, { new: true });
