@@ -41,18 +41,18 @@ const Profile = () => {
                         <div className='ProfileContainer'>
                             <div className="ProfileUserExperiences">
                                 <button onClick={UserExperiences} class="ProfileUserExperiencesButton">
-                                    <p>circlescircles</p>
+                                    <p><b>your experiences!</b></p>
                                 </button>
                             </div>
                             <div className='ProfileContainer2'>
                                 <div className="ProfileFavorites">
                                     <button onClick={favorites} class="ProfileFavoritesButton">
-                                        <p>circlescirclestoo</p>
+                                        <p>favorites</p>
                                     </button>
                                 </div>
                                 <div className="ProfileRatings">
                                     <button onClick={ratings} class="ProfileRatingsButton">
-                                        <p>circlescirclestoo?</p>
+                                        <p>ratings</p>
                                     </button>
                                 </div>
                             </div>
