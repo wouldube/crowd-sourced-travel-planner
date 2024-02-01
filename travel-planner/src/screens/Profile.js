@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Buttons from '../components/Buttons.js';
 
@@ -8,39 +8,21 @@ const Profile = () => {
     const [user, userinfo] = useState(0);
     
     const navigate = useNavigate();
-    const account = () => {
-        navigate('/account');
-    };
-    const UserExperiences = () => {
-        navigate('/UserExperiences');
-    };
-    const favorites = () => {
-        navigate('/favorites');
-    };
-    const ratings = () => {
-        navigate('/ratings');
-    };
-    const trips = () => {
-        navigate('/trips');
-    };
+    const account = () => { navigate('/account'); };
+    const UserExperiences = () => { navigate('/UserExperiences'); };
+    const favorites = () => { navigate('/favorites'); };
+    const ratings = () => { navigate('/ratings'); };
 
-    // login check
-    /*useEffect(() => {
-        fetch("http://localhost:5000/smthn")
-            .then(response => response.json())
-            .then(login => check(login))
-            .catch(error => console.error('Error fetching data:', error));
-    }, []);
-
-    // user info
-    useEffect(() => {
-        if (login === 1) {
-            fetch("http://localhost:5000/user-info")
-                .then(response => response.json())
-                .then(user => userinfo(user))
-                .catch(error => console.error('Error fetching data:', error));
-        }
-    }, []);*/
+    // login check & user data
+    const userdata = async() => {
+        try {
+        const theuserinfo = await fetch("http://localhost:5000/user-info/:65b57e2b37f5c24ce79c5b6e")
+        userinfo(theuserinfo)
+        console.log(user)
+        check(1)
+        } catch(error) { onsole.error('Error fetching data:', error) }
+    }
+    useEffect( () => { userdata() }, []);
 
     return (
         <div>           
@@ -48,35 +30,35 @@ const Profile = () => {
                 {login === 0 && (
                     <div className="loginblur"></div>
                 )}
+                {login === 1 && (
+                    <div>
+                        <div className="ProfileAccount">
+                            <button onClick={account} class="ProfileAccountButton">
+                            <p>user name!</p>
+                            </button>
+                        </div>
 
-                <div>
-                <div className="ProfileAccount">
-                    <button onClick={account} class="ProfileAccountButton">
-                        <p>user name!</p>
-                    </button>
-                </div>
-                </div>
-                <div className='ProfileContainer'>
-                    <div className="ProfileUserExperiences">
-                        <button onClick={UserExperiences} class="ProfileUserExperiencesButton">
-                            <p>circlescircles</p>
-                        </button>
-                    </div>
-                    <div className='ProfileContainer2'>
-                        <div className="ProfileFavorites">
-                            <button onClick={favorites} class="ProfileFavoritesButton">
-                                <p>circlescirclestoo</p>
-                            </button>
-                        </div>
-                        <div className="ProfileRatings">
-                            <button onClick={ratings} class="ProfileRatingsButton">
-                                <p>circlescirclestoo?</p>
-                            </button>
+                        <div className='ProfileContainer'>
+                            <div className="ProfileUserExperiences">
+                                <button onClick={UserExperiences} class="ProfileUserExperiencesButton">
+                                    <p><b>your experiences!</b></p>
+                                </button>
+                            </div>
+                            <div className='ProfileContainer2'>
+                                <div className="ProfileFavorites">
+                                    <button onClick={favorites} class="ProfileFavoritesButton">
+                                        <p>favorites</p>
+                                    </button>
+                                </div>
+                                <div className="ProfileRatings">
+                                    <button onClick={ratings} class="ProfileRatingsButton">
+                                        <p>ratings</p>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div>
-                </div>
+                )}
             </div>
         </div>
     )
