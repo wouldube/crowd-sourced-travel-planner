@@ -44,7 +44,6 @@ const UserSetup = ({uid, email}) => {
                     type="text" 
                     name="name" 
                     id="name" 
-                    required
                     onChange={(e) => setName(e.target.value)}>
                 </input>
                 </div>
@@ -54,7 +53,6 @@ const UserSetup = ({uid, email}) => {
                     type="text" 
                     name="bio" 
                     id="bio" 
-                    required
                     onChange={(e) => setBio(e.target.value)}>
                 </input>
                 </div>

@@ -5,7 +5,7 @@ const cors = require("cors");
 const { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience } = require('../controllers/experienceController');
 const { createReview, getReviewsByExperienceId, getReviewById, updateReview, deleteReview } = require('../controllers/reviewController');
 const tripController = require("../controllers/tripController");
-const { getUserById, getUserExperiences, getUserReviews, getUserTrips, createUser, updateUser, deleteUser } = require('../controllers/userController');
+const { getUserById, getUserByUid, getUserExperiences, getUserReviews, getUserTrips, createUser, updateUser, deleteUser } = require('../controllers/userController');
 
 
 const corsOptions = {
@@ -47,6 +47,21 @@ router.get('/user-info/:id', async (req, res) => {
     }
 });
 
+router.get('/user/:id', async (req, res) => {
+    // Get User
+    try {
+        const user = await getUserByUid(req.params.id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.json(user);
+        
+    } catch(error) {
+        console.error(`Error in GET /user-info/${req.params.id}:`, error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 router.post('/new-user', async (req, res) => {
     // Create User (will be moved into register route when firebase is set up)
     try {
@@ -62,9 +77,10 @@ router.post('/new-user', async (req, res) => {
 
 router.put('/user-info/:id', async (req, res) => {
     // Update User
+    // TODO: Add back profile picture stuff
     try {
-        const { email, username, name, bio, img } = req.body;
-        const userUpdate = { email, username, name, bio, img };
+        const { email, username, name, bio } = req.body;
+        const userUpdate = { email, username, name, bio };
         const numUpdated = await updateUser(req.params.id, userUpdate);
         res.json(numUpdated); // if numUpdated = 0 -> update unsuccessful
     } catch (error) {
