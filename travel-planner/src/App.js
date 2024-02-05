@@ -13,6 +13,8 @@ import Trips from './screens/Trips.js';
 import { UpdateExperience } from './screens/UpdateExperience.js';
 import Trip from './components/Trip.js';
 import Buttons from './components/Buttons.js';
+import Register from './screens/Register.js';
+import Login from './screens/Login.js';
 
 function App() {
 
@@ -27,6 +29,14 @@ function App() {
             <Route
               path="/"
               element={ <Exploration/> }
+            />
+            <Route
+              path="/register"
+              element={ <Register/> }
+            />
+            <Route
+              path="/login"
+              element={ <Login/> }
             />
             <Route
               path="/create-exp"

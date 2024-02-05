@@ -7,7 +7,15 @@ const getUserById = async (id) => {
 
     // id: document id
 
-    const user = await User.findById(id);
+    const user = await User.findById({"_id": id});
+    return user;
+}
+
+const getUserByUid = async (id) => {
+
+    // id: document id
+
+    const user = await User.findOne({"uid": id});
     return user;
 }
 
@@ -62,7 +70,7 @@ const updateUser = async(id, update) => {
     // update: {"property to update": updated value, "property to update": updated value}
     // returns 0 if update fails, 1 if update succeeds
 
-    const result = await User.updateOne({"_id": id}, update);
+    const result = await User.updateOne({"uid": id}, update);
     return result.modifiedCount;
 }
 
@@ -76,4 +84,4 @@ const deleteUser = async(id) => {
 
 }
 
-module.exports = { getUserById, getUserExperiences, getUserReviews, getUserTrips, createUser, updateUser, deleteUser };
+module.exports = { getUserById, getUserByUid, getUserExperiences, getUserReviews, getUserTrips, createUser, updateUser, deleteUser };
