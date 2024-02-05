@@ -50,8 +50,8 @@ router.get('/user-info/:id', async (req, res) => {
 router.post('/new-user', async (req, res) => {
     // Create User (will be moved into register route when firebase is set up)
     try {
-        const { email, username, name, bio, img } = req.body;
-        const numCreated = await createUser("firebase_uid", email, username, name, bio, img);
+        const { uid, email, username, name, bio } = req.body;
+        const numCreated = await createUser(uid, email, username, name, bio);
         res.status(201).json(numCreated); // if numCreated = 0 -> create unsuccessful
     } catch (error) {
         console.error("Error in POST /new-user:", error);

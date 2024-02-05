@@ -7,7 +7,7 @@ const getUserById = async (id) => {
 
     // id: document id
 
-    const user = await User.findById(id);
+    const user = await User.findOne({"uid": id});
     return user;
 }
 
