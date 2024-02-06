@@ -5,7 +5,7 @@ const cors = require("cors");
 const { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience } = require('../controllers/experienceController');
 const { createReview, getReviewsByExperienceId, getReviewById, updateReview, deleteReview } = require('../controllers/reviewController');
 const tripController = require("../controllers/tripController");
-const { getUserById, getUserExperiences, getUserReviews, getUserTrips, createUser, updateUser, deleteUser } = require('../controllers/userController');
+const { getUserById, getUserExperiences, getUserFavorites, getUserReviews, getUserTrips, createUser, updateUser, deleteUser } = require('../controllers/userController');
 
 
 const corsOptions = {
@@ -353,6 +353,19 @@ router.get('/my-experiences/:id', async (req, res) => {
         res.json(experiences);
     } catch (error) {
         console.error(`Error in retrieving user experiences`, error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+router.get('/my-favorites/:id', async (req, res) => {
+    // Fetch and display experiences favorited by the user
+    console.log(req.params.id)
+    try {
+        const favorites = await getUserFavorites(req.params.id);
+        console.log(favorites)
+        res.json(favorites);
+    } catch (error) {
+        console.error(`Error in retrieving user favorites`, error);
         res.status(500).json({ message: error.message });
     }
 });

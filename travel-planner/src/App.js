@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // screens and components
@@ -16,7 +16,8 @@ import Buttons from './components/Buttons.js';
 
 function App() {
 
-  // const [experiences, setUserExperiences] = useState([])
+  const [experienceToUpdate, setExperienceToUpdate] = useState([])
+  const [favoriteToUpdate, setUserFavorites] = useState([])
 
   return (
     <div className="App">
@@ -42,15 +43,15 @@ function App() {
                 />
                 <Route
                   path="/UserExperiences"
-                  element={ <UserExperiences/> }
+                  element={ <UserExperiences setExperienceToUpdate={setExperienceToUpdate}/> }
                 />
                     <Route
-                      path="/updateexperience"
-                      element={ <UpdateExperience/> }
+                      path="/UserExperiences/updateexperience"
+                      element={ <UpdateExperience experienceToUpdate={experienceToUpdate} setExperienceToUpdate={setExperienceToUpdate}/> }
                     />
                 <Route
                   path="/favorites"
-                  element={ <Favorites/> }
+                  element={ <Favorites favoriteToUpdate={favoriteToUpdate} setUserFavorites={setUserFavorites} /> }
                 />
                 <Route
                   path="/ratings"

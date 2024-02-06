@@ -20,7 +20,7 @@ const Profile = () => {
         userinfo(theuserinfo)
         console.log(user)
         check(1)
-        } catch(error) { onsole.error('Error fetching data:', error) }
+        } catch(error) { console.error('Error fetching data:', error) }
     }
     useEffect( () => { userdata() }, []);
 

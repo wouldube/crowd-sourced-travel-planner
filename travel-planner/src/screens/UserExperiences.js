@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function UserExperiences({ setUserExperienceToUpdate }) {
+function UserExperiences({ setExperienceToUpdate }) {
 
     const [experiences, setUserExperiences] = useState([]);
     const navigate = useNavigate();
 
-    // const onUpdate = experiences => {
-    //     setUserExperienceToUpdate(experiences);
-    //     navigate("/update-experiences")
-    // }
+    const onUpdate = experiences => {
+        setExperienceToUpdate(experiences);
+        navigate("/UserExperiences/updateexperience")
+    }
 
     // const loadExperience = async () => {
     //     const response = await fetch('/my-experiences');
@@ -42,10 +42,11 @@ function UserExperiences({ setUserExperienceToUpdate }) {
                             {/* Need to create experiences-other-owner in css file */}
                             <div className="experiences-other-owner">{exp.owner}</div>
                             {/* {experiences.reviews} */}
-                            <div className="ratingImage"><img src="https://media.istockphoto.com/id/1306258842/photo/5-or-five-stars-sign-symbol-on-white-background-illustration-ranking-quality-service-review.jpg?s=612x612&w=0&k=20&c=PLhPtCoPZSUM9FSg9CAmTC_7b4WoHMYdaDHas64kg6M=" alt=" "></img></div>
+                            <div className="ratingImage">
+                                <img src="https://media.istockphoto.com/id/1306258842/photo/5-or-five-stars-sign-symbol-on-white-background-illustration-ranking-quality-service-review.jpg?s=612x612&w=0&k=20&c=PLhPtCoPZSUM9FSg9CAmTC_7b4WoHMYdaDHas64kg6M=" alt=" "></img></div>
                             <div className="experiences-other-listtext">{exp.description}</div>
                             {/* Need to work on update button */}
-                            {/* <button onClick={updateExperience} className="explore-button">Create</button> */}
+                            <button onClick={(onUpdate)}> Update </button>
                         </div>
                     ))};  
                     </div>
