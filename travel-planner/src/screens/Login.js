@@ -26,7 +26,7 @@ const Login = () => {
                 uid = userCredential.user.uid;
 
                 // DEBUG
-                const response = await fetch(`http://localhost:5000/user-info/${uid}`, {
+                const response = await fetch(`http://localhost:5000/user/${uid}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
