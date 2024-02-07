@@ -1,4 +1,4 @@
-const { User } = require('../models/schema')
+const { User, Trip } = require('../models/schema')
 const { getExperienceById } = require("../controllers/experienceController");
 // user CRUD functions
 
@@ -37,13 +37,34 @@ const getUserReviews = async (id) => {
 }
 
 const getUserTrips = async (id) => {
-
     // id: document id
     // returns a list of trip ids
-
     const user = await User.findById(id);
-    return user.trips
+    let trips = []
 
+    for (let i=0; i<user.trips.length; i++) {
+        trips.push(await Trip.findById(user.trips[i]));
+    }
+
+    return trips
+}
+
+const updateUserTrips = async (userID, tripID, add=1) => {
+    // updates user trips to append a new one
+    // Adds in default; Removes otherwise
+    const user = await User.findById(userID)
+    if (add) {
+        await User.updateOne({_id: userID}, {$push: {trips: tripID}})
+    } else {
+        for (let i=0; i<user.trips.length; i++) {
+            if (tripID == user.trips[i]._id.toString()) {
+                await user.trips.splice(i,1)
+                await User.updateOne({_id: userID}, {trips: user.trips})
+                break
+            }
+        }
+    }
+    return
 }
 
 //Create
@@ -76,4 +97,4 @@ const deleteUser = async(id) => {
 
 }
 
-module.exports = { getUserById, getUserExperiences, getUserReviews, getUserTrips, createUser, updateUser, deleteUser };
+module.exports = { getUserById, getUserExperiences, getUserReviews, getUserTrips, updateUserTrips, createUser, updateUser, deleteUser };
