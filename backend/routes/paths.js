@@ -227,45 +227,56 @@ module.exports = router;
     
 
 // ---- Trip CRUD Operations ----
-router.get('/trips', async (req, res) => {
+router.get('/trips/:id', async (req, res) => {
     // Fetch the user's trips
     try {
-        console.log(`GET request to /trips`);
-        const allUserTrips =  await tripController.getAllUserTrips(req.body.userid)
+        console.log(`GET request to /trips`)
+        const allUserTrips = await getUserTrips(req.params.id)
         res.json(allUserTrips)
     } catch (error) {
-        console.error(`Error in GET /trips`, error);
-        res.status(500).json({ message: error.message });
+        console.error(`Error in GET /trips`, error)
+        res.status(500).json({ message: error.message })
     }
-});
+})
 
-router.get('/trips/:id', async (req, res) => {
+router.get('/trip/:id', async (req, res) => {
     // Fetch specific trip details
     try {
         console.log(`GET request to trip ${req.params.id}`)
         const trip =  await tripController.getTripById(req.params.id)
         if (!trip) {
-            return res.status(404).json({ message: "Trip not found" });
+            return res.status(404).json({ message: "Trip not found" })
         }
-        res.json(trip);
+        res.json(trip)
     } catch (error) {
-        console.error(`Error in GET /trips/${req.params.id}`, error);
-        res.status(500).json({ message: error.message });
+        console.error(`Error in GET /trip/${req.params.id}`, error)
+        res.status(500).json({ message: error.message })
     }
-});
+})
+
+router.get('/trip/experiences/:id', async (req, res) => {
+    // Fetch specific trip experiences
+    try {
+        console.log(`GET request to trip's experiences ${req.params.id}`)
+        const experiences =  await tripController.getTripExperiences(req.params.id)
+        res.json(experiences)
+    } catch (error) {
+        console.error(`Error in GET /trip/experiences/${req.params.id}`, error)
+        res.status(500).json({ message: error.message })
+    }
+})
 
 router.post('/create-trip', async (req, res) => {
     // Create a new trip
     try {
         console.log(`POST request for trip`)
-        //const { title, description, image, owner, experiences } = req.body
         const trip =  await tripController.createTrip(req.body)
         res.status(200).json(trip)
     } catch (error) {
-        console.error(`Error in POST /create-trip/`, error);
-        res.status(500).json({ message: error.message });
+        console.error(`Error in POST /create-trip/`, error)
+        res.status(500).json({ message: error.message })
     }
-});
+})
 
 router.put('/update-trip/:id', async (req, res) => {
     // Update an existing trip
@@ -274,22 +285,22 @@ router.put('/update-trip/:id', async (req, res) => {
         const trip =  await tripController.updateTrip(req.params.id, req.body)
         res.json(trip)
     } catch (error) {
-        console.error(`Error in PUT /update-trip/${req.params.id}`, error);
-        res.status(500).json({ message: error.message });
+        console.error(`Error in PUT /update-trip/${req.params.id}`, error)
+        res.status(500).json({ message: error.message })
     }
-});
+})
 
 router.delete('/delete-trip/:id', async (req, res) => {
     // Delete a trip
     try {
         console.log(`DELETE request for trip`)
-        const trip =  await tripController.deleteTrip(req.params.id)
+        const trip =  await tripController.deleteTrip(req.params.id, req.body.owner)
         res.json({ message: "Trip deleted!"})
     } catch (error) {
-        console.error(`Error in DELETE /delete-trip/${req.params.id}`, error);
-        res.status(500).json({ message: error.message });
+        console.error(`Error in DELETE /delete-trip/${req.params.id}`, error)
+        res.status(500).json({ message: error.message })
     }
-});
+})
 
 // ---- Review CRUD Operations ----
 // Create a new review
