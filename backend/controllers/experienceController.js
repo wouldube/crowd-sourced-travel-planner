@@ -49,4 +49,27 @@ const deleteExperience = async(id) => {
 
 }
 
-module.exports = { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience }
+// Search
+const searchExperiences = async (textQuery, longitude, latitude, maxDistance) => {
+    let searchCriteria = {
+        $or: [
+            { title: { $regex: textQuery, $options: 'i' } },
+            { description: { $regex: textQuery, $options: 'i' } },
+        ]
+    };
+
+    if (longitude && latitude) {
+
+        searchCriteria['location'] = {
+            $near: {
+                $geometry: { type: "Point", coordinates: [longitude, latitude] },
+                $maxDistance: maxDistance
+            }
+        };
+    }
+
+    return await Experience.find(searchCriteria);
+};
+
+
+module.exports = { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience, searchExperiences }

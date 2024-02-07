@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const express = require('express');
 const cors = require("cors");
 
-const { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience } = require('../controllers/experienceController');
+const { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience, searchExperiences } = require('../controllers/experienceController');
 const { createReview, getReviewsByExperienceId, getReviewById, updateReview, deleteReview } = require('../controllers/reviewController');
 const tripController = require("../controllers/tripController");
 const { getUserById, getUserByUid, getUserExperiences, getUserFavorites, getUserReviews, getUserTrips, createUser, updateUser, deleteUser } = require('../controllers/userController');
@@ -200,6 +200,31 @@ router.put('/update-exp/:experience_id', async (req, res) => {
 router.delete('/delete-exp/:experience_id', (req, res) => {
     // Delete an experience
 });
+
+// Route to handle search requests
+router.get('/search', async (req, res) => {
+    const { query } = req.query;
+    let longitude = parseFloat(req.query.longitude);
+    let latitude = parseFloat(req.query.latitude);
+    let maxDistance = parseFloat(req.query.maxDistance);
+
+    // Check if the query parameters for longitude and latitude are provided before parsing
+    longitude = !isNaN(longitude) ? longitude : undefined;
+    latitude = !isNaN(latitude) ? latitude : undefined;
+    maxDistance = !isNaN(maxDistance) ? maxDistance : undefined;
+
+    try {
+        const results = await searchExperiences(query, longitude, latitude, maxDistance);
+        res.json(results);
+    } catch (error) {
+        console.error("Error in GET /search:", error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+module.exports = router;
+
+    
 
 // ---- Trip CRUD Operations ----
 router.get('/trips/:id', async (req, res) => {
