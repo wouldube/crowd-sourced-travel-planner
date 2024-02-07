@@ -15,6 +15,7 @@ import Trip from './components/Trip.js';
 import Buttons from './components/Buttons.js';
 import Register from './screens/Register.js';
 import Login from './screens/Login.js';
+import Search from './screens/Search';
 
 function App() {
 
@@ -74,6 +75,11 @@ function App() {
                   path="/sometrip"
                   element={ <Trip/> }
                 />
+                <Route 
+                  path="/search" 
+                  element={<Search/>}
+                  />
+
           </Routes>
         </div>
       </BrowserRouter>

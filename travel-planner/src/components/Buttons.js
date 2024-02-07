@@ -34,6 +34,9 @@ const Buttons = () => {
                 <button onClick={() => navigateTo('/ratings')} className="button">
                     Ratings
                 </button>
+                <button onClick={() => navigateTo('/search')} className="button">
+                    Search
+                </button>
                 {/* ... more buttons as needed */}
             </div>
         </div>
