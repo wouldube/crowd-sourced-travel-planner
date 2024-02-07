@@ -19,6 +19,9 @@ import Register from './screens/Register.js';
 import Login from './screens/Login.js';
 
 function App() {
+
+  const [experienceToUpdate, setExperienceToUpdate] = useState([])
+  const [favoriteToUpdate, setUserFavorites] = useState([])
   const [experienceObject, setExperienceObject] = useState()
   const [tripObject, setTripObject] = useState()
 
@@ -32,9 +35,9 @@ function App() {
             <Route path="create-exp" element={<CreateExperience/>}/>
             <Route path="profile" element={<Profile/>}/>
                 <Route path="account" element={<Account/>}/>
-                <Route path="UserExperiences" element={<UserExperiences/>}/>
-                    <Route path="updateexperience" element={<UpdateExperience/>}/>
-                <Route path="favorites" element={<Favorites/>}/>
+                <Route path="UserExperiences" element={<UserExperiences setExperienceToUpdate={setExperienceToUpdate}/>}/>
+                    <Route path="updateexperience" element={<UpdateExperience experienceToUpdate={experienceToUpdate} setExperienceToUpdate={setExperienceToUpdate}/>}/>
+                <Route path="favorites" element={<Favorites favoriteToUpdate={favoriteToUpdate} setUserFavorites={setUserFavorites}/>}/>
                 <Route path="ratings" element={<Ratings/>}/>
                 <Route path="trips" element={<Trips setTripObject={setTripObject}/>}/>
                   <Route path="trips/trip" element={<Trip tripObject={tripObject}/>}/>
