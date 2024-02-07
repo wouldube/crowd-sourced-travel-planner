@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { React, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // screens and components
@@ -12,6 +12,8 @@ import Ratings from './screens/Ratings.js';
 import Trips from './screens/Trips.js';
 import { UpdateExperience } from './screens/UpdateExperience.js';
 import Trip from './components/Trip.js';
+import CreateTrip from './screens/CreateTrip';
+import UpdateTrip from './screens/UpdateTrip';
 import Buttons from './components/Buttons.js';
 import Register from './screens/Register.js';
 import Login from './screens/Login.js';
@@ -20,61 +22,27 @@ function App() {
 
   const [experienceToUpdate, setExperienceToUpdate] = useState([])
   const [favoriteToUpdate, setUserFavorites] = useState([])
+  const [experienceObject, setExperienceObject] = useState()
+  const [tripObject, setTripObject] = useState()
 
   return (
     <div className="App">
       <BrowserRouter>
-      <Buttons />
+      <Buttons/>
         <div className="screens">
           <Routes>
-            <Route
-              path="/"
-              element={ <Exploration/> }
-            />
-            <Route
-              path="/register"
-              element={ <Register/> }
-            />
-            <Route
-              path="/login"
-              element={ <Login/> }
-            />
-            <Route
-              path="/create-exp"
-              element={ <CreateExperience/> }
-            />
-            <Route
-              path="/profile"
-              element={ <Profile/> }
-            />
-                <Route
-                  path="/account"
-                  element={ <Account/> }
-                />
-                <Route
-                  path="/UserExperiences"
-                  element={ <UserExperiences setExperienceToUpdate={setExperienceToUpdate}/> }
-                />
-                    <Route
-                      path="/UserExperiences/updateexperience"
-                      element={ <UpdateExperience experienceToUpdate={experienceToUpdate} setExperienceToUpdate={setExperienceToUpdate}/> }
-                    />
-                <Route
-                  path="/favorites"
-                  element={ <Favorites favoriteToUpdate={favoriteToUpdate} setUserFavorites={setUserFavorites} /> }
-                />
-                <Route
-                  path="/ratings"
-                  element={ <Ratings/> }
-                />
-                <Route
-                  path="/trips"
-                  element={ <Trips/> }
-                />
-                <Route
-                  path="/sometrip"
-                  element={ <Trip/> }
-                />
+            <Route path="/" element={<Exploration/>}/>
+            <Route path="create-exp" element={<CreateExperience/>}/>
+            <Route path="profile" element={<Profile/>}/>
+                <Route path="account" element={<Account/>}/>
+                <Route path="UserExperiences" element={<UserExperiences setExperienceToUpdate={setExperienceToUpdate}/>}/>
+                    <Route path="updateexperience" element={<UpdateExperience experienceToUpdate={experienceToUpdate} setExperienceToUpdate={setExperienceToUpdate}/>}/>
+                <Route path="favorites" element={<Favorites favoriteToUpdate={favoriteToUpdate} setUserFavorites={setUserFavorites}/>}/>
+                <Route path="ratings" element={<Ratings/>}/>
+                <Route path="trips" element={<Trips setTripObject={setTripObject}/>}/>
+                  <Route path="trips/trip" element={<Trip tripObject={tripObject}/>}/>
+                  <Route path="trips/create-trip" element={<CreateTrip/>}/>
+                  <Route path="trips/trip/update-trip" element={<UpdateTrip tripObject={tripObject}/>}/>
           </Routes>
         </div>
       </BrowserRouter>
