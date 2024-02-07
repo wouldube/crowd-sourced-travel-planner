@@ -20,6 +20,9 @@ import Login from './screens/Login.js';
 import Search from './screens/Search';
 
 function App() {
+
+  const [experienceToUpdate, setExperienceToUpdate] = useState([])
+  const [favoriteToUpdate, setUserFavorites] = useState([])
   const [experienceObject, setExperienceObject] = useState()
   const [tripObject, setTripObject] = useState()
 
