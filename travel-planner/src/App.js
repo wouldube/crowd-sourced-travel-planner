@@ -15,6 +15,8 @@ import Trip from './components/Trip.js';
 import CreateTrip from './screens/CreateTrip';
 import UpdateTrip from './screens/UpdateTrip';
 import Buttons from './components/Buttons.js';
+import Register from './screens/Register.js';
+import Login from './screens/Login.js';
 
 function App() {
   const [experienceObject, setExperienceObject] = useState()
