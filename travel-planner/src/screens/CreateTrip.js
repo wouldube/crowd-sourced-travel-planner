@@ -13,7 +13,7 @@ const CreateTrip = () => {
     
     useEffect( () => { 
         
-        if (localStorage.getItem("id") === null) {
+        if (!localStorage.getItem("id")) {
             // localStorage.setItem("path", "/trips/create-trip")
             navigate("/login")
         }

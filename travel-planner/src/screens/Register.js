@@ -6,33 +6,29 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [confirm, setConfirm] = useState("");
-    const [uid, setUid] = useState("");
 
     const createUser = async (event) => {
         event.preventDefault();
 
         if (pass !== confirm) {
             const error = document.getElementById("password-error")
-            error.style.visibility = "visible"
+            error.style.display = "block"
             return
         }
 
         const hide = document.getElementById("sign-up")
-        hide.style.visibility = "hidden"
+        hide.style.display = "none"
 
         const show = document.getElementById("setup")
-        show.style.visibility = "visible"
+        show.style.display = "block"
 
     }
 
     return (
         <div>
         <div id="sign-up">
-        <div id="password-error" style={{visibility: "hidden"}}>
+        <div id="password-error" style={{display: "none"}}>
             <span>Passwords do not match.</span>
-        </div>
-        <div id="email-error" style={{visibility: "hidden"}}>
-            <span>An account with this email already exists.</span>
         </div>
         <div id="inputs">
         <form>
@@ -73,10 +69,10 @@ const Register = () => {
         </form>
         </div>
         </div>
-        <div id="setup" style={{visibility: "hidden"}}>
+        <div id="setup" style={{display: "none"}}>
             <UserSetup 
-                uid={uid} 
-                setUid={setUid}
+                // uid={uid} 
+                // setUid={setUid}
                 email={email} 
                 pass={pass}
             />

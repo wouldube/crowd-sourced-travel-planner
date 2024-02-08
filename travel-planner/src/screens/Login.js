@@ -33,6 +33,7 @@ const Login = () => {
                     },
                 });
                 const result = await response.json()
+                console.log(result._id)
                 localStorage.setItem('id', result._id)
 
                 // if (localStorage.getItem('path')) {
@@ -75,6 +76,9 @@ const Login = () => {
                     <input type="submit" value="Login" onClick={authLogin}></input>
                 </div>
             </form>
+            <div>
+                <button onClick={() => {navigate(`/register`)}}>Create an Account</button>
+            </div>
         </div>
     )
 }
