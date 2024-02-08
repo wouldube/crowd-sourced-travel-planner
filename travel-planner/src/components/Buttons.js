@@ -15,6 +15,12 @@ const Buttons = () => {
             </div>
 
             <div className="Buttons">
+                <button onClick={() => navigateTo('/login')} className="button">
+                    Login
+                </button>
+                <button onClick={() => navigateTo('/register')} className="button">
+                    Register
+                </button>
                 <button onClick={() => navigateTo('/trips')} className="button">
                     Trips
                 </button>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
-function Favorites({ setUserFavorites }) {
+function Favorites() {
 
     const [favorites, setFavorite] = useState([]);
     const navigate = useNavigate();
@@ -22,15 +22,23 @@ function Favorites({ setUserFavorites }) {
     //     setFavorite(data);
     // }
 
-    const loadFavorites = () => {
-        fetch("http://localhost:5000/my-favorites/65b57e2b37f5c24ce79c5b6e")
+    const loadFavorites = (id) => {
+        fetch(`http://localhost:5000/my-favorites/${id}`)
             .then(response => response.json())
             .then(favorites => setFavorite(favorites), console.log(favorites))
             .catch(error => console.error('Error fetching data:', error));
     }
 
     useEffect(() => {
-        loadFavorites();
+
+        if (localStorage.getItem("id") === null) {
+            // localStorage.setItem("path", "/favorites")
+            navigate("/login")
+        }
+
+        const id = localStorage.getItem("id")
+
+        loadFavorites(id);
         console.log(favorites)
     }, []);
 
@@ -44,7 +52,7 @@ function Favorites({ setUserFavorites }) {
                         <div key={index} className="user-experiences-list">
                             <div className="experiences-title-list"><strong>{fav.title}</strong></div>
                             <div className="experiences-other-listtext">{fav.location.coordinates[0]}, {fav.location.coordinates[1]}</div>
-                            <div className="experiences-other-owner">{fav.owner}</div>
+                            {/* <div className="experiences-other-owner">{fav.owner}</div> this shows a ObjectId*/}
                             {/* {favorites.reviews} */}
                             <div className="ratingImage">
                                 <img src="https://media.istockphoto.com/id/1306258842/photo/5-or-five-stars-sign-symbol-on-white-background-illustration-ranking-quality-service-review.jpg?s=612x612&w=0&k=20&c=PLhPtCoPZSUM9FSg9CAmTC_7b4WoHMYdaDHas64kg6M=" alt=" "></img></div>

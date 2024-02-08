@@ -10,13 +10,21 @@ const UpdateTrip = ({tripObject}) => {
     
     const [allExperiences, setAllExperiences] = useState([]);
     useEffect( () => { 
+        if (localStorage.getItem("id") === null) {
+            // localStorage.setItem("path", "trips/trip/update-trip")
+            navigate("/login")
+        }
+
+        const id = localStorage.getItem("id")
+
         const getExperiences = async() => {
             try {
-                const data = await fetch("http://localhost:5000/my-experiences/65b57e2b37f5c24ce79c5b6e")
+                const data = await fetch(`http://localhost:5000/my-experiences/${id}`)
                 const experiences = await data.json()
                 setAllExperiences(experiences)
             } catch(error) { console.error('Error fetching data:', error) }
         }
+        
         getExperiences() }, [])
 
     /* UpdateTrip Done */

@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
-const UserSetup = ({uid, email}) => {
+const firebase = require("firebase/app")
+const { firebaseConfig } = require("../firebase/firebase-config");
+const { getAuth, createUserWithEmailAndPassword } = require("firebase/auth");
+
+const UserSetup = ({uid, setUid, email, pass}) => {
 
     const navigate = useNavigate();
+
+    const fb_app = firebase.initializeApp(firebaseConfig);
+    const auth = getAuth(fb_app);
 
     const [username, setUsername] = useState("");
     const [name, setName] = useState("");
@@ -11,6 +18,15 @@ const UserSetup = ({uid, email}) => {
 
     const newUser = async (event) => {
         event.preventDefault();
+
+        createUserWithEmailAndPassword(auth, email, pass)
+            .then((userCredential) => {
+                setUid(userCredential.user.uid);
+                // Success, route to next destination
+            })
+            .catch((error) => {
+                console.log(error);
+            })
         
         const user = { uid, email, username, name, bio };
         const response = await fetch("http://localhost:5000/new-user", {
@@ -20,6 +36,20 @@ const UserSetup = ({uid, email}) => {
                 "Content-Type": "application/json",
             },
         });
+
+        const new_user = await fetch(`http://localhost:5000/user/${uid}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        const result = await response.json()
+        localStorage.setItem('id', result._id)
+
+        // if (localStorage.getItem('path')) {
+        //     navigate(localStorage.getItem('path'))
+        // }
 
         navigate("/");
     }
