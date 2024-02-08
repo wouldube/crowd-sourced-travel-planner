@@ -28,7 +28,7 @@ const Profile = () => {
 
     useEffect(() => {
 
-        if (localStorage.getItem("id") === null) {
+        if (!localStorage.getItem("id")) {
             // localStorage.setItem("path", "/profile")
             navigate("/login")
         }
@@ -53,7 +53,7 @@ const Profile = () => {
                 {login === 1 && (
                     <div>
                         <div className="ProfileAccount">
-                            <button onClick={account} class="ProfileAccountButton">
+                            <button onClick={account} className="ProfileAccountButton">
                             <p>{username}</p>
                             </button>
                         </div>

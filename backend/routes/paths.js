@@ -58,6 +58,7 @@ router.post('/new-user', async (req, res) => {
     // Create User (will be moved into register route when firebase is set up)
     try {
         const { uid, email, username, name, bio } = req.body;
+        console.log(req.body)
         const numCreated = await createUser(uid, email, username, name, bio);
         res.status(201).json(numCreated); // if numCreated = 0 -> create unsuccessful
     } catch (error) {
@@ -71,8 +72,8 @@ router.put('/user-info/:id', async (req, res) => {
     // Update User
     // TODO: Add back profile picture stuff
     try {
-        const { email, username, name, bio } = req.body;
-        const userUpdate = { email, username, name, bio };
+        const { email, username, name, bio, image } = req.body;
+        const userUpdate = { email, username, name, bio, image };
         const numUpdated = await updateUser(req.params.id, userUpdate);
         res.json(numUpdated); // if numUpdated = 0 -> update unsuccessful
     } catch (error) {

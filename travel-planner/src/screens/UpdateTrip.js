@@ -10,7 +10,7 @@ const UpdateTrip = ({tripObject}) => {
     
     const [allExperiences, setAllExperiences] = useState([]);
     useEffect( () => { 
-        if (localStorage.getItem("id") === null) {
+        if (!localStorage.getItem("id")) {
             // localStorage.setItem("path", "trips/trip/update-trip")
             navigate("/login")
         }

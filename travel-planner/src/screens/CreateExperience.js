@@ -10,7 +10,7 @@ export const CreateExperience = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("id") === null) {
+    if (!localStorage.getItem("id")) {
       // localStorage.setItem("path", "/create-exp")
       navigate("/login")
     }
@@ -31,15 +31,16 @@ export const CreateExperience = () => {
 
     const fb_app = firebase.initializeApp(firebaseConfig);
     const storage = getStorage(fb_app)
-
+    
+    // TODO change imgRef to include experience id so imgs not overwritten
     const imgFile = document.getElementById('image');
-    const imgRef = ref(storage, image);
+    const imgRef = ref(storage, `/experiences/${id}/${image}`);
     const upload = await uploadBytesResumable(imgRef, imgFile.files[0], { contentType: 'image/png' })
     const downloadURL = await getDownloadURL(imgRef);
-    image = downloadURL
+    setImage(downloadURL)
     console.log(downloadURL)
 
-    const newExperience = { title, description, coordinates, image, id };
+    const newExperience = { title, description, coordinates, image:downloadURL, id };
     const response = await fetch("http://localhost:5000/create-exp", {
       method: "POST",
       body: JSON.stringify(newExperience),

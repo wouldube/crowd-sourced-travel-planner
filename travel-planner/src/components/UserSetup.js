@@ -5,7 +5,7 @@ const firebase = require("firebase/app")
 const { firebaseConfig } = require("../firebase/firebase-config");
 const { getAuth, createUserWithEmailAndPassword } = require("firebase/auth");
 
-const UserSetup = ({uid, setUid, email, pass}) => {
+const UserSetup = ({email, pass}) => {
 
     const navigate = useNavigate();
 
@@ -16,19 +16,27 @@ const UserSetup = ({uid, setUid, email, pass}) => {
     const [name, setName] = useState("");
     const [bio, setBio] = useState("");
 
+    const authenticateUser = async () => {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, pass)
+            return userCredential.user.uid
+
+        } catch(error) {
+            console.log(error);
+            return
+        }
+    }
+
     const newUser = async (event) => {
         event.preventDefault();
 
-        createUserWithEmailAndPassword(auth, email, pass)
-            .then((userCredential) => {
-                setUid(userCredential.user.uid);
-                // Success, route to next destination
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+        const uid = await authenticateUser()
+        // console.log(uid)
+
+        let user = { uid, email, username, name, bio };
+
+        // Upload Profile Image to Firebase
         
-        const user = { uid, email, username, name, bio };
         const response = await fetch("http://localhost:5000/new-user", {
             method: "POST",
             body: JSON.stringify(user),
@@ -44,7 +52,7 @@ const UserSetup = ({uid, setUid, email, pass}) => {
             },
         });
 
-        const result = await response.json()
+        const result = await new_user.json()
         localStorage.setItem('id', result._id)
 
         // if (localStorage.getItem('path')) {

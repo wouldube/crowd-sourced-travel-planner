@@ -19,7 +19,7 @@ function UserExperiences({ setExperienceToUpdate }) {
 
     const loadExperience = () => {
 
-        if (localStorage.getItem("id") === null) {
+        if (!localStorage.getItem("id")) {
             // localStorage.setItem("path", "/UserExperiences")
             navigate("/login")
         }

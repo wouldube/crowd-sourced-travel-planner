@@ -14,7 +14,7 @@ const Trips = ({setTripObject}) => {
     }
     useEffect(() => {
 
-        if (localStorage.getItem("id") === null) {
+        if (!localStorage.getItem("id")) {
             // localStorage.setItem("path", "/trips")
             navigate("/login")
         }
