@@ -1,21 +1,30 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const Account = () => {
 
-    // HARDCODED DATA ******************************************
+    const navigate = useNavigate();
 
     const [user, setUser] = useState({
         email: '',
         username: '',
         name: '',
         bio: '',
-        uid: '',
+        id: '',
     });
 
     // TODO: handle password changes
 
     useEffect(() => {
-        fetch("http://localhost:5000/user/jDBiwhZWfugCoFh6cXOdlZr6ZH13")
+
+        if (localStorage.getItem("id") === null) {
+            // localStorage.setItem("path", "/account")
+            navigate("/login")
+        }
+
+        const id = localStorage.getItem("id")
+
+        fetch(`http://localhost:5000/user-info/${id}`)
         .then(response => response.json())
         .then(user => {
             setUser(user);
@@ -23,7 +32,7 @@ const Account = () => {
             setUsername(user.username);
             setName(user.name || '');
             setBio(user.bio || '');
-            setUid(user.uid);
+            setId(id);
         })
         
         .catch(error => console.log(error));
@@ -33,7 +42,7 @@ const Account = () => {
     const [username, setUsername] = useState("");
     const [name, setName] = useState("");
     const [bio, setBio] = useState("");
-    const [uid, setUid] = useState("");
+    const [id, setId] = useState("");
 
     // *********************************************************
 
@@ -41,7 +50,7 @@ const Account = () => {
         event.preventDefault();
         
         const user = { email, username, name, bio };
-        const response = await fetch(`http://localhost:5000/user-info/${uid}`, {
+        const response = await fetch(`http://localhost:5000/user-info/${id}`, {
             method: "PUT",
             body: JSON.stringify(user),
             headers: {

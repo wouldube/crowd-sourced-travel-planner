@@ -1,21 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
 const { firebaseConfig } = require("../firebase/firebase-config");
-//import { MdOutlineStarBorder, MdOutlineStarHalf, MdOutlineStar } from "react-icons/md";
 
 export const CreateExperience = () => {
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("id") === null) {
+      // localStorage.setItem("path", "/create-exp")
+      navigate("/login")
+    }
+
+    setId(localStorage.getItem("id"))
+  })
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const [id, setId] = useState("");
   let [image, setImage] = useState(null);
-  //   const [rating, setRating] = useState("");
-  //   const [review, setReview] = useState("");
-
-  const navigate = useNavigate();
 
   const createExperience = async () => {
     try{
@@ -31,7 +39,7 @@ export const CreateExperience = () => {
     image = downloadURL
     console.log(downloadURL)
 
-    const newExperience = { title, description, coordinates, image };
+    const newExperience = { title, description, coordinates, image, id };
     const response = await fetch("http://localhost:5000/create-exp", {
       method: "POST",
       body: JSON.stringify(newExperience),

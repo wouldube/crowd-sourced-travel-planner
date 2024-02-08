@@ -1,14 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import UserSetup from '../components/UserSetup.js';
 
-const firebase = require("firebase/app")
-const { firebaseConfig } = require("../firebase/firebase-config");
-const { getAuth, createUserWithEmailAndPassword } = require("firebase/auth");
-
 const Register = () => {
-
-    const fb_app = firebase.initializeApp(firebaseConfig);
-    const auth = getAuth(fb_app);
 
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
@@ -24,19 +17,11 @@ const Register = () => {
             return
         }
 
-        createUserWithEmailAndPassword(auth, email, pass)
-            .then((userCredential) => {
-                setUid(userCredential.user.uid);
-                // Success, route to next destination
-                const hide = document.getElementById("sign-up")
-                hide.style.visibility = "hidden"
+        const hide = document.getElementById("sign-up")
+        hide.style.visibility = "hidden"
 
-                const show = document.getElementById("setup")
-                show.style.visibility = "visible"
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+        const show = document.getElementById("setup")
+        show.style.visibility = "visible"
 
     }
 
@@ -91,7 +76,9 @@ const Register = () => {
         <div id="setup" style={{visibility: "hidden"}}>
             <UserSetup 
                 uid={uid} 
+                setUid={setUid}
                 email={email} 
+                pass={pass}
             />
         </div>
         </div>

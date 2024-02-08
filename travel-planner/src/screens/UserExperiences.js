@@ -18,7 +18,15 @@ function UserExperiences({ setExperienceToUpdate }) {
     // }
 
     const loadExperience = () => {
-        fetch("http://localhost:5000/my-experiences/65b57e2b37f5c24ce79c5b6e")
+
+        if (localStorage.getItem("id") === null) {
+            // localStorage.setItem("path", "/UserExperiences")
+            navigate("/login")
+        }
+
+        const id = localStorage.getItem("id")
+
+        fetch(`http://localhost:5000/my-experiences/${id}`)
             .then(response => response.json())
             .then(experiences => setUserExperiences(experiences), console.log(experiences))
             .catch(error => console.error('Error fetching data:', error));
@@ -40,7 +48,7 @@ function UserExperiences({ setExperienceToUpdate }) {
                             <div className="experiences-title-list"><strong>{exp.title}</strong></div>
                             <div className="experiences-other-listtext">{exp.location.coordinates[0]}, {exp.location.coordinates[1]}</div>
                             {/* Need to create experiences-other-owner in css file */}
-                            <div className="experiences-other-owner">{exp.owner}</div>
+                            {/* <div className="experiences-other-owner">{exp.owner}</div> Displays ObjectId */}
                             {/* {experiences.reviews} */}
                             <div className="ratingImage">
                                 <img src="https://media.istockphoto.com/id/1306258842/photo/5-or-five-stars-sign-symbol-on-white-background-illustration-ranking-quality-service-review.jpg?s=612x612&w=0&k=20&c=PLhPtCoPZSUM9FSg9CAmTC_7b4WoHMYdaDHas64kg6M=" alt=" "></img></div>

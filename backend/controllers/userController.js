@@ -104,7 +104,7 @@ const updateUser = async(id, update) => {
     // update: {"property to update": updated value, "property to update": updated value}
     // returns 0 if update fails, 1 if update succeeds
 
-    const result = await User.updateOne({"uid": id}, update);
+    const result = await User.updateOne({"_id": id}, update);
     return result.modifiedCount;
 }
 

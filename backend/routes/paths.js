@@ -24,14 +24,6 @@ router.get('/', (req, res) => {
 
 // ---- User CRUD Operations ----
 
-router.post('/login', (req, res) => {
-    // Handle login logic here
-});
-
-router.post('/register', (req, res) => {
-    // Handle registration logic here
-});
-
 router.get('/user-info/:id', async (req, res) => {
     // Get User
     try {
@@ -47,10 +39,10 @@ router.get('/user-info/:id', async (req, res) => {
     }
 });
 
-router.get('/user/:id', async (req, res) => {
+router.get('/user/:uid', async (req, res) => {
     // Get User
     try {
-        const user = await getUserByUid(req.params.id);
+        const user = await getUserByUid(req.params.uid);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -134,18 +126,16 @@ router.get('/experiences/:id', async (req, res) => {
 
 router.post("/create-exp", async (req, res) => {
     // Create a new experience
-    console.log("backend")
-    
-    console.log(req.body)
-    let { title, description, coordinates, image } = req.body;
+
+    let { title, description, coordinates, image, id } = req.body;
     
     coordinates = [Number(coordinates['latitude']), Number(coordinates['longitude'])];
 
-    console.log('Title:', title);
-    console.log('Description:', description);
-    console.log('Coordinates:', coordinates);
-    console.log('Image:', image);
-    //Checking missing fields
+    // DEBUG
+    // console.log('Title:', title);
+    // console.log('Description:', description);
+    // console.log('Coordinates:', coordinates);
+    // console.log('Image:', image);
         
     if (!title || !description || !coordinates || !image ) {
         return res.status(400).json({ message: "Missing required fields" });
@@ -158,10 +148,9 @@ router.post("/create-exp", async (req, res) => {
       description,
       location,
       image,
+      id
     );
     
-    console.log(result)
-
     res
       .status(200)
       .json({ message: "Experience created successfully", result: result });
