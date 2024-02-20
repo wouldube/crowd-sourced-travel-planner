@@ -1,51 +1,96 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-// const firebase = require("firebase/app")
-// const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
-// const { firebaseConfig } = require("../firebase/firebase-config");
-//import { MdOutlineStarBorder, MdOutlineStarHalf, MdOutlineStar } from "react-icons/md";
+const firebase = require("firebase/app")
+const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
+const { firebaseConfig } = require("../firebase/firebase-config");
 
-export const UpdateExperience = ({ ExperienceToUpdate }) => {
-
-  const [title, setTitle] = useState(ExperienceToUpdate.title);
-  const [description, setDescription] = useState(ExperienceToUpdate.description);
-  const [latitude, setLatitude] = useState(ExperienceToUpdate.latitude);
-  const [longitude, setLongitude] = useState(ExperienceToUpdate.longitude);
-  let [image, setImage] = useState(ExperienceToUpdate.image);
+export const UpdateExperience = ({ experienceToUpdate }) => {
 
   const navigate = useNavigate();
 
-  const updateExperience = async () => {
-    // const response = await fetch(`/my-experiences/${userExperienceToUpdate.experience_id}`, { // need to check link
-    //   method: "PUT",
-    //   body: JSON.stringify(response),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    const response = await fetch(`http://localhost:5000/update-exp/65729e8085891cfdbfb12faa`, { // need to check link
-      method: "PUT",
-      body: JSON.stringify(response),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.status === 200) {
-      alert("Successfully updated experience.");
-      console.log(response);
-    } else {
-      alert(`Failed to update experience, status code = ${response.status}`);
-      console.log("error");
+  const fb_app = firebase.initializeApp(firebaseConfig);
+  const storage = getStorage(fb_app);
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+  const [images, setImages] = useState("");
+  const [owner, setOwner] = useState("");
+
+  const [experience, setExperience] = useState({
+    title: '',
+    description: '',
+    location: '',
+    images: '',
+    owner: '',
+  });
+
+
+  useEffect(() => {
+
+    if (!localStorage.getItem("id")) {
+        // localStorage.setItem("path", "/account")
+        navigate("/login")
     }
-    navigate("/");
+
+    const id = localStorage.getItem("id")
+
+    fetch(`http://localhost:5000/experiences/${experienceToUpdate}`)
+    .then(response => response.json())
+    .then(experience => {
+        setExperience(experience);
+        setTitle(experience.title);
+        setDescription(experience.description);
+        setLatitude(experience.location['coordinates'][0]);
+        setLongitude(experience.location['coordinates'][1]);
+        setImages(experience.images[0]);
+        setOwner(experience.owner);
+
+        if (experience.owner != id) {
+          navigate("/UserExperiences")
+        }
+
+    })
+    
+    .catch(error => console.log(error));
+
+  }, [])
+
+  const addImage = async (newImage) => {
+    const imgFile = document.getElementById('image');
+    const imgRef = ref(storage, `/experiences/${experienceToUpdate}/${newImage}`);
+    await uploadBytesResumable(imgRef, imgFile.files[0], { contentType: 'image/png' });
+    const downloadURL = await getDownloadURL(imgRef);
+    setImages([downloadURL]);
+  }
+
+  const updateExperience = async (event) => {
+    event.preventDefault();
+
+    const location = {"type":"Point","coordinates":[latitude, longitude]};
+
+    let exp = {title, description, location, images}
+
+    // image stuff
+
+
+    const response = await fetch(`http://localhost:5000/update-exp/${experienceToUpdate}`, {
+      method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(exp)
+    });
   }
 
   return (
-    <div className="UpdateExperience">
+    <div className="update">
       <h2>Update Experience:</h2>
+      <form>
       <div className="title">
-        <label htmlFor="title">Title</label><br/>
+        <label htmlFor="title">Title: </label><br/>
         <input
           type="text"
           id="title"
@@ -56,7 +101,7 @@ export const UpdateExperience = ({ ExperienceToUpdate }) => {
       </div>
 
       <div className="description">
-        <label htmlFor="description">Description</label><br/>
+        <label htmlFor="description">Description: </label><br/>
         <input
           type="text"
           id="description"
@@ -68,7 +113,7 @@ export const UpdateExperience = ({ ExperienceToUpdate }) => {
 
       <div className="geolocation">
         <span>Geolocation</span> <br />
-        <label htmlFor="lat">Latitude</label><br/>
+        <label htmlFor="lat">Latitude: </label><br/>
         <input
           type="number"
           id="lat"
@@ -87,37 +132,26 @@ export const UpdateExperience = ({ ExperienceToUpdate }) => {
       </div>
 
       <div className="image">
-        <label htmlFor="image">Image</label><br/>
+        <div>
+        <img src={images} style={{width:"220px"}}/>
+        </div>
+        <label htmlFor="image">Change Image: </label><br/>
         <input
           type="file"
           id="image"
           accept="image/*"
-          required
-          onChange={(e) => setImage(e.target.value)}
+          onChange={(e) => addImage([e.target.value])}
         />
       </div>
-
-      <br/>
-      {/* <div className="review">
-            <div>
-                <span>Rating: </span>
-                <span>
-                    <MdOutlineStarBorder id="1"/>
-                    <MdOutlineStarBorder id="2"/>
-                    <MdOutlineStarBorder id="3"/>
-                    <MdOutlineStarBorder id="4"/>
-                    <MdOutlineStarBorder id="5"/>
-                </span>
-            </div>
-
-            <div>
-                <label for="review">Review: </label>
-                <input type="text" id="review" name="review"></input>
-            </div>
-            </div> */}
-
-      <br />
-      <button onClick={updateExperience} className="explore-button">Update</button>
+      <div>
+        <input type="submit" onClick={updateExperience} value="Update"></input>
+      </div>
+      </form>
+      <div>
+        <button onClick={() => {navigate(`/UserExperiences`)}}>Cancel</button>
+      </div>
     </div>
   );
 };
+
+export default UpdateExperience;

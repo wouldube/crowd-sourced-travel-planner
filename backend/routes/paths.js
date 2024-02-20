@@ -158,26 +158,28 @@ router.post("/create-exp", async (req, res) => {
 });
 
 router.put('/update-exp/:experience_id', async (req, res) => {
+    console.log("updating")
+    console.log(req.body)
     const experience_id = req.params.experience_id;
     const filter = {"_id": experience_id};
     const update = {};
-    if (newTitle = req.body.title){
-        update["title"] = newTitle;
+    if (req.body.title){
+        update["title"] = req.body.title;
     }
-    if (newDescription = req.body.description){
-        update["description"] = newDescription;
+    if (req.body.description){
+        update["description"] = req.body.description;
     }
-    if (newLocation = req.body.location){
-        update["location"] = newLocation;
+    if (req.body.location){
+        update["location"] = req.body.location;
     }
-    if (newImage = req.body.image){
-        update["image"] = newImage;
+    if (req.body.images){
+        update["images"] = req.body.images;
     }
     try {
         const modifiedCount = await updateExperience(filter, update);
         
         if (modifiedCount > 0) {
-            res.status(200).json({ message: "Experience updated successfully" });
+            res.json(modifiedCount);
         } else {
             res.status(404).json({ message: "Experience not found or no update needed" });
         }
