@@ -10,7 +10,6 @@ import UserExperiences from './screens/UserExperiences.js';
 import Favorites from './screens/Favorites.js';
 import Ratings from './screens/Ratings.js';
 import Trips from './screens/Trips.js';
-import { UpdateExperience } from './screens/UpdateExperience.js';
 import Trip from './components/Trip.js';
 import CreateTrip from './screens/CreateTrip';
 import UpdateTrip from './screens/UpdateTrip';
@@ -18,6 +17,7 @@ import Buttons from './components/Buttons.js';
 import Register from './screens/Register.js';
 import Login from './screens/Login.js';
 import Search from './screens/Search';
+import UpdateExperience from './screens/UpdateExperience.js';
 
 function App() {
 
@@ -39,7 +39,7 @@ function App() {
                 <Route path="register" element={<Register/>}/>
                 <Route path="login" element={<Login/>}/>
                 <Route path="UserExperiences" element={<UserExperiences setExperienceToUpdate={setExperienceToUpdate}/>}/>
-                    <Route path="updateexperience" element={<UpdateExperience experienceToUpdate={experienceToUpdate} setExperienceToUpdate={setExperienceToUpdate}/>}/>
+                <Route path="update-exp" element={<UpdateExperience experienceToUpdate={experienceToUpdate}/>}/>
                 <Route path="favorites" element={<Favorites favoriteToUpdate={favoriteToUpdate} setUserFavorites={setUserFavorites}/>}/>
                 <Route path="ratings" element={<Ratings/>}/>
                 <Route path="trips" element={<Trips setTripObject={setTripObject}/>}/>

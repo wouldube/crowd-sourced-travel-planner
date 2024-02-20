@@ -24,8 +24,6 @@ const Account = () => {
         id: '',
     });
 
-    // TODO: handle password changes
-
     useEffect(() => {
 
         if (!localStorage.getItem("id")) {
