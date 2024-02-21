@@ -28,7 +28,7 @@ const Buttons = () => {
                     Profile
                 </button>
                 <button onClick={() => navigateTo('/create-exp')} className="button">
-                    Add Experience
+                    Create Experience
                 </button>
                 {/* Add additional buttons here */}
                 <button onClick={() => navigateTo('/UserExperiences')} className="button">

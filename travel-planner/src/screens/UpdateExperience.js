@@ -86,7 +86,7 @@ export const UpdateExperience = ({ experienceToUpdate }) => {
   }
 
   return (
-    <div className="update">
+    <div className="AddExperience">
       <h2>Update Experience:</h2>
       <form>
       <div className="title">
