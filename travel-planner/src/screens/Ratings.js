@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Container, Paper, Grid, Box, Card, Button} from '@mui/material'
 
 const Ratings = () => {
     // Example hardcoded data for testing the layout
@@ -31,20 +32,22 @@ const Ratings = () => {
     };
 
     return (
-        <div className="ratings">
+        <Paper>
             <h2>Your Ratings</h2>
-            <div className="ratings-list">
+            <Grid container spacing={3}>
                 {ratings.map(rating => (
-                    <div key={rating._id} className="rating-item">
+                    <Grid item xs={12}>
+                    <Card key={rating._id}>
                         <p>Rating: {rating.rating}</p>
                         <p>Description: {rating.description}</p>
                         <button onClick={() => handleDelete(rating._id)} className="button delete-button">
                             Delete
                         </button>
-                    </div>
+                    </Card>
+                    </Grid>
                 ))}
-            </div>
-        </div>
+                </Grid>
+        </Paper>
     );
 };
 

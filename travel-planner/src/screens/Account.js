@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {Container, Paper, Grid, Box, Card, Button} from '@mui/material';
 
 const Account = () => {
 
@@ -53,6 +54,7 @@ const Account = () => {
     }
 
     return (
+        <Paper>
         <div className="account">
             <h2>My Account</h2>
             <form>
@@ -103,6 +105,7 @@ const Account = () => {
             </div>
             </form>
         </div>
+    </Paper>
     )
 }
 

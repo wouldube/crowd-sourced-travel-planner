@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Buttons from '../components/Buttons.js';
+import {Container, Paper, Grid, Box, Card, Button} from '@mui/material';
 
 
 const Profile = () => {
@@ -25,42 +26,41 @@ const Profile = () => {
     useEffect( () => { userdata() }, []);
 
     return (
-        <div>           
-            <div className="Profile">
-                {login === 0 && (
-                    <div className="loginblur"></div>
+        <Paper>
+                {/* {login === 0 && (
+                    // <div className="loginblur"></div>
                 )}
-                {login === 1 && (
-                    <div>
-                        <div className="ProfileAccount">
-                            <button onClick={account} class="ProfileAccountButton">
-                            <p>user name!</p>
-                            </button>
-                        </div>
-
-                        <div className='ProfileContainer'>
-                            <div className="ProfileUserExperiences">
-                                <button onClick={UserExperiences} class="ProfileUserExperiencesButton">
-                                    <p><b>your experiences!</b></p>
-                                </button>
-                            </div>
-                            <div className='ProfileContainer2'>
-                                <div className="ProfileFavorites">
-                                    <button onClick={favorites} class="ProfileFavoritesButton">
-                                        <p>favorites</p>
-                                    </button>
-                                </div>
-                                <div className="ProfileRatings">
-                                    <button onClick={ratings} class="ProfileRatingsButton">
-                                        <p>ratings</p>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
-            </div>
-        </div>
+                {login === 1 && ( */}
+                    {/* // <div> */}
+            <Button onClick={account}>
+                <p>user</p>
+            </Button>
+            <Paper>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                    <Card>
+                        <Button onClick={UserExperiences}>
+                        <p><b>your experiences!</b></p>
+                        </Button>
+                    </Card>
+                    </Grid>
+                    <Grid item xs={6}>
+                    <Card>
+                        <Button onClick={favorites}>
+                        <p>favorites</p>
+                        </Button>
+                    </Card>
+                    </Grid>
+                    <Grid item xs={6}>
+                    <Card>
+                        <Button onClick={ratings}>
+                        <p>ratings</p>
+                        </Button>
+                    </Card>
+                    </Grid>
+                </Grid>
+            </Paper>
+        </Paper>
     )
 }
 

@@ -5,6 +5,8 @@ const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
 const { firebaseConfig } = require("../firebase/firebase-config");
 //import { MdOutlineStarBorder, MdOutlineStarHalf, MdOutlineStar } from "react-icons/md";
+import {Container, Paper, Grid, Box, Card, Button,
+  FormLabel, FormControl, Input, TextField,} from '@mui/material'
 
 export const CreateExperience = () => {
   const [title, setTitle] = useState("");
@@ -18,97 +20,69 @@ export const CreateExperience = () => {
   const navigate = useNavigate();
 
   const createExperience = async () => {
-    try{
-    const coordinates = { latitude, longitude };
+    try {
+      const coordinates = { latitude, longitude };
 
-    const fb_app = firebase.initializeApp(firebaseConfig);
-    const storage = getStorage(fb_app)
+      const fb_app = firebase.initializeApp(firebaseConfig);
+      const storage = getStorage(fb_app)
 
-    const imgFile = document.getElementById('image');
-    const imgRef = ref(storage, image);
-    const upload = await uploadBytesResumable(imgRef, imgFile.files[0], { contentType: 'image/png' })
-    const downloadURL = await getDownloadURL(imgRef);
-    image = downloadURL
-    console.log(downloadURL)
+      const imgFile = document.getElementById('image');
+      const imgRef = ref(storage, image);
+      const upload = await uploadBytesResumable(imgRef, imgFile.files[0], { contentType: 'image/png' })
+      const downloadURL = await getDownloadURL(imgRef);
+      image = downloadURL
+      console.log(downloadURL)
 
-    const newExperience = { title, description, coordinates, image };
-    const response = await fetch("http://localhost:5000/create-exp", {
-      method: "POST",
-      body: JSON.stringify(newExperience),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.status === 200) {
-      // do something
-      console.log(response);
-      // navigate("/create-exp");
-    } else {
-      // handle error
-      console.log("error");
+      const newExperience = { title, description, coordinates, image };
+      const response = await fetch("http://localhost:5000/create-exp", {
+        method: "POST",
+        body: JSON.stringify(newExperience),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.status === 200) {
+        // do something
+        console.log(response);
+        // navigate("/create-exp");
+      } else {
+        // handle error
+        console.log("error");
+      }
+      navigate("/");
+    } catch (error) {
+      console.log(error)
     }
-    navigate("/");
-  } catch (error) {
-    console.log(error)
-  }};
+  };
 
   return (
-    <div className="AddExperience">
-      <h2>Create New Experience!</h2>
-      <div className="title">
-        <label htmlFor="title">Title</label><br/>
-        <input
-          type="text"
-          id="title"
-          required
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
+    <Container>
+      <Paper>
+      <form>
+        <FormControl>
 
-      <div className="description">
-        <label htmlFor="description">Description</label><br/>
-        <input
-          type="text"
-          id="description"
-          required
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+      <FormLabel>Create New Experience!</FormLabel>
+        <TextField
+            id="title" label="title" required value={title}
+            onChange={(e) => setTitle(e.target.value)}
         />
-      </div>
-
-      <div className="geolocation">
-        <span>Geolocation</span> <br />
-        <label htmlFor="lat">Latitude</label><br/>
-        <input
-          type="number"
-          id="lat"
-          required
-          value={latitude}
-          onChange={(e) => setLatitude(e.target.value)}
-        /><br/>
-        <label htmlFor="long">Longitude</label><br/>
-        <input
-          type="number"
-          id="long"
-          required
-          value={longitude}
-          onChange={(e) => setLongitude(e.target.value)}
+        <TextField
+            id="description" label="description" required value={description}
+            onChange={(e) => setDescription(e.target.value)}
         />
-      </div>
-
-      <div className="image">
-        <label htmlFor="image">Image</label><br/>
-        <input
-          type="file"
-          id="image"
-          accept="image/*"
-          required
-          onChange={(e) => setImage(e.target.value)}
+        <TextField
+            type="number" id="lat" label="lat" required value={latitude}
+            onChange={(e) => setLatitude(e.target.value) }
         />
-      </div>
+        <TextField
+            type="number" id="long" label="lat" required value={longitude}
+            onChange={(e) => setLongitude(e.target.value) }
+        />
+        <Input
+            type="file" id="image" accept="image/*" label="image" required
+            onChange={(e) => setImage(e.target.value) }
+        />
 
-      <br/>
       {/* <div className="review">
             <div>
                 <span>Rating: </span>
@@ -127,9 +101,11 @@ export const CreateExperience = () => {
             </div>
             </div> */}
 
-      <br />
-      <button onClick={createExperience} className="explore-button">Create</button>
-    </div>
+      <Button varient="contained" onClick={createExperience}>Create</Button>
+      </FormControl>
+      </form>
+      </Paper>
+      </Container>
   );
 };
 
