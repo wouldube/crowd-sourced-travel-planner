@@ -1,59 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
 const { firebaseConfig } = require("../firebase/firebase-config");
-//import { MdOutlineStarBorder, MdOutlineStarHalf, MdOutlineStar } from "react-icons/md";
 import {Container, Paper, Grid, Box, Card, Button,
   FormLabel, FormControl, Input, TextField,} from '@mui/material'
 
 export const CreateExperience = () => {
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("id")) {
+      // localStorage.setItem("path", "/create-exp")
+      navigate("/login")
+    }
+
+    setId(localStorage.getItem("id"))
+  })
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const [id, setId] = useState("");
   let [image, setImage] = useState(null);
-  //   const [rating, setRating] = useState("");
-  //   const [review, setReview] = useState("");
-
-  const navigate = useNavigate();
 
   const createExperience = async () => {
     try {
       const coordinates = { latitude, longitude };
 
-      const fb_app = firebase.initializeApp(firebaseConfig);
-      const storage = getStorage(fb_app)
+    const fb_app = firebase.initializeApp(firebaseConfig);
+    const storage = getStorage(fb_app)
+    
+    // TODO change imgRef to include experience id so imgs not overwritten
+    const imgFile = document.getElementById('image');
+    const imgRef = ref(storage, `/experiences/${id}/${image}`);
+    const upload = await uploadBytesResumable(imgRef, imgFile.files[0], { contentType: 'image/png' })
+    const downloadURL = await getDownloadURL(imgRef);
+    setImage(downloadURL)
+    console.log(downloadURL)
 
-      const imgFile = document.getElementById('image');
-      const imgRef = ref(storage, image);
-      const upload = await uploadBytesResumable(imgRef, imgFile.files[0], { contentType: 'image/png' })
-      const downloadURL = await getDownloadURL(imgRef);
-      image = downloadURL
-      console.log(downloadURL)
-
-      const newExperience = { title, description, coordinates, image };
-      const response = await fetch("http://localhost:5000/create-exp", {
-        method: "POST",
-        body: JSON.stringify(newExperience),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.status === 200) {
-        // do something
-        console.log(response);
-        // navigate("/create-exp");
-      } else {
-        // handle error
-        console.log("error");
-      }
-      navigate("/");
-    } catch (error) {
-      console.log(error)
+    const newExperience = { title, description, coordinates, image:downloadURL, id };
+    const response = await fetch("http://localhost:5000/create-exp", {
+      method: "POST",
+      body: JSON.stringify(newExperience),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.status === 200) {
+      // do something
+      console.log(response);
+      // navigate("/create-exp");
+    } else {
+      // handle error
+      console.log("error");
     }
-  };
+    navigate("/");
+  } catch (error) {
+    console.log(error)
+  }};
 
   return (
     <Container>
@@ -102,6 +110,7 @@ export const CreateExperience = () => {
             </div> */}
 
       <Button varient="contained" onClick={createExperience}>Create</Button>
+      <button onClick={() => {navigate(`/UserExperiences`)}} className="explore-button">Cancel</button>
       </FormControl>
       </form>
       </Paper>

@@ -16,9 +16,14 @@ const Buttons = () => {
             </Card>
 
             <ButtonGroup variant="contained">
-
                 <Button variant="contained" onClick={() => navigateTo('/trips')}>
                     Trips
+                </Button>
+                <Button onClick={() => navigateTo('/login')} className="button">
+                    Login
+                </Button>
+                <Button onClick={() => navigateTo('/register')} className="button">
+                    Register
                 </Button>
                 <Button variant="contained" onClick={() => navigateTo('/profile')}>
                     Profile
@@ -26,7 +31,6 @@ const Buttons = () => {
                 <Button variant="contained" onClick={() => navigateTo('/create-exp')}>
                     Add Experience
                 </Button>
-                {/* Add additional buttons here */}
                 <Button variant="contained" onClick={() => navigateTo('/UserExperiences')}>
                     My Experiences
                 </Button>
@@ -36,7 +40,9 @@ const Buttons = () => {
                 <Button variant="contained" onClick={() => navigateTo('/ratings')}>
                     Ratings
                 </Button>
-                {/* ... more buttons as needed */}
+                <Button onClick={() => navigateTo('/search')} className="button">
+                    Search
+                </Button>
             </ButtonGroup>
         </Container>
     )

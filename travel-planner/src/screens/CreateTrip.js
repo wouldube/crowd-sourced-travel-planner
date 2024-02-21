@@ -6,18 +6,30 @@ const CreateTrip = () => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [image, setImage] = useState('')
-    const [owner, setOwner] = useState('65b57e2b37f5c24ce79c5b6e')
+    const [owner, setOwner] = useState('')
     const [experiences, setExperiences] = useState([])
-    
+
     const [allExperiences, setAllExperiences] = useState([])
+    
     useEffect( () => { 
+        
+        if (!localStorage.getItem("id")) {
+            // localStorage.setItem("path", "/trips/create-trip")
+            navigate("/login")
+        }
+
+        const id = localStorage.getItem("id")
+        setOwner(id)
+
         const getExperiences = async() => {
             try {
-                const data = await fetch("http://localhost:5000/my-experiences/65b57e2b37f5c24ce79c5b6e")
+                console.log(owner)
+                const data = await fetch(`http://localhost:5000/my-experiences/${id}`)
                 const experiences = await data.json()
                 setAllExperiences(experiences)
             } catch(error) { console.error('Error fetching data:', error) }
         }
+        
         getExperiences() }, [])
 
     /* CreateTrip Done */

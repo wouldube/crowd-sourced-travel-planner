@@ -60,15 +60,19 @@ let Theme = createTheme({
             variants: [
                 {
                     props: { variant: 'experiencesMap' },
-                    style: { width: '95vw', height: '90%' }
-                }
+                    style: { width: '70vw', height: '70vh' }
+                },
+                {
+                    props: { variant: 'experiencesGrid' },
+                    style: { width: '70vw', height: '70vh' }
+                },
             ],
             styleOverrides: {
                 root: {
                     overflow: 'scroll', borderRadius: '1rem',
                     boxShadow: '0px 0px 10px 5px rgba(255, 255, 255, 0.3)',
                     backgroundColor: '#098778',
-                    // width: '90%', height: '90%'
+                    style: { width: '70vw', height: '70vh' }
                 }
             }
         }

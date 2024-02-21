@@ -1,36 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function UserExperiences({ setUserExperienceToUpdate }) {
+function UserExperiences({setExperienceToUpdate}) {
 
     const [experiences, setUserExperiences] = useState([]);
     const navigate = useNavigate();
 
-    // const onUpdate = experiences => {
-    //     setUserExperienceToUpdate(experiences);
-    //     navigate("/update-experiences")
-    // }
+    const onUpdate = (expId) => {
 
-    // const loadExperience = async () => {
-    //     const response = await fetch('/my-experiences');
-    //     const data = await response.json();
-    //     setExperiences(data);
-    // }
+        setExperienceToUpdate(expId);
+        navigate("/update-exp");
+
+    }
+
 
     const loadExperience = () => {
-        fetch("http://localhost:5000/my-experiences/65b57e2b37f5c24ce79c5b6e")
+
+        if (!localStorage.getItem("id")) {
+            // localStorage.setItem("path", "/UserExperiences")
+            navigate("/login")
+        }
+
+        const id = localStorage.getItem("id")
+
+        fetch(`http://localhost:5000/my-experiences/${id}`)
             .then(response => response.json())
-            .then(experiences => setUserExperiences(experiences), console.log(experiences))
+            .then(experiences => setUserExperiences(experiences))
             .catch(error => console.error('Error fetching data:', error));
     }
 
     useEffect(() => {
         loadExperience();
-        console.log(experiences)
     }, []);
 
     return (
-         <div className="MyExperiences">
+        <div>
+        <div className="MyExperiences" id="my-experiences">
             <div className="experinceListBody">
                 <strong>Your experiences</strong>
                 <div className="experienceListContainer">
@@ -39,19 +44,18 @@ function UserExperiences({ setUserExperienceToUpdate }) {
                         <div key={index} className="user-experiences-list">
                             <div className="experiences-title-list"><strong>{exp.title}</strong></div>
                             <div className="experiences-other-listtext">{exp.location.coordinates[0]}, {exp.location.coordinates[1]}</div>
-                            {/* Need to create experiences-other-owner in css file */}
-                            <div className="experiences-other-owner">{exp.owner}</div>
-                            {/* {experiences.reviews} */}
-                            <div className="ratingImage"><img src="https://media.istockphoto.com/id/1306258842/photo/5-or-five-stars-sign-symbol-on-white-background-illustration-ranking-quality-service-review.jpg?s=612x612&w=0&k=20&c=PLhPtCoPZSUM9FSg9CAmTC_7b4WoHMYdaDHas64kg6M=" alt=" "></img></div>
+                            <div className="ratingImage">
+                                <img src="https://media.istockphoto.com/id/1306258842/photo/5-or-five-stars-sign-symbol-on-white-background-illustration-ranking-quality-service-review.jpg?s=612x612&w=0&k=20&c=PLhPtCoPZSUM9FSg9CAmTC_7b4WoHMYdaDHas64kg6M=" alt=" "></img></div>
                             <div className="experiences-other-listtext">{exp.description}</div>
                             {/* Need to work on update button */}
-                            {/* <button onClick={updateExperience} className="explore-button">Create</button> */}
+                            <button onClick={(e) => onUpdate(exp._id)}>Update</button>
                         </div>
                     ))};  
                     </div>
                 </div>
            </div>
         </div> 
+        </div>
     );
 }
 

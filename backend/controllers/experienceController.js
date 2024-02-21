@@ -1,5 +1,4 @@
-const { Experience } = require('../models/schema')
-
+const { Experience, User } = require('../models/schema');
 
 // experience CRUD functions
 
@@ -20,11 +19,21 @@ const getExperienceById = async (id) => {
 }
 
 //Create
-const createExperience = async (title, description, location, images) => {
+const createExperience = async (title, description, location, images, id) => {
     // left out reviews for now
-    const experience = new Experience({ title: title, description: description, 
-        location: location, images: images });
-    return experience.save()
+    const owner = await User.findById({"_id": id});
+
+    const experience = new Experience({ title, description, 
+        location, images, owner });
+    
+    const result = await experience.save();
+    
+    let user_exp = owner.experiences;
+    user_exp.push(result._id)
+
+    await User.updateOne({"_id": id}, {"experiences": user_exp})
+    
+    return result
 }
 
 
@@ -49,4 +58,27 @@ const deleteExperience = async(id) => {
 
 }
 
-module.exports = { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience }
+// Search
+const searchExperiences = async (textQuery, longitude, latitude, maxDistance) => {
+    let searchCriteria = {
+        $or: [
+            { title: { $regex: textQuery, $options: 'i' } },
+            { description: { $regex: textQuery, $options: 'i' } },
+        ]
+    };
+
+    if (longitude && latitude) {
+
+        searchCriteria['location'] = {
+            $near: {
+                $geometry: { type: "Point", coordinates: [longitude, latitude] },
+                $maxDistance: maxDistance
+            }
+        };
+    }
+
+    return await Experience.find(searchCriteria);
+};
+
+
+module.exports = { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience, searchExperiences }

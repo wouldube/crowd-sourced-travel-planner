@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 const firebase = require("firebase/app")
@@ -32,7 +32,13 @@ const Login = () => {
                         "Content-Type": "application/json",
                     },
                 });
-                console.log(await response.json())
+                const result = await response.json()
+                console.log(result._id)
+                localStorage.setItem('id', result._id)
+
+                // if (localStorage.getItem('path')) {
+                //     navigate(localStorage.getItem('path'))
+                // }
 
                 navigate("/");
             })
@@ -70,6 +76,9 @@ const Login = () => {
                     <input type="submit" value="Login" onClick={authLogin}></input>
                 </div>
             </form>
+            <div>
+                <button onClick={() => {navigate(`/register`)}}>Create an Account</button>
+            </div>
         </div>
     )
 }

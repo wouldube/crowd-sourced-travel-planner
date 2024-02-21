@@ -1,53 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import UserSetup from '../components/UserSetup.js';
 
-const firebase = require("firebase/app")
-const { firebaseConfig } = require("../firebase/firebase-config");
-const { getAuth, createUserWithEmailAndPassword } = require("firebase/auth");
-
 const Register = () => {
-
-    const fb_app = firebase.initializeApp(firebaseConfig);
-    const auth = getAuth(fb_app);
 
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [confirm, setConfirm] = useState("");
-    const [uid, setUid] = useState("");
 
     const createUser = async (event) => {
         event.preventDefault();
 
         if (pass !== confirm) {
             const error = document.getElementById("password-error")
-            error.style.visibility = "visible"
+            error.style.display = "block"
             return
         }
 
-        createUserWithEmailAndPassword(auth, email, pass)
-            .then((userCredential) => {
-                setUid(userCredential.user.uid);
-                // Success, route to next destination
-                const hide = document.getElementById("sign-up")
-                hide.style.visibility = "hidden"
+        const hide = document.getElementById("sign-up")
+        hide.style.display = "none"
 
-                const show = document.getElementById("setup")
-                show.style.visibility = "visible"
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+        const show = document.getElementById("setup")
+        show.style.display = "block"
 
     }
 
     return (
         <div>
         <div id="sign-up">
-        <div id="password-error" style={{visibility: "hidden"}}>
+        <div id="password-error" style={{display: "none"}}>
             <span>Passwords do not match.</span>
-        </div>
-        <div id="email-error" style={{visibility: "hidden"}}>
-            <span>An account with this email already exists.</span>
         </div>
         <div id="inputs">
         <form>
@@ -88,10 +69,12 @@ const Register = () => {
         </form>
         </div>
         </div>
-        <div id="setup" style={{visibility: "hidden"}}>
+        <div id="setup" style={{display: "none"}}>
             <UserSetup 
-                uid={uid} 
+                // uid={uid} 
+                // setUid={setUid}
                 email={email} 
+                pass={pass}
             />
         </div>
         </div>

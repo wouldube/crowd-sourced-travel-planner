@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 const express = require('express');
 const cors = require("cors");
 
-const { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience } = require('../controllers/experienceController');
+const { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience, searchExperiences } = require('../controllers/experienceController');
 const { createReview, getReviewsByExperienceId, getReviewById, updateReview, deleteReview } = require('../controllers/reviewController');
 const tripController = require("../controllers/tripController");
-const { getUserById, getUserByUid, getUserExperiences, getUserReviews, getUserTrips, createUser, updateUser, deleteUser } = require('../controllers/userController');
+const { getUserById, getUserByUid, getUserExperiences, getUserFavorites, getUserReviews, getUserTrips, createUser, updateUser, deleteUser } = require('../controllers/userController');
 
 
 const corsOptions = {
@@ -24,14 +24,6 @@ router.get('/', (req, res) => {
 
 // ---- User CRUD Operations ----
 
-router.post('/login', (req, res) => {
-    // Handle login logic here
-});
-
-router.post('/register', (req, res) => {
-    // Handle registration logic here
-});
-
 router.get('/user-info/:id', async (req, res) => {
     // Get User
     try {
@@ -47,10 +39,10 @@ router.get('/user-info/:id', async (req, res) => {
     }
 });
 
-router.get('/user/:id', async (req, res) => {
+router.get('/user/:uid', async (req, res) => {
     // Get User
     try {
-        const user = await getUserByUid(req.params.id);
+        const user = await getUserByUid(req.params.uid);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -66,6 +58,7 @@ router.post('/new-user', async (req, res) => {
     // Create User (will be moved into register route when firebase is set up)
     try {
         const { uid, email, username, name, bio } = req.body;
+        console.log(req.body)
         const numCreated = await createUser(uid, email, username, name, bio);
         res.status(201).json(numCreated); // if numCreated = 0 -> create unsuccessful
     } catch (error) {
@@ -79,8 +72,8 @@ router.put('/user-info/:id', async (req, res) => {
     // Update User
     // TODO: Add back profile picture stuff
     try {
-        const { email, username, name, bio } = req.body;
-        const userUpdate = { email, username, name, bio };
+        const { email, username, name, bio, image } = req.body;
+        const userUpdate = { email, username, name, bio, image };
         const numUpdated = await updateUser(req.params.id, userUpdate);
         res.json(numUpdated); // if numUpdated = 0 -> update unsuccessful
     } catch (error) {
@@ -134,18 +127,16 @@ router.get('/experiences/:id', async (req, res) => {
 
 router.post("/create-exp", async (req, res) => {
     // Create a new experience
-    console.log("backend")
-    
-    console.log(req.body)
-    let { title, description, coordinates, image } = req.body;
+
+    let { title, description, coordinates, image, id } = req.body;
     
     coordinates = [Number(coordinates['latitude']), Number(coordinates['longitude'])];
 
-    console.log('Title:', title);
-    console.log('Description:', description);
-    console.log('Coordinates:', coordinates);
-    console.log('Image:', image);
-    //Checking missing fields
+    // DEBUG
+    // console.log('Title:', title);
+    // console.log('Description:', description);
+    // console.log('Coordinates:', coordinates);
+    // console.log('Image:', image);
         
     if (!title || !description || !coordinates || !image ) {
         return res.status(400).json({ message: "Missing required fields" });
@@ -158,36 +149,37 @@ router.post("/create-exp", async (req, res) => {
       description,
       location,
       image,
+      id
     );
     
-    console.log(result)
-
     res
       .status(200)
       .json({ message: "Experience created successfully", result: result });
 });
 
 router.put('/update-exp/:experience_id', async (req, res) => {
+    console.log("updating")
+    console.log(req.body)
     const experience_id = req.params.experience_id;
     const filter = {"_id": experience_id};
     const update = {};
-    if (newTitle = req.body.title){
-        update["title"] = newTitle;
+    if (req.body.title){
+        update["title"] = req.body.title;
     }
-    if (newDescription = req.body.description){
-        update["description"] = newDescription;
+    if (req.body.description){
+        update["description"] = req.body.description;
     }
-    if (newLocation = req.body.location){
-        update["location"] = newLocation;
+    if (req.body.location){
+        update["location"] = req.body.location;
     }
-    if (newImage = req.body.image){
-        update["image"] = newImage;
+    if (req.body.images){
+        update["images"] = req.body.images;
     }
     try {
         const modifiedCount = await updateExperience(filter, update);
         
         if (modifiedCount > 0) {
-            res.status(200).json({ message: "Experience updated successfully" });
+            res.json(modifiedCount);
         } else {
             res.status(404).json({ message: "Experience not found or no update needed" });
         }
@@ -200,6 +192,31 @@ router.put('/update-exp/:experience_id', async (req, res) => {
 router.delete('/delete-exp/:experience_id', (req, res) => {
     // Delete an experience
 });
+
+// Route to handle search requests
+router.get('/search', async (req, res) => {
+    const { query } = req.query;
+    let longitude = parseFloat(req.query.longitude);
+    let latitude = parseFloat(req.query.latitude);
+    let maxDistance = parseFloat(req.query.maxDistance);
+
+    // Check if the query parameters for longitude and latitude are provided before parsing
+    longitude = !isNaN(longitude) ? longitude : undefined;
+    latitude = !isNaN(latitude) ? latitude : undefined;
+    maxDistance = !isNaN(maxDistance) ? maxDistance : undefined;
+
+    try {
+        const results = await searchExperiences(query, longitude, latitude, maxDistance);
+        res.json(results);
+    } catch (error) {
+        console.error("Error in GET /search:", error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+module.exports = router;
+
+    
 
 // ---- Trip CRUD Operations ----
 router.get('/trips/:id', async (req, res) => {
@@ -380,6 +397,19 @@ router.get('/my-experiences/:id', async (req, res) => {
         res.json(experiences);
     } catch (error) {
         console.error(`Error in retrieving user experiences`, error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+router.get('/my-favorites/:id', async (req, res) => {
+    // Fetch and display experiences favorited by the user
+    console.log(req.params.id)
+    try {
+        const favorites = await getUserFavorites(req.params.id);
+        console.log(favorites)
+        res.json(favorites);
+    } catch (error) {
+        console.error(`Error in retrieving user favorites`, error);
         res.status(500).json({ message: error.message });
     }
 });

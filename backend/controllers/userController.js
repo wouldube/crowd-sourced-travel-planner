@@ -44,6 +44,19 @@ const getUserReviews = async (id) => {
 
 }
 
+const getUserFavorites = async (id) => {
+    // id: document id
+    // returns a list of favorite experience ids
+    const user = await User.findById(id);
+    let favList = [];
+    for (let i = 0; i < user.favorites.length; i++) {
+        favList.push(await getExperienceById(user.favorites[i])); //check this
+        console.log(favList);
+    }
+    return favList;
+
+}
+
 const getUserTrips = async (id) => {
     // id: document id
     // returns a list of trip ids
@@ -91,7 +104,7 @@ const updateUser = async(id, update) => {
     // update: {"property to update": updated value, "property to update": updated value}
     // returns 0 if update fails, 1 if update succeeds
 
-    const result = await User.updateOne({"uid": id}, update);
+    const result = await User.updateOne({"_id": id}, update);
     return result.modifiedCount;
 }
 
@@ -105,4 +118,4 @@ const deleteUser = async(id) => {
 
 }
 
-module.exports = { getUserById, getUserByUid, getUserExperiences, getUserReviews, getUserTrips, updateUserTrips, createUser, updateUser, deleteUser };
+module.exports = { getUserById, getUserByUid, getUserExperiences, getUserFavorites, getUserReviews, getUserTrips, updateUserTrips, createUser, updateUser, deleteUser };
