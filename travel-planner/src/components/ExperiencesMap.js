@@ -1,4 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
+import { Container, Paper, Grid, Box, Card, Button } from '@mui/material';
 
 const ExperiencesMap = () => {
   const [experiences, setExperiences] = useState([])
@@ -11,28 +12,28 @@ const ExperiencesMap = () => {
   }, [])
 
   return (
-    <div className="ExperiencesMap">
-      <div class="Experience AnExperience">
-        <h3>Hoh Rainforest Hike</h3>
-        <p>Hike the Hoh Rainforest in Olympic National Park on this mesmerizing trail. The towering trees draped in lush moss 
-          create a magical and serene trail experience.</p>
-        <p>Y,X</p>
-      </div>
-      {experiences.map((exp, index) => (
-        <div key={index} class="Experience">
-          <h3>{exp.title}</h3>
-          <p>{exp.description}</p>
-          <p>{exp.location.coordinates[0]}, {exp.location.coordinates[1]}</p>
-      </div>
-    ))}
-      <div class="Experience AnExperience">
-          <h3>Hoh Rainforest Hike</h3>
-          <p>Hike the Hoh Rainforest in Olympic National Park on this mesmerizing trail. The towering trees draped in lush moss 
+    <Container>
+      <Paper variant="experiencesMap">
+        <Grid container spacing={10}>
+          {experiences.map((exp, index) => (
+            <Grid item sm={4} key={index}>
+              <Card variant="experience">
+                <h3>{exp.title}</h3>
+                <p>{exp.description}</p>
+                <p>{exp.location.coordinates[0]}, {exp.location.coordinates[1]}</p>
+              </Card>
+            </Grid>
+          ))}
+          <div class="Experience AnExperience">
+            <h3>Hoh Rainforest Hike</h3>
+            <p>Hike the Hoh Rainforest in Olympic National Park on this mesmerizing trail. The towering trees draped in lush moss
               create a magical and serene trail experience.</p>
-          <p>X,Y</p>
-      </div>
-  </div>
-);
+            <p>X,Y</p>
+          </div>
+        </Grid>
+      </Paper>
+    </Container>
+  );
 }
 
 export default ExperiencesMap;

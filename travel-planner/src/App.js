@@ -1,5 +1,6 @@
 import { React, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import {Container} from '@mui/material';
 
 // screens and components
 import Exploration from './screens/Exploration'
@@ -16,6 +17,8 @@ import UpdateTrip from './screens/UpdateTrip';
 import Buttons from './components/Buttons.js';
 import Register from './screens/Register.js';
 import Login from './screens/Login.js';
+import Theme from './UX/Theme'
+import { ThemeProvider } from '@mui/material/styles'
 import Search from './screens/Search';
 import UpdateExperience from './screens/UpdateExperience.js';
 
@@ -28,6 +31,8 @@ function App() {
 
   return (
     <div className="App">
+      <ThemeProvider theme={Theme}>
+        <Container>
       <BrowserRouter>
       <Buttons/>
         <div className="screens">
@@ -50,6 +55,8 @@ function App() {
           </Routes>
         </div>
       </BrowserRouter>
+      </Container>
+      </ThemeProvider>
     </div>
   );
 }

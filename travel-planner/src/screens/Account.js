@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {Container, Paper, Grid, Box, Card, Button} from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
 const firebase = require("firebase/app")
@@ -133,6 +134,7 @@ const Account = () => {
     // *********************************************************
 
     return (
+        <Paper>
         <div className="account">
             <h2>My Account</h2>
             <form>
@@ -223,6 +225,7 @@ const Account = () => {
                 <button onClick={logOut}>Logout</button>
             </div>
         </div>
+    </Paper>
     )
 }
 

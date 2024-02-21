@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
 const { firebaseConfig } = require("../firebase/firebase-config");
+import {Container, Paper, Grid, Box, Card, Button,
+  FormLabel, FormControl, Input, TextField,} from '@mui/material'
 
 export const CreateExperience = () => {
 
@@ -26,8 +28,8 @@ export const CreateExperience = () => {
   let [image, setImage] = useState(null);
 
   const createExperience = async () => {
-    try{
-    const coordinates = { latitude, longitude };
+    try {
+      const coordinates = { latitude, longitude };
 
     const fb_app = firebase.initializeApp(firebaseConfig);
     const storage = getStorage(fb_app)
@@ -62,62 +64,33 @@ export const CreateExperience = () => {
   }};
 
   return (
-    <div className="AddExperience">
-      <h2>Create New Experience!</h2>
-      <div className="title">
-        <label htmlFor="title">Title</label><br/>
-        <input
-          type="text"
-          id="title"
-          required
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
+    <Container>
+      <Paper>
+      <form>
+        <FormControl>
 
-      <div className="description">
-        <label htmlFor="description">Description</label><br/>
-        <input
-          type="text"
-          id="description"
-          required
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+      <FormLabel>Create New Experience!</FormLabel>
+        <TextField
+            id="title" label="title" required value={title}
+            onChange={(e) => setTitle(e.target.value)}
         />
-      </div>
-
-      <div className="geolocation">
-        <span>Geolocation</span> <br />
-        <label htmlFor="lat">Latitude</label><br/>
-        <input
-          type="number"
-          id="lat"
-          required
-          value={latitude}
-          onChange={(e) => setLatitude(e.target.value)}
-        /><br/>
-        <label htmlFor="long">Longitude</label><br/>
-        <input
-          type="number"
-          id="long"
-          required
-          value={longitude}
-          onChange={(e) => setLongitude(e.target.value)}
+        <TextField
+            id="description" label="description" required value={description}
+            onChange={(e) => setDescription(e.target.value)}
         />
-      </div>
-
-      <div className="image">
-        <label htmlFor="image">Image</label><br/>
-        <input
-          type="file"
-          id="image"
-          accept="image/*"
-          required
-          onChange={(e) => setImage(e.target.value)}
+        <TextField
+            type="number" id="lat" label="lat" required value={latitude}
+            onChange={(e) => setLatitude(e.target.value) }
         />
-      </div>
+        <TextField
+            type="number" id="long" label="lat" required value={longitude}
+            onChange={(e) => setLongitude(e.target.value) }
+        />
+        <Input
+            type="file" id="image" accept="image/*" label="image" required
+            onChange={(e) => setImage(e.target.value) }
+        />
 
-      <br/>
       {/* <div className="review">
             <div>
                 <span>Rating: </span>
@@ -136,10 +109,12 @@ export const CreateExperience = () => {
             </div>
             </div> */}
 
-      <br />
-      <button onClick={createExperience} className="explore-button">Create</button>
+      <Button varient="contained" onClick={createExperience}>Create</Button>
       <button onClick={() => {navigate(`/UserExperiences`)}} className="explore-button">Cancel</button>
-    </div>
+      </FormControl>
+      </form>
+      </Paper>
+      </Container>
   );
 };
 

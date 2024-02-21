@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Container, Paper, Grid, Box, Card, Button, ButtonGroup } from '@mui/material';
 
 const Buttons = () => {
     const navigate = useNavigate();
@@ -9,44 +10,42 @@ const Buttons = () => {
     };
 
     return (
-        <div>
-            <div className="logo" onClick={() => navigateTo('/')}>
+        <Container>
+            <Card onClick={() => navigateTo('/')}>
                 <h2>Travel-Planner</h2>
-            </div>
+            </Card>
 
-            <div className="Buttons">
-                <button onClick={() => navigateTo('/login')} className="button">
-                    Login
-                </button>
-                <button onClick={() => navigateTo('/register')} className="button">
-                    Register
-                </button>
-                <button onClick={() => navigateTo('/trips')} className="button">
+            <ButtonGroup variant="contained">
+                <Button variant="contained" onClick={() => navigateTo('/trips')}>
                     Trips
-                </button>
-                <button onClick={() => navigateTo('/profile')} className="button">
+                </Button>
+                <Button onClick={() => navigateTo('/login')} className="button">
+                    Login
+                </Button>
+                <Button onClick={() => navigateTo('/register')} className="button">
+                    Register
+                </Button>
+                <Button variant="contained" onClick={() => navigateTo('/profile')}>
                     Profile
-                </button>
-                <button onClick={() => navigateTo('/create-exp')} className="button">
-                    Create Experience
-                </button>
-                {/* Add additional buttons here */}
-                <button onClick={() => navigateTo('/UserExperiences')} className="button">
+                </Button>
+                <Button variant="contained" onClick={() => navigateTo('/create-exp')}>
+                    Add Experience
+                </Button>
+                <Button variant="contained" onClick={() => navigateTo('/UserExperiences')}>
                     My Experiences
-                </button>
-                <button onClick={() => navigateTo('/favorites')} className="button">
+                </Button>
+                <Button variant="contained" onClick={() => navigateTo('/favorites')}>
                     Favorites
-                </button>
-                <button onClick={() => navigateTo('/reviews')} className="button">
+                </Button>
+                <Button variant="contained" onClick={() => navigateTo('/reviews')}>
                     Reviews
-                </button>
-                <button onClick={() => navigateTo('/search')} className="button">
+                </Button>
+                <Button onClick={() => navigateTo('/search')} className="button">
                     Search
-                </button>
-                {/* ... more buttons as needed */}
-            </div>
-        </div>
-    );
+                </Button>
+            </ButtonGroup>
+        </Container>
+    )
 }
 
 export default Buttons;
