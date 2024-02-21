@@ -37,8 +37,8 @@ const Buttons = () => {
                 <button onClick={() => navigateTo('/favorites')} className="button">
                     Favorites
                 </button>
-                <button onClick={() => navigateTo('/ratings')} className="button">
-                    Ratings
+                <button onClick={() => navigateTo('/reviews')} className="button">
+                    Reviews
                 </button>
                 <button onClick={() => navigateTo('/search')} className="button">
                     Search
