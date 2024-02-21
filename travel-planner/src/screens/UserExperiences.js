@@ -53,7 +53,6 @@ function UserExperiences({setExperienceToUpdate}) {
                     ))};  
                     </div>
                 </div>
-                <button onClick={() => navigate('/create-exp')} className="button">Create New Experience</button>
            </div>
         </div> 
         </div>
