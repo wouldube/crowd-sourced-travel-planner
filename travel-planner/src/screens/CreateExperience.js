@@ -138,7 +138,6 @@ export const CreateExperience = () => {
 
       <br />
       <button onClick={createExperience} className="explore-button">Create</button>
-      <button onClick={() => {navigate(`/UserExperiences`)}} className="explore-button">Cancel</button>
     </div>
   );
 };
