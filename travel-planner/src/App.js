@@ -8,7 +8,7 @@ import Profile from './screens/Profile.js';
 import Account from './screens/Account.js';
 import UserExperiences from './screens/UserExperiences.js';
 import Favorites from './screens/Favorites.js';
-import Ratings from './screens/Ratings.js';
+import Reviews from './screens/Reviews.js';
 import Trips from './screens/Trips.js';
 import Trip from './components/Trip.js';
 import CreateTrip from './screens/CreateTrip';
@@ -41,7 +41,7 @@ function App() {
                 <Route path="UserExperiences" element={<UserExperiences setExperienceToUpdate={setExperienceToUpdate}/>}/>
                 <Route path="update-exp" element={<UpdateExperience experienceToUpdate={experienceToUpdate}/>}/>
                 <Route path="favorites" element={<Favorites favoriteToUpdate={favoriteToUpdate} setUserFavorites={setUserFavorites}/>}/>
-                <Route path="ratings" element={<Ratings/>}/>
+                <Route path="reviews" element={<Reviews/>}/>
                 <Route path="trips" element={<Trips setTripObject={setTripObject}/>}/>
                   <Route path="trips/trip" element={<Trip tripObject={tripObject}/>}/>
                   <Route path="trips/create-trip" element={<CreateTrip/>}/>

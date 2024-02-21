@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require("cors");
 
 const { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience, searchExperiences } = require('../controllers/experienceController');
-const { createReview, getReviewsByExperienceId, getReviewById, updateReview, deleteReview } = require('../controllers/reviewController');
+const { createReview, getReviewsByExperienceId, getReviewById, getReviewsByUserId, updateReview, deleteReview } = require('../controllers/reviewController');
 const tripController = require("../controllers/tripController");
 const { getUserById, getUserByUid, getUserExperiences, getUserFavorites, getUserReviews, getUserTrips, createUser, updateUser, deleteUser } = require('../controllers/userController');
 
@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
     res.json('hello world');
 });
 
-
+ 
 // ---- User CRUD Operations ----
 
 router.get('/user-info/:id', async (req, res) => {
@@ -363,8 +363,6 @@ router.put('/reviews/:id', async (req, res) => {
 router.delete('/reviews/:id', async (req, res) => {
     try {
         const result = await deleteReview(req.params.id);
-        // TODO: delete review from User's list of ratings
-        // TODO: delete review from Experience's list of ratings
         if (result) {
             res.json({ message: "Review deleted successfully" });
         } else {
@@ -420,9 +418,22 @@ router.get('/my-trips', (req, res) => {
 });
 
 // My Reviews Page
-router.get('/my-reviews', (req, res) => {
+router.get('/my-reviews/:userId', async (req, res) => {
     // Fetch and display reviews created by the user
+    try {
+        const userId = req.params.userId;
+        const reviews = await getReviewsByUserId(userId);
+        res.json(reviews.map(review => ({
+            ...review._doc, // Spread the review document
+            experience: review.experience // Include the full experience details
+        })));
+    } catch (error) {
+        console.error(`Error in GET /my-reviews/${req.params.userId}:`, error);
+        res.status(500).json({ message: error.message });
+    }
 });
+
+
 
 
 // ---- Community Engagement and Content Enrichment Endpoints ----

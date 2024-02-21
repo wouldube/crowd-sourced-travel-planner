@@ -27,9 +27,14 @@ const getReviewById = async (id) => {
 
 // Retrieve all reviews created by a specific user
 const getReviewsByUserId = async (userId) => {
-    const reviews = await Review.find({ owner: userId });
-    return reviews;
+    try {
+        const reviews = await Review.find({ owner: userId }).populate('experience');
+        return reviews;
+    } catch (error) {
+        throw error;
+    }
 };
+
 
 
 // Update a review
@@ -44,4 +49,4 @@ const deleteReview = async (id) => {
     return result;
 };
 
-module.exports = { createReview, getReviewsByExperienceId,  getReviewById, updateReview, deleteReview };
+module.exports = { createReview, getReviewsByExperienceId, getReviewById, getReviewsByUserId, updateReview, deleteReview };
