@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField } from '@mui/material'
 
 const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
@@ -31,15 +32,15 @@ export const UpdateExperience = ({ experienceToUpdate }) => {
   useEffect(() => {
 
     if (!localStorage.getItem("id")) {
-        // localStorage.setItem("path", "/account")
-        navigate("/login")
+      // localStorage.setItem("path", "/account")
+      navigate("/login")
     }
 
     const id = localStorage.getItem("id")
 
     fetch(`http://localhost:5000/experiences/${experienceToUpdate}`)
-    .then(response => response.json())
-    .then(experience => {
+      .then(response => response.json())
+      .then(experience => {
         setExperience(experience);
         setTitle(experience.title);
         setDescription(experience.description);
@@ -52,9 +53,9 @@ export const UpdateExperience = ({ experienceToUpdate }) => {
           navigate("/UserExperiences")
         }
 
-    })
-    
-    .catch(error => console.log(error));
+      })
+
+      .catch(error => console.log(error));
 
   }, [])
 
@@ -69,89 +70,69 @@ export const UpdateExperience = ({ experienceToUpdate }) => {
   const updateExperience = async (event) => {
     event.preventDefault();
 
-    const location = {"type":"Point","coordinates":[latitude, longitude]};
+    const location = { "type": "Point", "coordinates": [latitude, longitude] };
 
-    let exp = {title, description, location, images}
+    let exp = { title, description, location, images }
 
     // image stuff
 
 
     const response = await fetch(`http://localhost:5000/update-exp/${experienceToUpdate}`, {
       method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(exp)
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(exp)
     });
   }
 
   return (
-    <div className="AddExperience">
-      <h2>Update Experience:</h2>
+    <Container>
+      <h3>Update Experience</h3>
       <form>
-      <div className="title">
-        <label htmlFor="title">Title: </label><br/>
-        <input
-          type="text"
-          id="title"
-          required
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
-
-      <div className="description">
-        <label htmlFor="description">Description: </label><br/>
-        <input
-          type="text"
-          id="description"
-          required
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </div>
-
-      <div className="geolocation">
-        <span>Geolocation</span> <br />
-        <label htmlFor="lat">Latitude: </label><br/>
-        <input
-          type="number"
-          id="lat"
-          required
-          value={latitude}
-          onChange={(e) => setLatitude(e.target.value)}
-        /><br/>
-        <label htmlFor="long">Longitude</label><br/>
-        <input
-          type="number"
-          id="long"
-          required
-          value={longitude}
-          onChange={(e) => setLongitude(e.target.value)}
-        />
-      </div>
-
-      <div className="image">
-        <div>
-        <img src={images} style={{width:"220px"}}/>
-        </div>
-        <label htmlFor="image">Change Image: </label><br/>
-        <input
-          type="file"
-          id="image"
-          accept="image/*"
-          onChange={(e) => addImage([e.target.value])}
-        />
-      </div>
-      <div>
-        <input type="submit" onClick={updateExperience} value="Update"></input>
-      </div>
+        <FormControl>
+          <TextField label="title"
+            type="text"
+            id="title"
+            required
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <TextField label="description"
+            type="text"
+            id="description"
+            required
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <span>Geolocation</span>
+          <TextField label="Latitude"
+            type="number"
+            id="lat"
+            required
+            value={latitude}
+            onChange={(e) => setLatitude(e.target.value)}
+          />
+          <TextField label="Longitude"
+            type="number"
+            id="long"
+            required
+            value={longitude}
+            onChange={(e) => setLongitude(e.target.value)}
+          />
+          <img src={images} style={{ width: "220px" }} />
+          <TextField
+            type="file"
+            id="image"
+            accept="image/*"
+            onChange={(e) => addImage([e.target.value])}
+          />
+          <Button type="submit" onClick={updateExperience}>Update</Button>
+          <Divider/>
+          <Button onClick={() => { navigate(`/UserExperiences`) }}>Cancel</Button>
+        </FormControl>
       </form>
-      <div>
-        <button onClick={() => {navigate(`/UserExperiences`)}}>Cancel</button>
-      </div>
-    </div>
-  );
-};
+    </Container>
+)}
 
 export default UpdateExperience;

@@ -7,31 +7,50 @@ const ExperienceList = () => {
 
     useEffect(() => {
         fetch("http://localhost:5000/experiences")
-          .then(response => response.json())
-          .then(experiences => setAllExperiences(experiences))
-          .catch(error => console.error('Error fetching data:', error));
-      }, [])
+            .then(response => response.json())
+            .then(experiences => setAllExperiences(experiences))
+            .catch(error => console.error('Error fetching data:', error));
+    }, [])
 
     return (
-        <Paper variant="experiencesGrid">
+        <Container>
             <strong>More Experiences to Explore...</strong>
-            <Grid container spacing={12}>
-                    {experiences.map((allexp, index) => (
-                        <Grid item xs={6}>
-                            <img src={allexp.image} alt=" "></img>
-                            <div className="experiences-title-list"><strong>{allexp.title}</strong></div>
-                            <div className="experiences-other-listtext">Location: {allexp.location.coordinates[0]}, {allexp.location.coordinates[1]}</div>
-                            <div className="experiences-title-list">Posted By: {allexp.owner}</div>
-                            {/* {allexp.reviews} */}
-                            <div className="ratingImage">
-                                <img src="https://media.istockphoto.com/id/1306258842/photo/5-or-five-stars-sign-symbol-on-white-background-illustration-ranking-quality-service-review.jpg?s=612x612&w=0&k=20&c=PLhPtCoPZSUM9FSg9CAmTC_7b4WoHMYdaDHas64kg6M=" alt=" "></img></div>
-                                <br/><div className="experiences-other-listtext">{allexp.description}</div>
+            <Grid container spacing={3}>
+                {experiences.map((allexp) => (
+                    <Grid item xs={6}>
+                    <Card>
+                        <Grid container spacing={1}>
+                            <Grid item xs={12}>
+                                <img src={allexp.image} alt=" "></img>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <strong>{allexp.title}</strong>
+                            </Grid>
+                            <Grid item xs={12}>
+                                {allexp.location.coordinates[0]}, {allexp.location.coordinates[1]}
+                            </Grid>
+                            <Grid item xs={12}>
+                                Posted By: {allexp.owner}
+                            </Grid>
+                            <Grid item xs={12}>
+                                {/* {allexp.reviews} */}
+                            </Grid>
+                            <Grid item xs={12}>
+                                <div className="ratingImage">
+                                    <img src="https://media.istockphoto.com/id/1306258842/photo/5-or-five-stars-sign-symbol-on-white-background-illustration-ranking-quality-service-review.jpg?s=612x612&w=0&k=20&c=PLhPtCoPZSUM9FSg9CAmTC_7b4WoHMYdaDHas64kg6M=" alt=" " />
+                                </div>
+                            </Grid>
+                            <Grid item xs={12}>
+                                {allexp.description}
+                            </Grid>
                         </Grid>
-                    ))};
-           </Grid>
-         </Paper>
-        )
-      }
+                    </Card>
+                    </Grid>
+                ))}
+            </Grid>
+        </Container>
+    )
+}
 
 export default ExperienceList;
 

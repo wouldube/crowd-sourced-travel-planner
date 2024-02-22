@@ -10,7 +10,9 @@ body {
   align-items: center; justify-content: center;
 
   color: #020a1e;
-  background-color: #93d7ed;
+  background: linear-gradient(0deg, #93d7ed, #93d7ed, #FFFFFF) fixed;
+
+
 }
 
 code {

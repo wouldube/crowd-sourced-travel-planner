@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
 const { firebaseConfig } = require("../firebase/firebase-config");
-import {Container, Paper, Grid, Box, Card, Button,
-  FormLabel, FormControl, Input, TextField,} from '@mui/material'
+import {Container, Paper, Grid, Box, Card, Button, FormControl, FormLabel, Input, TextField} from '@mui/material'
 
 export const CreateExperience = () => {
 
@@ -65,7 +64,6 @@ export const CreateExperience = () => {
 
   return (
     <Container>
-      <Paper>
       <form>
         <FormControl>
 
@@ -113,7 +111,6 @@ export const CreateExperience = () => {
       <button onClick={() => {navigate(`/UserExperiences`)}} className="explore-button">Cancel</button>
       </FormControl>
       </form>
-      </Paper>
       </Container>
   );
 };
