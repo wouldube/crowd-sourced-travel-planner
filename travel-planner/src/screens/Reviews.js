@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField, Select, option } from '@mui/material'
 
 const Reviews = () => {
     const [reviews, setReviews] = useState([]);
@@ -35,16 +36,16 @@ const Reviews = () => {
         fetch(`http://localhost:5000/reviews/${reviewId}`, {
             method: 'DELETE',
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Could not delete the review.');
-            }
-            return response.json();
-        })
-        .then(() => {
-            setReviews(reviews.filter(review => review._id !== reviewId));
-        })
-        .catch(error => console.error('Error:', error));
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Could not delete the review.');
+                }
+                return response.json();
+            })
+            .then(() => {
+                setReviews(reviews.filter(review => review._id !== reviewId));
+            })
+            .catch(error => console.error('Error:', error));
     };
 
     const handleSubmit = (e) => {
@@ -61,30 +62,28 @@ const Reviews = () => {
                 experience: newReview.experienceId
             }),
         })
-        .then(response => response.json())
-        .then(data => {
-            setReviews([...reviews, data]);
-            setNewReview({ ...newReview, description: '' });
-        })
-        .catch(error => console.error('Error posting review:', error));
+            .then(response => response.json())
+            .then(data => {
+                setReviews([...reviews, data]);
+                setNewReview({ ...newReview, description: '' });
+            })
+            .catch(error => console.error('Error posting review:', error));
     };
 
     const adjustTextareaHeight = (e) => {
         e.target.style.height = 'inherit';
         e.target.style.height = `${e.target.scrollHeight}px`;
         setNewReview({ ...newReview, description: e.target.value });
-      };
-      
-    
+    };
+
+
     return (
-        <div className="reviews-container">
-            <h2>Your Reviews</h2>
-            <form onSubmit={handleSubmit} className="review-form">
-                <label>
-                    Experience:
-                    <select 
-                    className="review-select"
-                        value={newReview.experienceId} 
+        <Container>
+            <h2>My Reviews</h2>
+            <form onSubmit={handleSubmit}>
+                <FormControl>
+                    <select label="Experience"
+                        value={newReview.experienceId}
                         onChange={(e) => setNewReview({ ...newReview, experienceId: e.target.value })}
                         required
                     >
@@ -92,12 +91,8 @@ const Reviews = () => {
                             <option key={exp._id} value={exp._id}>{exp.title}</option>
                         ))}
                     </select>
-                </label>
-                <label>
-                    Rating:
-                    <select 
-                        className="review-select"
-                        value={newReview.rating} 
+                    <select label="Rating"
+                        value={newReview.rating}
                         onChange={(e) => setNewReview({ ...newReview, rating: parseInt(e.target.value) })}
                     >
                         <option value="5">5 Stars</option>
@@ -106,41 +101,39 @@ const Reviews = () => {
                         <option value="2">2 Stars</option>
                         <option value="1">1 Star</option>
                     </select>
-                </label>
-                <label>
-                    Description:
-                    <textarea 
+                    <TextField label="Review"
                         className="review-textarea"
-                        value={newReview.description} 
+                        value={newReview.description}
                         onChange={adjustTextareaHeight}
                         required
                     />
-                </label>
-                <button type="submit" className="button submit-button">Add Review</button>
+                    <Button type="submit" className="button submit-button">Add Review</Button>
+                </FormControl>
             </form>
-            <div className="reviews-list">
+            <br />
+            <Divider />
+            <br />
             {reviews.length > 0 ? (
                 reviews.map(review => {
                     // Find the experience that matches the review's experienceId
                     const matchingExperience = experiences.find(exp => exp._id === review.experience);
                     const experienceTitle = matchingExperience ? matchingExperience.title : "Unknown Experience";
                     return (
-                    <div key={review._id} className="review-item">
-                        <p>Experience: {experienceTitle}</p>
-                        <p>Rating: {review.rating}</p>
-                        <p>Description: {review.description}</p>
-                        <button onClick={() => handleDelete(review._id)} className="button delete-button">
-                            Delete
-                        </button>
-                    </div>
-                );
-            })
-        ) : (
-        <p>No reviews found.</p>
-        )}
-        </div>
-        </div>
-    );
-};
+                        <Card key={review._id}>
+                            <p>Experience: {experienceTitle}</p>
+                            <p>Rating: {review.rating}</p>
+                            <p>Description: {review.description}</p>
+                            <Button onClick={() => handleDelete(review._id)} className="button delete-button">
+                                Delete
+                            </Button>
+                        </Card>
+                    )
+                })
+            ) : (
+                <p>No reviews found.</p>
+            )}
+        </Container>
+    )
+}
 
 export default Reviews;

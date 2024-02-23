@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { Container, Paper, Grid, Box, Card, Chip, Button } from '@mui/material'
 
 function Favorites() {
 
@@ -43,29 +44,40 @@ function Favorites() {
     }, []);
 
     return (
-         <div className="MyFavorites">
-            <div className="experinceListBody">
-                <strong>Your Favorited Experiences</strong>
-                <div className="experienceListContainer">
-                    <div className="experienceListImage">
-                    {favorites.map((fav, index) => (
-                        <div key={index} className="user-experiences-list">
-                            <div className="experiences-title-list"><strong>{fav.title}</strong></div>
-                            <div className="experiences-other-listtext">{fav.location.coordinates[0]}, {fav.location.coordinates[1]}</div>
-                            {/* <div className="experiences-other-owner">{fav.owner}</div> this shows a ObjectId*/}
+        <Container>
+            <strong>My Favorited Experiences</strong>
+            <Grid container sizing={3}>
+                {/* <div className="experienceListImage"> */}
+                {favorites.map((fav) => (
+                    <Grid item xs={3}>
+                        <Card>
+                            <Grid container sizing={3}>
+                                <Grid item xs={12}>
+                                    <strong>{fav.title}</strong>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    {fav.location.coordinates[0]}, {fav.location.coordinates[1]}
+                                </Grid>
+                                <Grid item xs={12}>
+                                    {fav.description}
+                                </Grid>
                             {/* {favorites.reviews} */}
                             <div className="ratingImage">
-                                <img src="https://media.istockphoto.com/id/1306258842/photo/5-or-five-stars-sign-symbol-on-white-background-illustration-ranking-quality-service-review.jpg?s=612x612&w=0&k=20&c=PLhPtCoPZSUM9FSg9CAmTC_7b4WoHMYdaDHas64kg6M=" alt=" "></img></div>
-                            <div className="experiences-other-listtext">{fav.description}</div>
+                                <img src="https://media.istockphoto.com/id/1306258842/photo/5-or-five-stars-sign-symbol-on-white-background-illustration-ranking-quality-service-review.jpg?s=612x612&w=0&k=20&c=PLhPtCoPZSUM9FSg9CAmTC_7b4WoHMYdaDHas64kg6M=" alt=" "></img>
+                            </div>
+                            {/* <div className="experiences-other-listtext"></div> */}
                             {/* Need to work on update button */}
-                            {/* <button onClick={(onDelete)}> Remove </button> */}
-                        </div>
-                    ))};  
-                    </div>
-                </div>
-           </div>
-        </div> 
-    );
+                            {/* <Button onClick={(onDelete)}> Remove </Button> */}
+                            {/* <Grid item xs={12}> */}
+                                    {/*{fav.owner} this shows a ObjectId*/}
+                                {/* </Grid> */}
+                            </Grid>
+</Card>
+                    </Grid>
+                ))}
+            </Grid>
+        </Container>
+    )
 }
 
 export default Favorites;

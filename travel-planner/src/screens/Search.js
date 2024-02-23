@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../design.css';
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField } from '@mui/material'
 
 const Search = () => {
     const [query, setQuery] = useState('');
@@ -28,42 +28,46 @@ const Search = () => {
             })
             .finally(() => {
                 setIsLoading(false);
-            });
-    };
+            })
+    }
 
     return (
-        <div className="search-container">
+        <Container>
             <h2>Search Experiences</h2>
-            <form onSubmit={handleSearch} className="search-form">
-                <input
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Enter search keywords"
-                    className="search-input"
-                />
-                <button type="submit" disabled={isLoading} className="search-button">
-                    {isLoading ? 'Searching...' : 'Search'}
-                </button>
+            <form onSubmit={handleSearch}>
+                <FormControl>
+                    <TextField
+                        type="text"
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        placeholder="Enter search keywords"
+                        className="search-input"
+                    />
+                    <Button type="submit" disabled={isLoading}>
+                        {isLoading ? 'Searching...' : 'Search'}
+                        <br />
+                    </Button>
+                    <br />
+                </FormControl>
             </form>
             {error && <p className="error">{error}</p>}
-            <div className="search-results">
-
-                {isLoading ? (
-                    <p>Loading...</p>
-                ) : results.length > 0 ? (
-                    results.map((result) => (
-                        <div key={result._id} className="search-item">
-                            <h3 className="search-item-title">{result.title}</h3>
-                            <p className="search-item-description">{result.description}</p>
-                        </div>
-                    ))
-                ) : (
-                    <p>No results found.</p>
-                )}
-            </div>
-        </div>
-    );
-};
+            {isLoading ? (
+                <p>Loading...</p>
+            ) : results.length > 0 ? (
+                results.map((result) => (
+                    <>
+                        <Card key={result._id}>
+                            <h3>{result.title}</h3>
+                            <p>{result.description}</p>
+                        </Card>
+                        <br />
+                    </>
+                ))
+            ) : (
+                <p>No results found.</p>
+            )}
+        </Container>
+    )
+}
 
 export default Search;

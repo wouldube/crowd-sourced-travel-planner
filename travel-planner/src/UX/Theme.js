@@ -78,7 +78,8 @@ let Theme = createTheme({
                     borderRadius: '1rem', border: 'solid 3px #05594f',
                     paddingRight: 'spacing(5)', ///////////////
                     boxShadow: '0px 0px 10px 5px rgba(0, 0, 0, 0.3)',
-                    background: 'radial-gradient(#FFFFFF, #098778)'
+                    background: 'radial-gradient(#FFFFFF, #098778)',
+                    height: '100vh'
                 }
             }
         }
