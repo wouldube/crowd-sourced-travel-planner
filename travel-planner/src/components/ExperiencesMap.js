@@ -13,7 +13,6 @@ const ExperiencesMap = () => {
 
   return (
     <Container>
-      <Paper variant="experiencesMap">
         <Grid container spacing={10}>
           {experiences.map((exp, index) => (
             <Grid item sm={4} key={index}>
@@ -31,7 +30,6 @@ const ExperiencesMap = () => {
             <p>X,Y</p>
           </div>
         </Grid>
-      </Paper>
     </Container>
   );
 }

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button } from '@mui/material'
 
-function UserExperiences({setExperienceToUpdate}) {
+function UserExperiences({ setExperienceToUpdate }) {
 
     const [experiences, setUserExperiences] = useState([]);
     const navigate = useNavigate();
@@ -34,28 +35,37 @@ function UserExperiences({setExperienceToUpdate}) {
     }, []);
 
     return (
-        <div>
-        <div className="MyExperiences" id="my-experiences">
-            <div className="experinceListBody">
-                <strong>Your experiences</strong>
-                <div className="experienceListContainer">
-                    <div className="experienceListImage">
-                    {experiences.map((exp, index) => (
-                        <div key={index} className="user-experiences-list">
-                            <div className="experiences-title-list"><strong>{exp.title}</strong></div>
-                            <div className="experiences-other-listtext">{exp.location.coordinates[0]}, {exp.location.coordinates[1]}</div>
-                            <div className="ratingImage">
-                                <img src="https://media.istockphoto.com/id/1306258842/photo/5-or-five-stars-sign-symbol-on-white-background-illustration-ranking-quality-service-review.jpg?s=612x612&w=0&k=20&c=PLhPtCoPZSUM9FSg9CAmTC_7b4WoHMYdaDHas64kg6M=" alt=" "></img></div>
-                            <div className="experiences-other-listtext">{exp.description}</div>
-                            {/* Need to work on update button */}
-                            <button onClick={(e) => onUpdate(exp._id)}>Update</button>
-                        </div>
-                    ))};  
-                    </div>
-                </div>
-           </div>
-        </div> 
-        </div>
+        <Container>
+            <strong>my experiences!</strong>
+            <Grid container spacing={2}>
+                {experiences.map((exp) => (
+                    <Grid item xs={6}>
+                        <Card>
+                        <Grid container spacing={1}>
+                            <Grid item xs={12}>
+                                <strong>{exp.title}</strong>
+                            </Grid>
+                            <Grid item xs={12}>
+                                {exp.location.coordinates[0]}, {exp.location.coordinates[1]}
+                            </Grid>
+                            <Grid item xs={12}>
+                                <div className="ratingImage">
+                                    <img src="https://media.istockphoto.com/id/1306258842/photo/5-or-five-stars-sign-symbol-on-white-background-illustration-ranking-quality-service-review.jpg?s=612x612&w=0&k=20&c=PLhPtCoPZSUM9FSg9CAmTC_7b4WoHMYdaDHas64kg6M=" alt=" "></img>
+                                </div>
+                            </Grid>
+                            <Grid item xs={12}>
+                                {exp.description}
+                                {/* Need to work on update button */}
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Button onClick={(e) => onUpdate(exp._id)}>Update</Button>
+                            </Grid>
+                        </Grid>
+                    </Card>
+                    </Grid>
+                ))}
+            </Grid>
+        </Container>
     );
 }
 

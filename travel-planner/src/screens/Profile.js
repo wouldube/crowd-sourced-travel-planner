@@ -1,13 +1,13 @@
 import { React, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Buttons from '../components/Buttons.js';
-import {Container, Paper, Grid, Box, Card, Button} from '@mui/material';
+import { useNavigate, Link } from 'react-router-dom';
+import Links from '../components/Buttons.js';
+import { Container, Paper, Grid, Box, Card, Divider, Chip } from '@mui/material';
 
 
 const Profile = () => {
     const [login, check] = useState(0);
     // const [user, userinfo] = useState(0);
-    
+
     const navigate = useNavigate();
     const account = () => { navigate('/account'); };
     const UserExperiences = () => { navigate('/UserExperiences'); };
@@ -38,49 +38,54 @@ const Profile = () => {
         check(1)
 
         fetch(`http://localhost:5000/user-info/${id}`)
-        .then(response => response.json())
-        .then(user => {
-            setUsername(user.username);
-        })
+            .then(response => response.json())
+            .then(user => {
+                setUsername(user.username);
+            })
 
     }, []);
 
     return (
-        <Paper>
-                {/* {login === 0 && (
+        <Container>
+            {/* {login === 0 && (
                     // <div className="loginblur"></div>
                 )}
                 {login === 1 && ( */}
-                    {/* // <div> */}
-            <Button onClick={account}>
-                <p>user</p>
-            </Button>
-            <Paper>
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                    <Card>
-                        <Button onClick={UserExperiences}>
-                        <p><b>your experiences!</b></p>
-                        </Button>
-                    </Card>
-                    </Grid>
-                    <Grid item xs={6}>
-                    <Card>
-                        <Button onClick={favorites}>
-                        <p>favorites</p>
-                        </Button>
-                    </Card>
-                    </Grid>
-                    <Grid item xs={6}>
-                    <Card>
-                        <Button onClick={ratings}>
-                        <p>ratings</p>
-                        </Button>
-                    </Card>
-                    </Grid>
+            {/* // <div> */}
+            <Link to='/account'>
+                user
+                </Link>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                <Divider>
+                {/* <Chip label="my experiences!" /> */}
+            </Divider>
+                            {/* <Chip label="my experiences!" /> */}
+
+                                    <Link to='/UserExperiences'>
+                            your experiences!
+                        </Link>
                 </Grid>
-            </Paper>
-        </Paper>
+                <Grid item xs={6}>
+
+
+                    {/* <Card> */}
+                        <Link to='/favorites'>
+                            favorites
+                        </Link>
+                    {/* </Card> */}
+                    <Divider variant="middle" orientation="vertical" >
+                </Divider>
+                </Grid>
+                <Grid item xs={6}>
+                    <Card>
+                        <Link to='/ratings'>
+                            ratings
+                        </Link>
+                    </Card>
+                </Grid>
+            </Grid>
+        </Container>
     )
 }
 

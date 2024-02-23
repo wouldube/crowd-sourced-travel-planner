@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import {Container} from '@mui/material';
+import { Container, Paper } from '@mui/material';
 
 // screens and components
 import Exploration from './screens/Exploration'
@@ -30,32 +30,34 @@ function App() {
   const [tripObject, setTripObject] = useState()
 
   return (
-    <div className="App">
+    <div>
       <ThemeProvider theme={Theme}>
         <Container>
-      <BrowserRouter>
-      <Buttons/>
-        <div className="screens">
-          <Routes>
-            <Route path="/" element={<Exploration/>}/>
-            <Route path="create-exp" element={<CreateExperience/>}/>
-            <Route path="profile" element={<Profile/>}/>
-                <Route path="account" element={<Account/>}/>
-                <Route path="register" element={<Register/>}/>
-                <Route path="login" element={<Login/>}/>
-                <Route path="UserExperiences" element={<UserExperiences setExperienceToUpdate={setExperienceToUpdate}/>}/>
-                <Route path="update-exp" element={<UpdateExperience experienceToUpdate={experienceToUpdate}/>}/>
-                <Route path="favorites" element={<Favorites favoriteToUpdate={favoriteToUpdate} setUserFavorites={setUserFavorites}/>}/>
-                <Route path="reviews" element={<Reviews/>}/>
-                <Route path="trips" element={<Trips setTripObject={setTripObject}/>}/>
-                  <Route path="trips/trip" element={<Trip tripObject={tripObject}/>}/>
-                  <Route path="trips/create-trip" element={<CreateTrip/>}/>
-                  <Route path="trips/trip/update-trip" element={<UpdateTrip tripObject={tripObject}/>}/>
-                <Route path="search" element={<Search/>}/>
-          </Routes>
-        </div>
-      </BrowserRouter>
-      </Container>
+          <BrowserRouter>
+            <Buttons/>
+            <Container>
+              <Paper variant='major'>
+                <Routes>
+                  <Route path="/" element={<Exploration />} />
+                  <Route path="create-exp" element={<CreateExperience />} />
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="account" element={<Account />} />
+                  <Route path="register" element={<Register />} />
+                  <Route path="login" element={<Login />} />
+                  <Route path="UserExperiences" element={<UserExperiences setExperienceToUpdate={setExperienceToUpdate} />} />
+                  <Route path="update-exp" element={<UpdateExperience experienceToUpdate={experienceToUpdate} />} />
+                  <Route path="favorites" element={<Favorites favoriteToUpdate={favoriteToUpdate} setUserFavorites={setUserFavorites} />} />
+                  <Route path="reviews" element={<Reviews />} />
+                  <Route path="trips" element={<Trips setTripObject={setTripObject} />} />
+                  <Route path="trips/trip" element={<Trip tripObject={tripObject} />} />
+                  <Route path="trips/create-trip" element={<CreateTrip />} />
+                  <Route path="trips/trip/update-trip" element={<UpdateTrip tripObject={tripObject} />} />
+                  <Route path="search" element={<Search />} />
+                </Routes>
+              </Paper>
+            </Container>
+          </BrowserRouter>
+        </Container>
       </ThemeProvider>
     </div>
   );

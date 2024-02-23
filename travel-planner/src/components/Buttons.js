@@ -19,10 +19,10 @@ const Buttons = () => {
                 <Button variant="contained" onClick={() => navigateTo('/trips')}>
                     Trips
                 </Button>
-                <Button onClick={() => navigateTo('/login')} className="button">
+                <Button onClick={() => navigateTo('/login')} className="Button">
                     Login
                 </Button>
-                <Button onClick={() => navigateTo('/register')} className="button">
+                <Button onClick={() => navigateTo('/register')} className="Button">
                     Register
                 </Button>
                 <Button variant="contained" onClick={() => navigateTo('/profile')}>
@@ -40,7 +40,7 @@ const Buttons = () => {
                 <Button variant="contained" onClick={() => navigateTo('/reviews')}>
                     Reviews
                 </Button>
-                <Button onClick={() => navigateTo('/search')} className="button">
+                <Button onClick={() => navigateTo('/search')} className="Button">
                     Search
                 </Button>
             </ButtonGroup>

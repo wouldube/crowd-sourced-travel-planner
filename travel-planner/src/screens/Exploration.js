@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Welcome from '../components/Welcome';
 import ExperiencesMap from '../components/ExperiencesMap.js';
 import ExperienceList from '../components/ExperienceList.js';
-import {Container, Paper, Grid, Box, Card, Button} from '@mui/material';
+import {Container, Paper, Grid, Box, Card, Divider, Button} from '@mui/material';
 
 const Exploration = () => {
     const [initial, isInitial] = useState(0);
@@ -19,26 +19,35 @@ const Exploration = () => {
     return (
         <Container>
             {initial === 0 && (
-                <Paper>
+                <>
                     <h2>Travel</h2>
                     <h2>Planner</h2>
-                </Paper>
+                </>
             )}
             {initial != 0 && (
                 <>
                 {component === 1 && (
                     <>
-                    <Button variant="extra" onClick={()=>which(2)}>More Experiences?</Button>
-                    <ExperiencesMap/>
+                        <Button variant="extra" onClick={()=>which(2)}>More Experiences?</Button>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <Divider/>
+                        <Divider/>
+                        <Divider/>
+                        <Divider/>
+                        <Divider/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <ExperiencesMap/>
                     </>
                 )}
 
                 {component === 0 && (
                     <>
-                    <Paper>
+                        <Button variant="extra" onClick={()=>which(1)}>Explore Now!</Button>
                         <Welcome/>
-                        <button onClick={()=>which(1)} className="explore-button">Explore Now!</button>
-                    </Paper>
                     </>
                 )}
 

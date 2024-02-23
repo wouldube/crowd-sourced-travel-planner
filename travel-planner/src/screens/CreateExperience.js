@@ -64,7 +64,6 @@ export const CreateExperience = () => {
 
   return (
     <Container>
-      <Paper>
       <form>
         <FormControl>
 
@@ -112,7 +111,6 @@ export const CreateExperience = () => {
       <button onClick={() => {navigate(`/UserExperiences`)}} className="explore-button">Cancel</button>
       </FormControl>
       </form>
-      </Paper>
       </Container>
   );
 };
