@@ -7,21 +7,13 @@ function Favorites() {
     const [favorites, setFavorite] = useState([]);
     const navigate = useNavigate();
 
-    // const onDelete = async _id => {
-    //     const response = await fetch(`/my-favorites/${_id}`,{method: 'DELETE'});
-    //     if (response.status === 204){
-    //         const newFavorite = favorites.filter(m => m._id !== _id);
-    //         setFavorite(newFavorite);
-    //     } else {
-    //         console.error(`Unable to remove favorite, status code = ${response.status}`);
-    //     }
-    // };
-
-    // const loadFavorites = async () => {
-    //     const response = await fetch('/my-favorites');
-    //     const data = await response.json();
-    //     setFavorite(data);
-    // }
+    const onDelete = (id) => {
+        fetch(`http://localhost:5000/my-favorites/${id}`, {
+            method: 'DELETE',
+        })
+            .then(() => {setFavorite(favorites.filter(favorite => favorite._id !== id));})
+            .catch(error => console.error('Error:', error));
+    };
 
     const loadFavorites = (id) => {
         fetch(`http://localhost:5000/my-favorites/${id}`)
@@ -71,8 +63,9 @@ function Favorites() {
                             {/* <Grid item xs={12}> */}
                                     {/*{fav.owner} this shows a ObjectId*/}
                                 {/* </Grid> */}
+                                <Button onClick={() => onDelete(fav._id)} className="button delete-button">Delete</Button>
                             </Grid>
-</Card>
+                        </Card>
                     </Grid>
                 ))}
             </Grid>

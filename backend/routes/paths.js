@@ -399,6 +399,21 @@ router.get('/my-experiences/:id', async (req, res) => {
     }
 });
 
+router.delete('/my-experiences/:id', async (req, res) => {
+    // Delete a user's experience
+    try {
+        const result = await deleteUserExperience(req.params.id);
+        if (result) {
+            res.json({ message: "Experience deleted successfully." });
+        } else {
+            res.status(404).json({ message: "Experience not found." });
+        }
+    } catch (error) {
+        console.error(`Error in removing favorite: ${req.params.id}:`, error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 router.get('/my-favorites/:id', async (req, res) => {
     // Fetch and display experiences favorited by the user
     console.log(req.params.id)
@@ -408,6 +423,21 @@ router.get('/my-favorites/:id', async (req, res) => {
         res.json(favorites);
     } catch (error) {
         console.error(`Error in retrieving user favorites`, error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+router.delete('/my-favorites/:id', async (req, res) => {
+    // Delete a user's favorite
+    try {
+        const result = await deleteUserFavorite(req.params.id);
+        if (result) {
+            res.json({ message: "Favorite removed successfully" });
+        } else {
+            res.status(404).json({ message: "Favorite not found." });
+        }
+    } catch (error) {
+        console.error(`Error in removing favorite: ${req.params.id}:`, error);
         res.status(500).json({ message: error.message });
     }
 });
