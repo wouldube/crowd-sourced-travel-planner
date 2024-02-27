@@ -4,26 +4,20 @@ const { getExperienceById } = require("../controllers/experienceController");
 
 // Read
 const getUserById = async (id) => {
-
     // id: document id
-
     const user = await User.findById({"_id": id});
     return user;
 }
 
 const getUserByUid = async (id) => {
-
     // id: document id
-
     const user = await User.findOne({"uid": id});
     return user;
 }
 
 const getUserExperiences = async (id) => {
-    
     // id: document id
     // returns a list of experience ids
-    
     const user = await User.findById(id);
     let expList = [];
     for (let i = 0; i < user.experiences.length; i++) {
@@ -31,17 +25,34 @@ const getUserExperiences = async (id) => {
         console.log(expList);
     }
     return expList;
-
 }
 
-const getUserReviews = async (id) => {
+const updateUserExperiences = async (userID, experienceID, add=1) => {
+    // Working on this; should update user info as well as explist
+    const user = await User.findById(userID)
+    for (let i=0; i<user.experiences.length; i++) {
+        if (experienceID == user.experiences[i]._id.toString()) {
+            await user.experiences.splice(i,1)
+            await User.updateOne({_id: userID}, {favorites: user.experiences})
+            break
+        }
+    }
+    return
+}
 
+const deleteUserExperience = async (id, expList) => {
+    // Delete an user's experience, working on this
+    let expList = await getUserExperiences(id)
+    const experience = await expList.findByIdAndDelete(id)
+    await updateUserExperience(user, id, 0)
+    return experience.deletedCount;
+};
+
+const getUserReviews = async (id) => {
     // id: document id
     // returns a list of review ids
-
     const user = await User.findById(id);
     return user.reviews
-
 }
 
 const getUserFavorites = async (id) => {
@@ -54,7 +65,30 @@ const getUserFavorites = async (id) => {
         console.log(favList);
     }
     return favList;
+}
 
+const updateUserFavorite = async (userID, experienceID, add=1) => {
+    // Working on this, should update user info as well as favlist
+    const user = await User.findById(userID)
+    if (add) {
+        await User.updateOne({_id: userID}, {$push: {favorites: experienceID}})
+    } else {
+        for (let i=0; i<user.favorites.length; i++) {
+            if (favoriteID == user.favorites[i]._id.toString()) {
+                await user.favorites.splice(i,1)
+                await User.updateOne({_id: userID}, {favorites: user.favorites})
+                break
+            }
+        }
+    }
+    return
+}
+
+const deleteUserFavorite = async (id, user) => {
+    // Working on this, should delete favorite, update list and user info
+    const favorite = await Trip.findByIdAndDelete(id)
+    await updateUserFavorite(user, id, 0)
+    return favorite.deletedCount
 }
 
 const getUserTrips = async (id) => {
@@ -90,9 +124,7 @@ const updateUserTrips = async (userID, tripID, add=1) => {
 
 //Create
 const createUser = async (uid, email, username, name, bio, img) => {
-
     // returns 0 if update fails, 1 if update succeeds
-    
     const user = new User({ uid: uid, email: email, username: username, 
         name: name, bio: bio, profile_img: img });
     return user.save()
@@ -100,22 +132,19 @@ const createUser = async (uid, email, username, name, bio, img) => {
 
 //Update
 const updateUser = async(id, update) => {
-
     // update: {"property to update": updated value, "property to update": updated value}
     // returns 0 if update fails, 1 if update succeeds
-
     const result = await User.updateOne({"_id": id}, update);
     return result.modifiedCount;
 }
 
 //Delete
 const deleteUser = async(id) => {
-
     // returns 0 if delete fails, 1 if delete succeeds
-
     const result = await User.deleteOne({"_id": id});
     return result.deletedCount;
-
 }
 
-module.exports = { getUserById, getUserByUid, getUserExperiences, getUserFavorites, getUserReviews, getUserTrips, updateUserTrips, createUser, updateUser, deleteUser };
+module.exports = { getUserById, getUserByUid, getUserExperiences, updateUserExperiences, deleteUserExperience, 
+    getUserFavorites, updateUserFavorite, deleteUserFavorite, getUserReviews, getUserTrips, updateUserTrips, 
+    createUser, updateUser, deleteUser };
