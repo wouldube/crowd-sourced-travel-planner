@@ -71,9 +71,10 @@ router.post('/new-user', async (req, res) => {
 router.put('/user-info/:id', async (req, res) => {
     // Update User
     // TODO: Add back profile picture stuff
+    console.log("updating")
+    console.log(req.body)
     try {
-        const { email, username, name, bio, image } = req.body;
-        const userUpdate = { email, username, name, bio, image };
+        const userUpdate = req.body;
         const numUpdated = await updateUser(req.params.id, userUpdate);
         res.json(numUpdated); // if numUpdated = 0 -> update unsuccessful
     } catch (error) {
@@ -162,19 +163,7 @@ router.put('/update-exp/:experience_id', async (req, res) => {
     console.log(req.body)
     const experience_id = req.params.experience_id;
     const filter = {"_id": experience_id};
-    const update = {};
-    if (req.body.title){
-        update["title"] = req.body.title;
-    }
-    if (req.body.description){
-        update["description"] = req.body.description;
-    }
-    if (req.body.location){
-        update["location"] = req.body.location;
-    }
-    if (req.body.images){
-        update["images"] = req.body.images;
-    }
+    const update = req.body;
     try {
         const modifiedCount = await updateExperience(filter, update);
         
@@ -189,8 +178,17 @@ router.put('/update-exp/:experience_id', async (req, res) => {
     }
 });
 
-router.delete('/delete-exp/:experience_id', (req, res) => {
+router.delete('/delete-exp/:experience_id', async (req, res) => {
     // Delete an experience
+    const id = req.params.experience_id;
+    try {
+        const modifiedCount = await deleteExperience(id);
+        res.json(modifiedCount);
+    } catch (error) {
+        console.error(`Error in DELETE /delete-exp/${experience_id}:`, error);
+        res.status(500).json({ message: error.message });
+    }
+
 });
 
 // Route to handle search requests

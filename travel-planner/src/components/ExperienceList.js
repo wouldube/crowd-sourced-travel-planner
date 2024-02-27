@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, Button } from '@mui/material'
 
-const ExperienceList = () => {
+const ExperienceList = ({setExpId}) => {
 
     const [experiences, setAllExperiences] = useState([]);
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetch("http://localhost:5000/experiences")
@@ -12,13 +15,19 @@ const ExperienceList = () => {
             .catch(error => console.error('Error fetching data:', error));
     }, [])
 
+    const goToExperience = (expId) => {
+        setExpId(expId)
+        console.log(expId)
+        navigate(`/experience`)
+    }
+
     return (
         <Container>
             <strong>More Experiences to Explore...</strong>
             <Grid container spacing={3}>
                 {experiences.map((allexp) => (
                     <Grid item xs={6}>
-                    <Card>
+                    <Card onClick={() => {goToExperience(allexp._id)}}>
                         <Grid container spacing={1}>
                             <Grid item xs={12}>
                                 <img src={allexp.image} alt=" "></img>
