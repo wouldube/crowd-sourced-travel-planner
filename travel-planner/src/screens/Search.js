@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField } from '@mui/material'
 
-const Search = () => {
+const Search = ({setExpId}) => {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const navigate = useNavigate()
 
     const handleSearch = (event) => {
         event.preventDefault();
@@ -29,6 +32,12 @@ const Search = () => {
             .finally(() => {
                 setIsLoading(false);
             })
+    }
+
+    const goToExperience = (expId) => {
+        setExpId(expId)
+        console.log(expId)
+        navigate(`/experience`)
     }
 
     return (
@@ -56,7 +65,7 @@ const Search = () => {
             ) : results.length > 0 ? (
                 results.map((result) => (
                     <>
-                        <Card key={result._id}>
+                        <Card key={result._id} onClick={() => {goToExperience(result._id)}}>
                             <h3>{result.title}</h3>
                             <p>{result.description}</p>
                         </Card>

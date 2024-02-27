@@ -21,6 +21,7 @@ import Theme from './UX/Theme'
 import { ThemeProvider } from '@mui/material/styles'
 import Search from './screens/Search';
 import UpdateExperience from './screens/UpdateExperience.js';
+import Experience from './screens/Experience.js';
 
 function App() {
 
@@ -28,6 +29,8 @@ function App() {
   const [favoriteToUpdate, setUserFavorites] = useState([])
   const [experienceObject, setExperienceObject] = useState()
   const [tripObject, setTripObject] = useState()
+  const [expId, setExpId] = useState()
+  const [initialExp, setInitialExp] = useState()
 
   return (
     <div>
@@ -38,7 +41,7 @@ function App() {
             <Container>
               <Paper variant='major'>
                 <Routes>
-                  <Route path="/" element={<Exploration />} />
+                  <Route path="/" element={<Exploration setExpId={setExpId}/>} />
                   <Route path="create-exp" element={<CreateExperience />} />
                   <Route path="profile" element={<Profile />} />
                   <Route path="account" element={<Account />} />
@@ -50,9 +53,10 @@ function App() {
                   <Route path="reviews" element={<Reviews />} />
                   <Route path="trips" element={<Trips setTripObject={setTripObject} />} />
                   <Route path="trips/trip" element={<Trip tripObject={tripObject} />} />
-                  <Route path="trips/create-trip" element={<CreateTrip />} />
+                  <Route path="trips/create-trip" element={<CreateTrip initialExp={initialExp}/>} />
                   <Route path="trips/trip/update-trip" element={<UpdateTrip tripObject={tripObject} />} />
-                  <Route path="search" element={<Search />} />
+                  <Route path="search" element={<Search setExpId={setExpId}/>} />
+                  <Route path="experience" element={<Experience expId={expId} setExperienceToUpdate={setExperienceToUpdate} setInitialExp={setInitialExp}/>} />
                 </Routes>
               </Paper>
             </Container>
