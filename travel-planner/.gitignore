@@ -13,7 +13,7 @@
 
 # misc
 /package.json
-package-lock.json
+/package-lock.json
 .env
 .DS_Store
 .env.local

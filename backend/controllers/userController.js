@@ -40,9 +40,9 @@ const updateUserExperiences = async (userID, experienceID, add=1) => {
     return
 }
 
-const deleteUserExperience = async (id, expList) => {
+const deleteUserExperience = async (id) => {
     // Delete an user's experience, working on this
-    let expList = await getUserExperiences(id)
+    const expList = await getUserExperiences(id)
     const experience = await expList.findByIdAndDelete(id)
     await updateUserExperience(user, id, 0)
     return experience.deletedCount;
