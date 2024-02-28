@@ -39,7 +39,7 @@ function App() {
           <BrowserRouter>
             <Buttons/>
             <Container>
-              <Paper variant='major'>
+              {/* <Paper> */}
                 <Routes>
                   <Route path="/" element={<Exploration setExpId={setExpId}/>} />
                   <Route path="create-exp" element={<CreateExperience />} />
@@ -58,7 +58,7 @@ function App() {
                   <Route path="search" element={<Search setExpId={setExpId}/>} />
                   <Route path="experience" element={<Experience expId={expId} setExperienceToUpdate={setExperienceToUpdate} setInitialExp={setInitialExp}/>} />
                 </Routes>
-              </Paper>
+              {/* </Paper> */}
             </Container>
           </BrowserRouter>
         </Container>
