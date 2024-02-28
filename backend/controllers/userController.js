@@ -33,7 +33,7 @@ const updateUserExperiences = async (userID, experienceID, add=1) => {
     for (let i=0; i<user.experiences.length; i++) {
         if (experienceID == user.experiences[i]._id.toString()) {
             await user.experiences.splice(i,1)
-            await User.updateOne({_id: userID}, {favorites: user.experiences})
+            await User.updateOne({_id: userID}, {experiences: user.experiences})
             break
         }
     }
