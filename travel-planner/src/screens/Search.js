@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField } from '@mui/material'
 
-const Search = () => {
+const Search = ({setExpId}) => {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const navigate = useNavigate()
 
     const handleSearch = (event) => {
         event.preventDefault();
@@ -31,6 +34,12 @@ const Search = () => {
             })
     }
 
+    const goToExperience = (expId) => {
+        setExpId(expId)
+        console.log(expId)
+        navigate(`/experience`)
+    }
+
     return (
         <Container>
             <h2>Search Experiences</h2>
@@ -51,24 +60,22 @@ const Search = () => {
                 </FormControl>
             </form>
             {error && <p className="error">{error}</p>}
-            <Grid container spacing={2}>
-                {isLoading ? (
-                    <p>Loading...</p>
-                ) : results.length > 0 ? (
-                    results.map((result) => (
-                        <>
-                            <Grid item xs={4}>
-                                <Card key={result._id}>
-                                    <h3>{result.title}</h3>
-                                    <p>{result.description}</p>
-                                </Card>
-                            </Grid>
-                        </>
-                    ))
-                ) : (
-                    <p>No results found.</p>
-                )}
-            </Grid>
+            {isLoading ? (
+                <p>Loading...</p>
+            ) : results.length > 0 ? (
+                results.map((result) => (
+                    <>
+                        <Card key={result._id} onClick={() => {goToExperience(result._id)}}>
+                            <h3>{result.title}</h3>
+                            <p>Rating: {result.averageRating || 0}</p>
+                            <p>{result.description}</p>
+                        </Card>
+                        <br />
+                    </>
+                ))
+            ) : (
+                <p>No results found.</p>
+            )}
         </Container>
     )
 }

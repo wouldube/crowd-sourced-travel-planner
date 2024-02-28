@@ -4,7 +4,7 @@ import ExperiencesMap from '../components/ExperiencesMap.js';
 import ExperienceList from '../components/ExperienceList.js';
 import { Container, Paper, Grid, Box, Card, Divider, Button } from '@mui/material';
 
-const Exploration = () => {
+const Exploration = ({setExpId}) => {
     const [initial, isInitial] = useState(0);
     const [component, which] = useState(0);
 
@@ -58,7 +58,7 @@ const Exploration = () => {
                         <br/>
                         <br/>
                         <br/>
-                        <ExperiencesMap/>
+                        <ExperiencesMap setExpId={setExpId}/>
                     </>
                 )}
 
@@ -71,7 +71,7 @@ const Exploration = () => {
 
                 {component === 2 && (
                     <>
-                    <ExperienceList/>
+                    <ExperienceList setExpId={setExpId}/>
                     </>
                 )}
                 </>

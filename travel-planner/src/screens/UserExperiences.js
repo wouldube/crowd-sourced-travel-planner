@@ -7,6 +7,15 @@ function UserExperiences({ setExperienceToUpdate }) {
     const [experiences, setUserExperiences] = useState([]);
     const navigate = useNavigate();
 
+    const onDelete = (id) => {
+        fetch(`http://localhost:5000/my-experiences/${id}`, {
+            method: 'DELETE',
+        })
+            .then(() => {setUserExperiences(experiences.filter(experience => experience._id !== id));
+            })
+            .catch(error => console.error('Error:', error));
+    };
+
     const onUpdate = (expId) => {
 
         setExperienceToUpdate(expId);
@@ -59,6 +68,7 @@ function UserExperiences({ setExperienceToUpdate }) {
                             </Grid>
                             <Grid item xs={12}>
                                 <Button onClick={(e) => onUpdate(exp._id)}>Update</Button>
+                                <Button onClick={() => onDelete(exp._id)} className="button delete-button">Delete</Button>
                             </Grid>
                         </Grid>
                     </Card>

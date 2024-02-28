@@ -1,7 +1,8 @@
 import React, { Component, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, Button } from '@mui/material';
 
-const ExperiencesMap = () => {
+const ExperiencesMap = ({setExpId}) => {
   // const [experiences, setExperiences] = useState([])
   const [randomizedExperiences, setRandomizedExperiences] = useState([])
 
@@ -19,6 +20,15 @@ const ExperiencesMap = () => {
     } catch (error) { console.error('Error fetching data:', error) }
   }
 
+
+  const navigate = useNavigate()
+
+  const goToExperience = (expId) => {
+    setExpId(expId)
+    console.log(expId)
+    navigate(`/experience`)
+  }
+
   useEffect(() => {
     getExperiences()
 
@@ -31,7 +41,7 @@ const ExperiencesMap = () => {
       <Grid container spacing={10}>
         {randomizedExperiences.map((exp, index) => (
           <Grid item sm={4} key={index}>
-            <Card variant="experience" style={{
+            <Card variant="experience" onClick={() => {goToExperience(exp._id)}} style={{
               backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(246, 225, 161, 0.3)), url(${exp.images[0]})`,
               '&:hover': {
                 backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.9), rgba(246, 225, 161, 0.9)), url(${exp.images[0]})`
@@ -44,7 +54,7 @@ const ExperiencesMap = () => {
             </Card>
           </Grid>
         ))}
-        <div class="Experience AnExperience">
+        <div className="Experience AnExperience">
           <h3>Hoh Rainforest Hike</h3>
           <p>Hike the Hoh Rainforest in Olympic National Park on this mesmerizing trail. The towering trees draped in lush moss
             create a magical and serene trail experience.</p>

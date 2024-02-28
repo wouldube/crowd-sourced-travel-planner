@@ -1,4 +1,6 @@
-const { Review } = require('../models/schema');
+const { Review, Experience } = require('../models/schema');
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 
 // Review CRUD functions
 
@@ -10,7 +12,20 @@ const createReview = async (rating, description, owner, experience) => {
         owner,
         experience
     });
-    return review.save();
+    review.save();
+
+    const averageReviews = await Review.aggregate([
+        {$project: {experience: 1, rating: 1}},
+        {$match: {experience: new ObjectId(experience)}},
+        {$group: {_id: null, average: {$avg: "$rating"}}},
+    ]).exec();
+
+    await Experience.updateOne(
+        {_id: new ObjectId(experience)},
+        {$set: {averageRating: Number.parseFloat(averageReviews[0].average).toFixed(2)}},
+        );
+        
+    return review;
 };
 
 // Retrieve all reviews for a specific experience

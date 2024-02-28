@@ -1,7 +1,7 @@
 import { React, useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const CreateTrip = () => {
+const CreateTrip = (initialExp) => {
     /* Data & Experiences */
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -26,6 +26,12 @@ const CreateTrip = () => {
                 console.log(owner)
                 const data = await fetch(`http://localhost:5000/my-experiences/${id}`)
                 const experiences = await data.json()
+                console.log(experiences)
+
+                if (initialExp) {
+                    experiences.unshift(initialExp.initialExp)
+                }
+
                 setAllExperiences(experiences)
             } catch(error) { console.error('Error fetching data:', error) }
         }
