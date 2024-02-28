@@ -67,6 +67,7 @@ const Search = ({setExpId}) => {
                     <>
                         <Card key={result._id} onClick={() => {goToExperience(result._id)}}>
                             <h3>{result.title}</h3>
+                            <p>Rating: {result.averageRating || 0}</p>
                             <p>{result.description}</p>
                         </Card>
                         <br />

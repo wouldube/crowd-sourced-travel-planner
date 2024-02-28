@@ -34,6 +34,7 @@ const experienceSchema = mongoose.Schema({
     images: [{ type: String, required: true }],
     owner: { type: mongoose.Types.ObjectId, required: true }, // User id
     reviews: [{ type: mongoose.Types.ObjectId, required: false }], // list of Review ids
+    averageRating: { type: Number, required: true , default: 0}, // Average Rating
 });
 
 
