@@ -1,6 +1,7 @@
 import { React, useEffect, useState, } from 'react';
 import TripExperience from "./TripExperience";
 import { useNavigate } from 'react-router-dom';
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button } from '@mui/material';
 
 const Trip = ({tripObject}) => {
     /* Trip Data & Experiences */
@@ -33,15 +34,16 @@ const Trip = ({tripObject}) => {
     const navigate = useNavigate()
 
     return (
+        <Container>
         <div className="TripMap">
             <h3>{tripObject.title}</h3>
-            <button onClick={() => {navigate(`update-trip`)}}>Edit?</button>
-            <button onClick={() => {deleteTrip()}}>Delete!</button>
+            <Button onClick={() => {navigate(`update-trip`)}}>Edit?</Button>
+            <Button onClick={() => {deleteTrip()}}>Delete!</Button>
             {component === 0 && (
                 <>
                 {experiences.map((exp, index) => (
                     <div key={index} className="TripsTrip">
-                        <button onClick={()=>which(1)}>{exp.title}</button>
+                        <Button onClick={()=>which(1)}>{exp.title}</Button>
                         <p>{exp.description}</p>
                     </div>
                 ))}
@@ -50,10 +52,11 @@ const Trip = ({tripObject}) => {
             {component === 1 && (
                 <>
                 <TripExperience/>
-                <button onClick={()=>which(0)}>X</button>
+                <Button onClick={()=>which(0)}>X</Button>
                 </>
             )}
         </div>
+        </Container>
     )
 }
 

@@ -51,21 +51,24 @@ const Search = () => {
                 </FormControl>
             </form>
             {error && <p className="error">{error}</p>}
-            {isLoading ? (
-                <p>Loading...</p>
-            ) : results.length > 0 ? (
-                results.map((result) => (
-                    <>
-                        <Card key={result._id}>
-                            <h3>{result.title}</h3>
-                            <p>{result.description}</p>
-                        </Card>
-                        <br />
-                    </>
-                ))
-            ) : (
-                <p>No results found.</p>
-            )}
+            <Grid container spacing={2}>
+                {isLoading ? (
+                    <p>Loading...</p>
+                ) : results.length > 0 ? (
+                    results.map((result) => (
+                        <>
+                            <Grid item xs={4}>
+                                <Card key={result._id}>
+                                    <h3>{result.title}</h3>
+                                    <p>{result.description}</p>
+                                </Card>
+                            </Grid>
+                        </>
+                    ))
+                ) : (
+                    <p>No results found.</p>
+                )}
+            </Grid>
         </Container>
     )
 }

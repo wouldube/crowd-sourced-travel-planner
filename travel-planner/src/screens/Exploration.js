@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Welcome from '../components/Welcome';
 import ExperiencesMap from '../components/ExperiencesMap.js';
 import ExperienceList from '../components/ExperienceList.js';
-import {Container, Paper, Grid, Box, Card, Divider, Button} from '@mui/material';
+import { Container, Paper, Grid, Box, Card, Divider, Button } from '@mui/material';
 
 const Exploration = () => {
     const [initial, isInitial] = useState(0);
@@ -18,6 +18,24 @@ const Exploration = () => {
 
     return (
         <Container>
+            <Grid container sizing={3}>
+                <Grid item xs={4}>
+                    <Paper variant="welcoming">
+                        <Welcome />
+                    </Paper>
+                </Grid>
+                <Grid item xs={8}>
+                    <Paper variant="experiencesGrid">
+                        <ExperienceList />
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper variant="experiencesMap">
+                        <ExperiencesMap />
+                    </Paper>
+                </Grid>
+            </Grid>
+            {/*             
             {initial === 0 && (
                 <>
                     <h2>Travel</h2>
@@ -57,7 +75,7 @@ const Exploration = () => {
                     </>
                 )}
                 </>
-            )}
+            )} */}
         </Container>
     )
 }

@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Links from '../components/Buttons.js';
-import { Container, Paper, Grid, Box, Card, Divider, Chip } from '@mui/material';
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button } from '@mui/material';
 
 
 const Profile = () => {
@@ -52,36 +52,33 @@ const Profile = () => {
                 )}
                 {login === 1 && ( */}
             {/* // <div> */}
-            <Link to='/account'>
-                user
-                </Link>
             <Grid container spacing={2}>
-                <Grid item xs={12}>
-                <Divider>
-                {/* <Chip label="my experiences!" /> */}
-            </Divider>
-                            {/* <Chip label="my experiences!" /> */}
-
-                                    <Link to='/UserExperiences'>
-                            your experiences!
-                        </Link>
+                <Grid item xs={3}>
+                    <Card>
+                        <Button onClick={() => { navigate("/account") }}>
+                            user
+                        </Button>
+                    </Card>
                 </Grid>
-                <Grid item xs={6}>
-
-
-                    {/* <Card> */}
-                        <Link to='/favorites'>
-                            favorites
-                        </Link>
-                    {/* </Card> */}
-                    <Divider variant="middle" orientation="vertical" >
-                </Divider>
+                <Grid item xs={12}>
+                    <Card>
+                        <Button onClick={() => { navigate("/UserExperiences") }}>
+                            my experiences!
+                        </Button>
+                    </Card>
                 </Grid>
                 <Grid item xs={6}>
                     <Card>
-                        <Link to='/ratings'>
-                            ratings
-                        </Link>
+                        <Button onClick={() => { navigate("/favorites") }}>
+                            favorites
+                        </Button>
+                    </Card>
+                </Grid>
+                <Grid item xs={6}>
+                    <Card>
+                        <Button onClick={() => { navigate("/reviews") }}>
+                            reviews
+                        </Button>
                     </Card>
                 </Grid>
             </Grid>
@@ -89,4 +86,4 @@ const Profile = () => {
     )
 }
 
-export default Profile;
+export default Profile

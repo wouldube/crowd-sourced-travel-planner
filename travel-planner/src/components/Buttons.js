@@ -14,19 +14,23 @@ const Buttons = () => {
             <Card onClick={() => navigateTo('/')}>
                 <h2>Travel-Planner</h2>
             </Card>
-
             <ButtonGroup variant="contained">
                 <Button variant="contained" onClick={() => navigateTo('/trips')}>
                     Trips
                 </Button>
+                <Button variant="contained" onClick={() => navigateTo('/profile')}>
+                    Profile
+                </Button>
+                <Button onClick={() => navigateTo('/search')} className="Button">
+                    Search
+                </Button>
+            </ButtonGroup>
+            <ButtonGroup variant="contained">
                 <Button onClick={() => navigateTo('/login')} className="Button">
                     Login
                 </Button>
                 <Button onClick={() => navigateTo('/register')} className="Button">
                     Register
-                </Button>
-                <Button variant="contained" onClick={() => navigateTo('/profile')}>
-                    Profile
                 </Button>
                 <Button variant="contained" onClick={() => navigateTo('/create-exp')}>
                     Add Experience
@@ -39,9 +43,6 @@ const Buttons = () => {
                 </Button>
                 <Button variant="contained" onClick={() => navigateTo('/reviews')}>
                     Reviews
-                </Button>
-                <Button onClick={() => navigateTo('/search')} className="Button">
-                    Search
                 </Button>
             </ButtonGroup>
         </Container>

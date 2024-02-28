@@ -36,7 +36,7 @@ function App() {
           <BrowserRouter>
             <Buttons/>
             <Container>
-              <Paper variant='major'>
+              {/* <Paper> */}
                 <Routes>
                   <Route path="/" element={<Exploration />} />
                   <Route path="create-exp" element={<CreateExperience />} />
@@ -54,7 +54,7 @@ function App() {
                   <Route path="trips/trip/update-trip" element={<UpdateTrip tripObject={tripObject} />} />
                   <Route path="search" element={<Search />} />
                 </Routes>
-              </Paper>
+              {/* </Paper> */}
             </Container>
           </BrowserRouter>
         </Container>

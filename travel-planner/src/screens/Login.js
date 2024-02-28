@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField, Select, option } from '@mui/material'
 
 const firebase = require("firebase/app")
 const { firebaseConfig } = require("../firebase/firebase-config");
@@ -49,37 +50,29 @@ const Login = () => {
     }
 
     return (
-        <div id="login">
+        <Container id="log-in">
             <h2>Login</h2>
             <form>
-                <div>
-                    <label htmlFor="email">Email: </label>
-                    <input 
-                        type="email" 
-                        name="email" 
-                        id="email" 
+                <FormControl>
+                    <TextField label="email"
+                        type="email"
+                        name="email"
+                        id="email"
                         required
-                        onChange={(e) => setEmail(e.target.value)}>
-                    </input>
-                </div>
-                <div>
-                    <label htmlFor="pass">Password: </label>
-                    <input 
-                        type="password" 
-                        name="pass" 
-                        id="pass" 
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <TextField label="passsword"
+                        type="password"
+                        name="pass"
+                        id="pass"
                         required
-                        onChange={(e) => setPass(e.target.value)}>
-                    </input>
-                </div>
-                <div>
-                    <input type="submit" value="Login" onClick={authLogin}></input>
-                </div>
+                        onChange={(e) => setPass(e.target.value)}
+                    />
+                    <Button type="submit" onClick={authLogin}>Login</Button>
+                </FormControl>
             </form>
-            <div>
-                <button onClick={() => {navigate(`/register`)}}>Create an Account</button>
-            </div>
-        </div>
+            <Button onClick={() => { navigate(`/register`) }}>Create an Account</Button>
+        </Container>
     )
 }
 

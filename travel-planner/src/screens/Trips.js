@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button } from '@mui/material';
 
 const Trips = ({setTripObject}) => {
     /* Trips */
@@ -32,15 +33,19 @@ const Trips = ({setTripObject}) => {
     }
 
     return (
-        <div className="Trips">
-            <button onClick={() => {navigate(`create-trip`)}}>Plan a New One!!</button>
-            {trips.map((trip, index) => (
-                <div key={index} className="TripsTrip">
-                    <button onClick={() => {TripClick(trip)}}>{trip.title}</button>
+        <Container>
+            <Button onClick={() => {navigate(`create-trip`)}}>Plan a New One!!</Button>
+            <Grid container spacing={1}>
+            {trips.map((trip) => (
+                <Grid item xs={12}>
+                    <Card>
+                    <Button onClick={() => {TripClick(trip)}}>{trip.title}</Button>
                     <p>{trip.description}</p>
-                </div>
+                    </Card>
+                </Grid>
             ))}
-        </div>
+            </Grid>
+        </Container>
     )
 }
 
