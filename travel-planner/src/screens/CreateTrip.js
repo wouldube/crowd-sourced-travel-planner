@@ -28,7 +28,9 @@ const CreateTrip = (initialExp) => {
                 const experiences = await data.json()
                 console.log(experiences)
 
-                if (initialExp) {
+                console.log(initialExp)
+
+                if (initialExp.initialExp) {
                     experiences.unshift(initialExp.initialExp)
                 }
 
