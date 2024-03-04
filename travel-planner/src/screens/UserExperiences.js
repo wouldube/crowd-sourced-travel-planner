@@ -9,13 +9,37 @@ function UserExperiences({ setExperienceToUpdate }) {
     const [experiences, setUserExperiences] = useState([]);
     const navigate = useNavigate();
 
-    const onDelete = (id) => {
-        fetch(`http://localhost:5000/my-experiences/${id}`, {
-            method: 'DELETE',
-        })
-            .then(() => {setUserExperiences(experiences.filter(experience => experience._id !== id));
-            })
-            .catch(error => console.error('Error:', error));
+    const onDelete = async (experience) => {
+        const id = localStorage.getItem("id")
+        if (id) {
+        const response = await fetch(`http://localhost:5000/delete-exp/${experience._id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(experience)
+        });
+
+        const data = await fetch(`http://localhost:5000/user-info/${id}`)
+        const user = await data.json()
+        const expList = user.experiences
+
+        const index = expList.indexOf(experience._id)
+        if (index > -1) {
+            expList.splice(index, 1);
+        }
+
+        const updateUser = await fetch(`http://localhost:5000/user-info/${id}`, {
+            method: "PUT",
+            body: JSON.stringify({"experiences": expList}),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        loadExperience()
+        }
+        
     };
 
     const onUpdate = (expId) => {
@@ -70,7 +94,7 @@ function UserExperiences({ setExperienceToUpdate }) {
                             </Grid>
                             <Grid item xs={12}>
                                 <EditNoteIcon onClick={() => onUpdate(exp._id)}/>
-                                <DeleteForeverIcon onClick={() => onDelete(exp._id)}/>
+                                <DeleteForeverIcon onClick={() => onDelete(exp)} className="button delete-button"/>
                             </Grid>
                         </Grid>
                     </Card>
