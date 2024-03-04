@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Paper, Grid, Box, Card, Divider, Chip, Button } from '@mui/material'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 function UserExperiences({ setExperienceToUpdate }) {
 
@@ -69,30 +71,30 @@ function UserExperiences({ setExperienceToUpdate }) {
 
     return (
         <Container>
-            <strong>my experiences!</strong>
+            <strong>My Experiences</strong>
             <Grid container spacing={2}>
                 {experiences.map((exp) => (
                     <Grid item xs={6}>
                         <Card>
                         <Grid container spacing={1}>
-                            <Grid item xs={12}>
+                            <Grid item xs={16}>
                                 <strong>{exp.title}</strong>
                             </Grid>
                             <Grid item xs={12}>
-                                {exp.location.coordinates[0]}, {exp.location.coordinates[1]}
+                                <img src={exp.images} style={{maxWidth: "100%" }}/>
                             </Grid>
                             <Grid item xs={12}>
-                                <div className="ratingImage">
-                                    <img src="https://media.istockphoto.com/id/1306258842/photo/5-or-five-stars-sign-symbol-on-white-background-illustration-ranking-quality-service-review.jpg?s=612x612&w=0&k=20&c=PLhPtCoPZSUM9FSg9CAmTC_7b4WoHMYdaDHas64kg6M=" alt=" "></img>
-                                </div>
+                                <strong>Location: </strong>{exp.location.coordinates[0]}, {exp.location.coordinates[1]}
+                            </Grid>
+                            <Grid item xs={12}>
+                                {exp.reviews}
                             </Grid>
                             <Grid item xs={12}>
                                 {exp.description}
-                                {/* Need to work on update button */}
                             </Grid>
                             <Grid item xs={12}>
-                                <Button onClick={(e) => onUpdate(exp._id)}>Update</Button>
-                                <Button onClick={(e) => onDelete(exp)} className="button delete-button">Delete</Button>
+                                <EditNoteIcon onClick={() => onUpdate(exp._id)}/>
+                                <DeleteForeverIcon onClick={() => onDelete(exp)} className="button delete-button"/>
                             </Grid>
                         </Grid>
                     </Card>
