@@ -26,12 +26,12 @@ const Exploration = ({setExpId}) => {
                 </Grid>
                 <Grid item xs={8}>
                     <Paper variant="experiencesGrid">
-                        <ExperienceList />
+                        <ExperienceList setExpId={setExpId}/>
                     </Paper>
                 </Grid>
                 <Grid item xs={12}>
                     <Paper variant="experiencesMap">
-                        <ExperiencesMap />
+                        <ExperiencesMap setExpId={setExpId}/>
                     </Paper>
                 </Grid>
             </Grid>
