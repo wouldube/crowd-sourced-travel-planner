@@ -122,5 +122,5 @@ const deleteUser = async(id) => {
 }
 
 module.exports = { getUserById, getUserByUid, getUserExperiences, updateUserExperiences, deleteUserExperience, 
-    getUserFavorites, updateUserFavorite, deleteUserFavorite, getUserReviews, getUserTrips, updateUserTrips, 
+    getUserFavorites, getUserReviews, getUserTrips, updateUserTrips, 
     createUser, updateUser, deleteUser };
