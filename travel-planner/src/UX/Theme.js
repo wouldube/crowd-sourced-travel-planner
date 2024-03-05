@@ -3,13 +3,13 @@ import { createTheme } from '@mui/material/styles';
 let Theme = createTheme({
     palette: {
         primary: { main: '#f6e1a1' },
-        secondary: { main: '#93d7ed' },
+        secondary: { main: '#bbcaf4' },
         action: {
-            active: '#f4e5bb',
-            hover: '#f4e5bb',
-            selected: '#f4e5bb'
+            active: '#bbcaf4',
+            hover: '#bbcaf4',
+            selected: '#bbcaf4'
         },
-        divider: '#f4e5bb',
+        divider: '#bbcaf4',
         background: { main: '#93d7ed' }
     },
     components: {
@@ -49,7 +49,7 @@ let Theme = createTheme({
                 }
             ],
             styleOverrides: {
-                root: {
+                root: {//'1rem'
                     borderRadius: '1rem', border: 'solid 3px #f6e1a1',
                     boxShadow: '0px 0px 10px 3px rgba(0, 0, 0, 0.2)',
                     background: 'radial-gradient(#FFFFFF, #f6e1a1)',
@@ -62,6 +62,9 @@ let Theme = createTheme({
                     width: '100%', height: '100%'
                 }
             }
+        },
+        MuiFormControl: {
+            styleOverrides: { root: { padding: '1%' } }
         },
         MuiPaper: {
             variants: [

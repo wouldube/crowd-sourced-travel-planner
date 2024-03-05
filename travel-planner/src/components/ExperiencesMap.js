@@ -54,12 +54,6 @@ const ExperiencesMap = ({setExpId}) => {
             </Card>
           </Grid>
         ))}
-        <div className="Experience AnExperience">
-          <h3>Hoh Rainforest Hike</h3>
-          <p>Hike the Hoh Rainforest in Olympic National Park on this mesmerizing trail. The towering trees draped in lush moss
-            create a magical and serene trail experience.</p>
-          <p>X,Y</p>
-        </div>
       </Grid>
     </Container>
   );

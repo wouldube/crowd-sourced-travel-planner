@@ -107,8 +107,8 @@ export const CreateExperience = () => {
             </div>
             </div> */}
 
-      <Button varient="contained" onClick={createExperience}>Create</Button>
-      <button onClick={() => {navigate(`/UserExperiences`)}} className="explore-button">Cancel</button>
+      <Button variant="contained" onClick={createExperience}>Create</Button>
+      <Button onClick={() => {navigate(`/UserExperiences`)}}>Cancel</Button>
       </FormControl>
       </form>
       </Container>

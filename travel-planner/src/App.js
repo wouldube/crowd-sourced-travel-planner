@@ -24,16 +24,14 @@ import UpdateExperience from './screens/UpdateExperience.js';
 import Experience from './screens/Experience.js';
 
 function App() {
-
-  const [experienceToUpdate, setExperienceToUpdate] = useState([])
-  const [favoriteToUpdate, setUserFavorites] = useState([])
-  const [experienceObject, setExperienceObject] = useState()
-  const [tripObject, setTripObject] = useState()
   const [expId, setExpId] = useState()
   const [initialExp, setInitialExp] = useState()
+  const [experienceToUpdate, setExperienceToUpdate] = useState([])
+  const [favoriteToUpdate, setUserFavorites] = useState([])
+  const [tripObject, setTripObject] = useState()
 
   return (
-    <div>
+    <main>
       <ThemeProvider theme={Theme}>
         <Container>
           <BrowserRouter>
@@ -63,8 +61,8 @@ function App() {
           </BrowserRouter>
         </Container>
       </ThemeProvider>
-    </div>
-  );
+    </main>
+  )
 }
 
 export default App;
