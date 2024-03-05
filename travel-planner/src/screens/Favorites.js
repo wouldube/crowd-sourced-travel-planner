@@ -51,11 +51,11 @@ function Favorites() {
     return (
         <Container>
             <strong>My Favorite Experiences</strong>
-            <Grid container sizing={3}>
-                {favorites.map((fav) => (
-                    <Grid item xs={3}>
+            <Grid container spacing={3}>
+                {favorites.map((fav, index) => (
+                    <Grid item key={index} xs={4}>
                         <Card>
-                            <Grid container sizing={3}>
+                            <Grid container>
                                 <Grid item xs={12}>
                                     <strong>{fav.title}</strong>
                                 </Grid>
