@@ -3,9 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, Button } from '@mui/material'
 
 const ExperienceList = ({setExpId}) => {
-
     const [experiences, setAllExperiences] = useState([]);
-
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -30,19 +28,20 @@ const ExperienceList = ({setExpId}) => {
                     <Card onClick={() => {goToExperience(allexp._id)}}>
                         <Grid container spacing={1}>
                             <Grid item xs={12}>
-                                <img src={allexp.images} style={{maxWidth: "100%" }}/>
+                                <img src={allexp.images} style={{borderRadius: "50px", maxWidth: "100%"}}/>
                             </Grid>
-                            <Grid item xs={16}>
+                            <Grid item xs={12}>
                                 <strong>{allexp.title}</strong>
                             </Grid>
                             <Grid item xs={12}>
-                                <strong>Location: </strong>{allexp.location.coordinates[0]}, {allexp.location.coordinates[1]}
+                                <strong>Location</strong><br/>{allexp.location.coordinates[0]}, {allexp.location.coordinates[1]}
                             </Grid>
                             <Grid item xs={12}>
-                                <strong>Posted By: </strong>{allexp.owner}
+                                <strong>Posted By</strong><br/>
+                                {/* {allexp.owner} */}
                             </Grid>
                             <Grid item xs={12}>
-                                <strong>Rating: </strong>{allexp.reviews}
+                                <strong>Rating</strong><br/>{allexp.reviews}
                             </Grid>
                             <Grid item xs={12}>
                                 {allexp.description}

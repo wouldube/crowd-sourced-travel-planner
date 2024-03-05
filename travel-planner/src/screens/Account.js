@@ -9,7 +9,7 @@ const { getAuth, signInWithEmailAndPassword, updateEmail, updatePassword } = req
 
 
 const Account = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const fb_app = firebase.initializeApp(firebaseConfig);
     const storage = getStorage(fb_app)
@@ -132,9 +132,9 @@ const Account = () => {
 
     return (
         <Container>
-            <Divider/>
-            <h3>My Account</h3>
-            <Divider/>
+            <Grid container>
+                <Grid item xs={6}>
+            <Paper>
             <form>
                 <FormControl>
                 <img src={image} style={{ width: "75px" }} />
@@ -170,9 +170,11 @@ const Account = () => {
                 <Button variant="contained" type="submit" onClick={updateUser} value="Submit">submit</Button>
             </FormControl>
             </form>
-            <Divider/>
-                {/* <Chip label="Update Email & Password" />
-            </Divider> */}
+            </Paper>
+            </Grid>
+            <Grid item xs={6}>
+                <Paper>
+
             <form>
             <FormControl>
                 <FormLabel>Update Email & Password</FormLabel>
@@ -203,9 +205,15 @@ const Account = () => {
                 <Button variant="contained" type="submit" onClick={updateEmailandPass} value="Submit">submit</Button>
             </FormControl>
             </form>
+            </Paper>
+            </Grid>
+            </Grid>
+
             <Divider/>
                 <Button onClick={logOut}>Logout</Button>
-        </Container>
+
+                
+        </Container >
     )
 }
 

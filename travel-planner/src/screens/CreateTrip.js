@@ -13,7 +13,6 @@ const CreateTrip = (initialExp) => {
     const [allExperiences, setAllExperiences] = useState([])
 
     useEffect(() => {
-
         if (!localStorage.getItem("id")) {
             // localStorage.setItem("path", "/trips/create-trip")
             navigate("/login")
@@ -60,51 +59,48 @@ const CreateTrip = (initialExp) => {
 
     return (
         <Container>
+            <Card>
+            New Trip!
             <form>
                 <FormControl>
-                    <Grid container spacing={2}>
+                    <Grid container>
                         <Grid item xs={12}>
                             <TextField
                                 id="title" label="Title" type="text" required
                                 value={title} onChange={(e) => { setTitle(e.target.value) }}
                             />
                         </Grid>
-
                         <Grid item xs={12}>
-
                             <TextField
                                 id="description" label="Description" type="text"
                                 value={description} onChange={(e) => setDescription(e.target.value)}
                             />
                         </Grid>
-
                         <Grid item xs={12}>
-
                             <TextField
                                 id="image" label="Image" type="file" accept="image/*"
                                 onChange={(e) => setImage(e.target.value)}
                             />
                         </Grid>
                     </Grid>
-
-                    <Button type="submit" onClick={SaveTrip}>Create</Button>
+                    <Button type="submit" onClick={SaveTrip}>+</Button>
                     <Divider/>
                     <Divider/>
                     <Divider/>
                     Add some of your experiences to the trip!
                     <Grid container sizing={3}>
-                        {allExperiences.map((exp) => (
-                            <Grid item xs={4}>
+                        {allExperiences.map((exp, index) => (
+                            <Grid item key={index} xs={4}>
                                 <Card variant="experience">
                                     <h3>{exp.title}</h3>
-                                    <p>{exp.description}</p>
-                                    <Button onClick={() => { setExperiences([...experiences, exp]) }}>ADD!!</Button>
+                                    <Button onClick={() => { setExperiences([...experiences, exp]) }}>+</Button>
                                 </Card>
                             </Grid>
                         ))}
                     </Grid>
                 </FormControl>
             </form>
+            </Card>
         </Container>
     )
 }

@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, Divider, Chip, Button } from '@mui/material';
 
 const Trip = ({ tripObject }) => {
-    /* Trip Data & Experiences */
     const [experiences, setExperiences] = useState([]);
+    const navigate = useNavigate()
 
     useEffect(() => {
         const getExperiences = async () => {
@@ -17,7 +17,6 @@ const Trip = ({ tripObject }) => {
         getExperiences()
     }, [])
 
-    /* Adjustments */
     const deleteTrip = async () => {
         try {
             await fetch(`http://localhost:5000/delete-trip/${tripObject._id}`, {
@@ -29,27 +28,24 @@ const Trip = ({ tripObject }) => {
         navigate(`/trips`)
     }
 
-    /* Navigation */
-    const [component, which] = useState(0);
-    const navigate = useNavigate()
 
     return (
         <Container>
-            <div className="TripMap">
                 <h3>{tripObject.title}</h3>
                 <Button onClick={() => { navigate(`update-trip`) }}>Edit?</Button>
                 <Button onClick={() => { deleteTrip() }}>Delete!</Button>
-                {component === 0 && (
-                    <>
-                        {experiences.map((exp, index) => (
-                            <div key={index} className="TripsTrip">
-                                <Button onClick={() => which(1)}>{exp.title}</Button>
-                                <p>{exp.description}</p>
-                            </div>
-                        ))}
-                    </>
-                )}
-            </div>
+                <Grid container sizing={3}>
+                    {experiences.map((exp, index) => (
+                        <Grid item key={index} xs={4}>
+                            <Card key={index} variant="experience" onClick={() => { goToExperience(exp._id) }}
+                                style={{
+                                    backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(246, 225, 161, 0.3)), url(${exp.images[0]})`
+                                }}>
+                                <Container><h3>{exp.title}</h3></Container>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
         </Container>
     )
 }
