@@ -12,7 +12,7 @@ const createReview = async (rating, description, owner, experience) => {
         owner,
         experience
     });
-    review.save();
+    await review.save();
 
     const averageReviews = await Review.aggregate([
         {$project: {experience: 1, rating: 1}},

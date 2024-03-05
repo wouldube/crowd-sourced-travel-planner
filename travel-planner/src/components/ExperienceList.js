@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, Button } from '@mui/material'
+import ReviewModal from './ReviewModal.js';
 
 const ExperienceList = ({setExpId}) => {
     const [experiences, setAllExperiences] = useState([]);
+
+    const [visibleReviewModal, setVisibleReviewModal] = useState(false);
+    const [reviewExpId, setReviewExpId] = useState();
+
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -17,6 +23,17 @@ const ExperienceList = ({setExpId}) => {
         setExpId(expId)
         //console.log(expId)
         navigate(`/experience`)
+    }
+
+    // Review
+    const handleReviewModal = (event, expId) => {
+        event.stopPropagation()
+        setReviewExpId(expId)
+        setVisibleReviewModal(true)
+    }
+    
+    const handleCloseReviewModal = (event) => {
+        setVisibleReviewModal(false)
     }
 
     return (
@@ -46,11 +63,23 @@ const ExperienceList = ({setExpId}) => {
                             <Grid item xs={12}>
                                 {allexp.description}
                             </Grid>
+                            <Grid item xs={12}>
+                                <button 
+                                    onClick={(event)=>{handleReviewModal(event, allexp._id)}}
+                                >
+                                    Review
+                                </button>
+                            </Grid>
                         </Grid>
                     </Card>
                     </Grid>
                 ))}
             </Grid>
+            {!!visibleReviewModal && 
+            <ReviewModal 
+                expId={reviewExpId}
+                onClose={handleCloseReviewModal}
+            ></ReviewModal>}
         </Container>
     )
 }
