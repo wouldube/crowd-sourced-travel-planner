@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, Chip, Button } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, Chip, Button, Tooltip, IconButton } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 function Favorites() {
@@ -51,11 +51,11 @@ function Favorites() {
     return (
         <Container>
             <strong>My Favorite Experiences</strong>
-            <Grid container spacing={3}>
-                {favorites.map((fav, index) => (
-                    <Grid item key={index} xs={4}>
+            <Grid container sizing={3}>
+                {favorites.map((fav) => (
+                    <Grid item xs={3}>
                         <Card>
-                            <Grid container>
+                            <Grid container sizing={3}>
                                 <Grid item xs={12}>
                                     <strong>{fav.title}</strong>
                                 </Grid>
@@ -74,7 +74,13 @@ function Favorites() {
                                 <Grid item xs={12}>
                                     {fav.description}
                                 </Grid>
-                                <FavoriteIcon onClick={() => unfavorite(fav)}/>
+                                <Grid item xs={12}>
+                                    <Tooltip title="Remove Favorite" followCursor>
+                                        <IconButton>
+                                            <FavoriteIcon onClick={() => unfavorite(fav)} className="button delete-button"/>
+                                        </IconButton>
+                                    </Tooltip>
+                                </Grid>
                             </Grid>
                         </Card>
                     </Grid>
