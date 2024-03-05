@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, useNavigate } from "react-router-dom";
 import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField, Select, option, ButtonGroup } from '@mui/material'
+import ReviewModal from '../components/ReviewModal.js';
 
 const Experience = (props) => {
 
     // TODO: make page usable when user not logged in
 
     const navigate = useNavigate();
+
+    // Review
+    const [visibleReviewModal, setVisibleReviewModal] = useState(false);
 
     const id = localStorage.getItem("id")
     const experienceId = props.expId
@@ -126,6 +130,16 @@ const Experience = (props) => {
         const show = document.getElementById("userTrips")
         show.style.display = "block"
     }
+    
+    // add review
+    const handleOpenReviewModal = () => {
+        setVisibleReviewModal(true);
+    };
+    
+    const handleCloseReviewModal = () => {
+        setVisibleReviewModal(false);
+    };
+    
 
     const pickTrip = async (trip) => {
         const expList = trip.experiences
@@ -197,6 +211,7 @@ const Experience = (props) => {
                 <Button variant="contained" onClick={addToTrip}>Add to Trip</Button>
                 <Button variant="contained" onClick={favoriteExp} id="addFav">Add to Favorites</Button>
                 <Button variant="contained" style={{display: "none"}} onClick={unfavoriteExp} id="removeFav">Remove Favorite</Button>
+                <button onClick={handleOpenReviewModal}>Write a Review</button>
                 </div>
             </ButtonGroup>
             <div id="userTrips" style={{display: "none"}}>
@@ -229,7 +244,11 @@ const Experience = (props) => {
             </Grid>
             </Grid>
             <div>
-                {/* review component */}
+                {visibleReviewModal && (
+                    <ReviewModal 
+                    expId={experienceId}
+                    onClose={handleCloseReviewModal}
+                />)}
             </div>
             </Paper>
         </Container>
