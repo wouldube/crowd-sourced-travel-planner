@@ -15,7 +15,7 @@ const ExperienceList = ({setExpId}) => {
 
     const goToExperience = (expId) => {
         setExpId(expId)
-        console.log(expId)
+        //console.log(expId)
         navigate(`/experience`)
     }
 

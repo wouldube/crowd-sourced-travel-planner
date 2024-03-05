@@ -8,32 +8,44 @@ function Favorites() {
     const [favorites, setFavorite] = useState([]);
     const navigate = useNavigate();
 
-    const onDelete = (id) => {
-        fetch(`http://localhost:5000/my-favorites/${id}`, {
-            method: 'DELETE',
-        })
-            .then(() => {setFavorite(favorites.filter(favorite => favorite._id !== id));})
-            .catch(error => console.error('Error:', error));
-    };
 
-    const loadFavorites = (id) => {
-        fetch(`http://localhost:5000/my-favorites/${id}`)
-            .then(response => response.json())
-            .then(favorites => setFavorite(favorites), console.log(favorites))
-            .catch(error => console.error('Error fetching data:', error));
+    const unfavorite = async (favorite) => {
+        const id = localStorage.getItem("id")
+        const data = await fetch(`http://localhost:5000/user-info/${id}`)
+        const user = await data.json()
+        const favList = user.favorites
+
+        const index = favList.indexOf(favorite._id)
+        if (index > -1) {
+            favList.splice(index, 1);
+        }
+
+        const updateUser = await fetch(`http://localhost:5000/user-info/${id}`, {
+            method: "PUT",
+            body: JSON.stringify({"favorites": favList}),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        console.log(updateUser);
+        loadFavorites()
     }
 
-    useEffect(() => {
-
+    const loadFavorites = () => {
         if (!localStorage.getItem("id")) {
-            // localStorage.setItem("path", "/favorites")
             navigate("/login")
         }
 
         const id = localStorage.getItem("id")
 
-        loadFavorites(id);
-        console.log(favorites)
+        fetch(`http://localhost:5000/my-favorites/${id}`)
+            .then(response => response.json())
+            .then(favorites => setFavorite(favorites))
+            .catch(error => console.error('Error fetching data:', error));
+    }
+
+    useEffect(() => {
+        loadFavorites();
     }, []);
 
     return (
@@ -62,14 +74,15 @@ function Favorites() {
                                 <Grid item xs={12}>
                                     {fav.description}
                                 </Grid>
-                                <FavoriteIcon onClick={() => onDelete(fav._id)}/>
+                                <FavoriteIcon onClick={() => unfavorite(fav)}/>
                             </Grid>
                         </Card>
                     </Grid>
                 ))}
             </Grid>
         </Container>
-    )
+    );
 }
+
 
 export default Favorites;
