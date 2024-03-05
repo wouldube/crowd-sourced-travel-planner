@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField, Select, option } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField, Select, option } from '@mui/material';
+import ReviewModal from '../components/ReviewModal.js';
 
 const Experience = (props) => {
 
     const navigate = useNavigate();
+
+    // Review
+    const [visibleReviewModal, setVisibleReviewModal] = useState(false);
 
     const id = localStorage.getItem("id")
     const experienceId = props.expId
@@ -69,6 +73,16 @@ const Experience = (props) => {
         const show = document.getElementById("userTrips")
         show.style.display = "block"
     }
+    
+    // add review
+    const handleOpenReviewModal = () => {
+        setVisibleReviewModal(true);
+    };
+    
+    const handleCloseReviewModal = () => {
+        setVisibleReviewModal(false);
+    };
+    
 
     const pickTrip = async (trip) => {
         const expList = trip.experiences
@@ -135,6 +149,7 @@ const Experience = (props) => {
             <div>
                 <button onClick={addToTrip}>Add to Trip</button>
                 <button onClick={favoriteExp}>Add to Favorites</button>
+                <button onClick={handleOpenReviewModal}>Write a Review</button>
             </div>
             <div id="userTrips" style={{display: "none"}}>
                 <button onClick={createTrip}>Create New Trip</button>
@@ -158,7 +173,11 @@ const Experience = (props) => {
                 <span>{experience.location.coordinates[0]}, {experience.location.coordinates[1]}</span>
             </div>
             <div>
-                {/* review component */}
+                {visibleReviewModal && (
+                    <ReviewModal 
+                    expId={experienceId}
+                    onClose={handleCloseReviewModal}
+                />)}
             </div>
         </Container>
     )
