@@ -36,22 +36,18 @@ function UserExperiences({ setExperienceToUpdate }) {
                 "Content-Type": "application/json",
             },
         });
-
+        
         loadExperience()
         }
-        
     };
 
     const onUpdate = (expId) => {
-
         setExperienceToUpdate(expId);
         navigate("/update-exp");
-
     }
 
 
     const loadExperience = () => {
-
         if (!localStorage.getItem("id")) {
             // localStorage.setItem("path", "/UserExperiences")
             navigate("/login")
