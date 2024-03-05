@@ -29,9 +29,11 @@ const CreateTrip = (initialExp) => {
                 const experiences = await data.json()
                 console.log(experiences)
 
-                // if (initialExp) {
-                //     experiences.unshift(initialExp.initialExp)
-                // }
+                console.log(initialExp)
+
+                if (initialExp.initialExp) {
+                    experiences.unshift(initialExp.initialExp)
+                }
 
                 setAllExperiences(experiences)
             } catch (error) { console.error('Error fetching data:', error) }

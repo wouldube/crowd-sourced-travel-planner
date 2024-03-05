@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField, Select, option } from '@mui/material'
+import { Container, Alert, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField, Select, option } from '@mui/material'
 
 const firebase = require("firebase/app")
 const { firebaseConfig } = require("../firebase/firebase-config");
@@ -45,6 +45,8 @@ const Login = () => {
             })
             .catch((error) => {
                 console.log(error)
+                const show = document.getElementById("badLogin")
+                show.style.display = "block"
                 return
             })
     }
@@ -52,6 +54,10 @@ const Login = () => {
     return (
         <Container id="log-in">
             <h2>Login</h2>
+            <div id="badLogin" style={{display: "none", width: "100%"}}>
+            <Alert severity="error" >Invalid username or password!</Alert>
+            <br/>
+            </div>
             <form>
                 <FormControl>
                     <TextField label="email"
