@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField, Select, option } from '@mui/material';
+import { BrowserRouter, useNavigate } from "react-router-dom";
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField, Select, option, ButtonGroup } from '@mui/material'
 import ReviewModal from '../components/ReviewModal.js';
 
 const Experience = (props) => {
+
+    // TODO: make page usable when user not logged in
 
     const navigate = useNavigate();
 
@@ -34,11 +36,43 @@ const Experience = (props) => {
             .then(response => response.json())
             .then(data => setExperience(data))
             .catch(error => console.error('Error fetching experience: ', error));
+        
+        if (id) {
+            favoriteButton()
+        }
 
     }, [])
 
+    const favoriteButton = async () => {
+        const data = await fetch(`http://localhost:5000/user-info/${id}`)
+        const user = await data.json()
+        const favList = user.favorites
+
+        if (favList.indexOf(experience._id) >= 0) {
+            const show = document.getElementById("removeFav")
+            show.style.display = "block"
+
+            const hide = document.getElementById("addFav")
+            hide.style.display = "none"
+        }
+        else {
+            const show = document.getElementById("addFav")
+            show.style.display = "block"
+            const hide = document.getElementById("removeFav")
+            hide.style.display = "none"
+        }
+    }
+
+    if (id) {
+        favoriteButton()
+    }
+
     // favorite an experience
     const favoriteExp = async () => {
+        if (!id) {
+            navigate('/')
+        }
+
         console.log('fav')
         console.log(id)
         const data = await fetch(`http://localhost:5000/user-info/${id}`)
@@ -59,7 +93,30 @@ const Experience = (props) => {
             });
 
             console.log(updateUser)
+
+            favoriteButton()
         }
+    }
+
+    const unfavoriteExp = async () => {
+        const data = await fetch(`http://localhost:5000/user-info/${id}`)
+        const user = await data.json()
+        const favList = user.favorites
+
+        const index = favList.indexOf(experience._id)
+        if (index > -1) {
+            favList.splice(index, 1);
+        }
+
+        const updateUser = await fetch(`http://localhost:5000/user-info/${id}`, {
+            method: "PUT",
+            body: JSON.stringify({"favorites": favList}),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        favoriteButton()
     }
 
     // add exp to trip
@@ -145,12 +202,18 @@ const Experience = (props) => {
 
     return (
         <Container>
+            <Paper>
             <h2>{experience.title}</h2>
-            <div>
-                <button onClick={addToTrip}>Add to Trip</button>
-                <button onClick={favoriteExp}>Add to Favorites</button>
+            <Grid container spacing={10}>
+            <Grid item xs={9}>
+            <ButtonGroup>
+                <div>
+                <Button variant="contained" onClick={addToTrip}>Add to Trip</Button>
+                <Button variant="contained" onClick={favoriteExp} id="addFav">Add to Favorites</Button>
+                <Button variant="contained" style={{display: "none"}} onClick={unfavoriteExp} id="removeFav">Remove Favorite</Button>
                 <button onClick={handleOpenReviewModal}>Write a Review</button>
-            </div>
+                </div>
+            </ButtonGroup>
             <div id="userTrips" style={{display: "none"}}>
                 <button onClick={createTrip}>Create New Trip</button>
                 {trips.map((trip, index) => (
@@ -159,19 +222,27 @@ const Experience = (props) => {
                     </div>
                 ))}
             </div>
+            <ButtonGroup>
             <div id="ownerTrue" style={{display: "none"}}>
-                <button onClick={updateExp}>Update</button>
-                <button onClick={deleteExp}>Delete</button>
+                <Button variant="contained" onClick={updateExp}>Update</Button>
+                <Button variant="contained" onClick={deleteExp}>Delete</Button>
             </div>
-            <img src={experience.images[0]} style={{ width: "400px" }}></img>
-            <div>
+            </ButtonGroup>
+            </Grid>
+            <Grid item xs={4}>
+            <img src={experience.images[0]} style={{ width: "350px" }}></img>
+            </Grid>
+            <Grid item xs={8}>
+            <div style={{"textAlign": "left", "marginLeft":70}}>
                 <p>Description: </p>
                 <span>{experience.description}</span>
             </div>
-            <div>
+            <div style={{"textAlign": "left", "marginLeft":70}}>
                 <p>Location: </p>
                 <span>{experience.location.coordinates[0]}, {experience.location.coordinates[1]}</span>
             </div>
+            </Grid>
+            </Grid>
             <div>
                 {visibleReviewModal && (
                     <ReviewModal 
@@ -179,6 +250,7 @@ const Experience = (props) => {
                     onClose={handleCloseReviewModal}
                 />)}
             </div>
+            </Paper>
         </Container>
     )
 }

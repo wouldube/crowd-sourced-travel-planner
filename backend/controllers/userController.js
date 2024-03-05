@@ -22,7 +22,7 @@ const getUserExperiences = async (id) => {
     let expList = [];
     for (let i = 0; i < user.experiences.length; i++) {
         expList.push(await getExperienceById(user.experiences[i]));
-        console.log(expList);
+        //console.log(expList);
     }
     return expList;
 }
@@ -62,33 +62,9 @@ const getUserFavorites = async (id) => {
     let favList = [];
     for (let i = 0; i < user.favorites.length; i++) {
         favList.push(await getExperienceById(user.favorites[i])); //check this
-        console.log(favList);
+        //console.log(favList);
     }
     return favList;
-}
-
-const updateUserFavorite = async (userID, experienceID, add=1) => {
-    // Working on this, should update user info as well as favlist
-    const user = await User.findById(userID)
-    if (add) {
-        await User.updateOne({_id: userID}, {$push: {favorites: experienceID}})
-    } else {
-        for (let i=0; i<user.favorites.length; i++) {
-            if (favoriteID == user.favorites[i]._id.toString()) {
-                await user.favorites.splice(i,1)
-                await User.updateOne({_id: userID}, {favorites: user.favorites})
-                break
-            }
-        }
-    }
-    return
-}
-
-const deleteUserFavorite = async (id, user) => {
-    // Working on this, should delete favorite, update list and user info
-    const favorite = await Trip.findByIdAndDelete(id)
-    await updateUserFavorite(user, id, 0)
-    return favorite.deletedCount
 }
 
 const getUserTrips = async (id) => {
