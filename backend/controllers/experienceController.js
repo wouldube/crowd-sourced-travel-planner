@@ -52,7 +52,7 @@ const updateExperience = async(filter, update) => {
 const deleteExperience = async(id) => {
 
     // returns 0 if delete fails, 1 if delete succeeds
-
+    
     const result = await Experience.deleteOne({"_id": id});
     return result.deletedCount;
 

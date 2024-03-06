@@ -22,7 +22,7 @@ function Favorites() {
 
         const updateUser = await fetch(`http://localhost:5000/user-info/${id}`, {
             method: "PUT",
-            body: JSON.stringify({"favorites": favList}),
+            body: JSON.stringify({ "favorites": favList }),
             headers: {
                 "Content-Type": "application/json",
             },
@@ -52,37 +52,40 @@ function Favorites() {
         <Container>
             <strong>My Favorite Experiences</strong>
             <Grid container sizing={3}>
-                {favorites.map((fav) => (
-                    <Grid item xs={3}>
-                        <Card>
-                            <Grid container sizing={3}>
-                                <Grid item xs={12}>
-                                    <strong>{fav.title}</strong>
+                {favorites.map((fav, index) => (
+                    <Grid item key={index} xs={3}>
+                        {(fav) && (
+                            <Card>
+                                <Grid container sizing={3}>
+                                    <Grid item xs={12}>
+                                        <strong>{fav.title}</strong>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <img src={fav.images} style={{ maxWidth: "100%" }} />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <strong>Location: </strong> {fav.location.coordinates[0]}, {fav.location.coordinates[1]}
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <strong>Posted By: </strong>{fav.owner}
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <strong>Rating: </strong> {fav.reviews}
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        {fav.description}
+                                    </Grid>
+                                    <FavoriteIcon onClick={() => unfavorite(fav)} />
+                                    <Grid item xs={12}>
+                                        <Tooltip title="Remove Favorite" followCursor>
+                                            <IconButton>
+                                                <FavoriteIcon onClick={() => unfavorite(fav)} className="button delete-button" />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Grid>
                                 </Grid>
-                                <Grid item xs={12}>
-                                    <img src={fav.images} style={{maxWidth: "100%" }}/>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <strong>Location: </strong> {fav.location.coordinates[0]}, {fav.location.coordinates[1]}
-                                </Grid>
-                                <Grid item xs={12}>
-                                <strong>Posted By: </strong>{fav.owner}
-                                </Grid>
-                                <Grid item xs={12}>
-                                <strong>Rating: </strong> {fav.reviews}
-                                </Grid>
-                                <Grid item xs={12}>
-                                    {fav.description}
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Tooltip title="Remove Favorite" followCursor>
-                                        <IconButton>
-                                            <FavoriteIcon onClick={() => unfavorite(fav)} className="button delete-button"/>
-                                        </IconButton>
-                                    </Tooltip>
-                                </Grid>
-                            </Grid>
-                        </Card>
+                            </Card>
+                        )}
                     </Grid>
                 ))}
             </Grid>
