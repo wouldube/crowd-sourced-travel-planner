@@ -54,8 +54,8 @@ const ExperienceList = ({setExpId}) => {
         <Container>
             <strong>More Experiences to Explore...</strong>
             <Grid container spacing={3}>
-                {experiences.slice(-8).map((allexp) => (
-                    <Grid item xs={6}>
+                {experiences.slice(-8).map((allexp, index) => (
+                    <Grid item key={index} xs={6}>
                     <Card onClick={() => {goToExperience(allexp._id)}}>
                         <Grid container spacing={1}>
                             <Grid item xs={12}>
