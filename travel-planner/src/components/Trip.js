@@ -37,12 +37,11 @@ const Trip = ({ tripObject }) => {
                 <Grid container sizing={3}>
                     {experiences.map((exp, index) => (
                         <Grid item key={index} xs={4}>
-                            {/* <Card key={index} variant="experience" onClick={() => { goToExperience(exp._id) }}
-                                style={{
+                            <Card key={index} variant="experience" style={{
                                     backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(246, 225, 161, 0.3)), url(${exp.images[0]})`
                                 }}>
                                 <Container><h3>{exp.title}</h3></Container>
-                            </Card> */}
+                            </Card>
                         </Grid>
                     ))}
                 </Grid>
