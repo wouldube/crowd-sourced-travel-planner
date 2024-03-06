@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Grid, Box, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
 const ReviewModal = ({ onClose, expId, style }) => {
     const [rating, setRating] = useState(5);
@@ -27,11 +27,19 @@ const ReviewModal = ({ onClose, expId, style }) => {
     };
 
     return (
-        <div className="review-modal" style={style}>
-            <button onClick={onClose}>X</button>
+        <Grid style={{
+            ...style,
+            padding: '20px',
+            maxWidth: '600px',
+            background: 'radial-gradient(#FFFFFF, #f6e1a1)',
+            borderRadius: '8px',
+        }} maxWidth="sm">
+            <Box display="flex" justifyContent="flex-end">
+                <Button onClick={onClose}>X</Button>
+            </Box>
             <h1>Review Experience</h1>
             <form onSubmit={handleSubmit}>
-                <div>
+            <div>
                     <label htmlFor="rating">Rating:</label>
                     <select
                         id="rating"
@@ -55,11 +63,13 @@ const ReviewModal = ({ onClose, expId, style }) => {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     margin="normal"
+                    variant="outlined"
                 />
-                <button type="submit">Submit Review</button>
+                <Button type="submit" variant="contained" color="primary" style={{ marginTop: '20px' }}>Submit Review</Button>
             </form>
-        </div>
+        </Grid>
     );
 };
+
 
 export default ReviewModal;
