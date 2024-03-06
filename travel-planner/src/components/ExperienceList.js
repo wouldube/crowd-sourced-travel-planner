@@ -51,22 +51,19 @@ const ExperienceList = ({setExpId}) => {
                                 <strong>{allexp.title}</strong>
                             </Grid>
                             <Grid item xs={12}>
-                                <strong>Location</strong><br/>{allexp.location.coordinates[0]}, {allexp.location.coordinates[1]}
+                                <strong>Location: </strong>{allexp.location.coordinates[0]}, {allexp.location.coordinates[1]}
                             </Grid>
                             <Grid item xs={12}>
-                                <strong>Posted By</strong><br/>
-                                {/* {allexp.owner} */}
+                                <strong>Posted By: </strong>{allexp.owner}
                             </Grid>
                             <Grid item xs={12}>
-                                <strong>Rating</strong><br/>{allexp.reviews}
+                                <strong>Rating: </strong>{allexp.averageRating}
                             </Grid>
                             <Grid item xs={12}>
                                 {allexp.description}
                             </Grid>
                             <Grid item xs={12}>
-                                <button 
-                                    onClick={(event)=>{handleReviewModal(event, allexp._id)}}
-                                >
+                                <button onClick={(event)=>{handleReviewModal(event, allexp._id)}} className="button delete-button">
                                     Review
                                 </button>
                             </Grid>
