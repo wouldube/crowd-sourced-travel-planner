@@ -8,6 +8,8 @@ const ExperienceList = ({setExpId}) => {
 
     const [visibleReviewModal, setVisibleReviewModal] = useState(false);
     const [reviewExpId, setReviewExpId] = useState();
+    const [modalStyle, setModalStyle] = useState({});
+
 
 
     const navigate = useNavigate()
@@ -27,7 +29,19 @@ const ExperienceList = ({setExpId}) => {
 
     // Review
     const handleReviewModal = (event, expId) => {
-        event.stopPropagation()
+        event.stopPropagation();
+        const { clientY } = event;
+
+        const modalY = clientY - 150;
+
+        // Set the modal style
+        setModalStyle({
+            top: `${modalY}px`,
+            position: 'fixed',
+            left: '50%',
+            transform: 'translateX(-50%)',
+        });
+    
         setReviewExpId(expId)
         setVisibleReviewModal(true)
     }
@@ -76,6 +90,7 @@ const ExperienceList = ({setExpId}) => {
             <ReviewModal 
                 expId={reviewExpId}
                 onClose={handleCloseReviewModal}
+                style={modalStyle}
             ></ReviewModal>}
         </Container>
     )

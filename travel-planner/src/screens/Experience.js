@@ -11,6 +11,7 @@ const Experience = (props) => {
 
     // Review
     const [visibleReviewModal, setVisibleReviewModal] = useState(false);
+    const [modalStyle, setModalStyle] = useState({});
 
     const id = localStorage.getItem("id")
     const experienceId = props.expId
@@ -132,8 +133,23 @@ const Experience = (props) => {
     }
     
     // add review
-    const handleOpenReviewModal = () => {
+    const handleOpenReviewModal = (event) => {
+        if (event) {
+            event.stopPropagation();
+            const { clientY } = event;
+    
+            const modalY = clientY - 150;
+    
+            setModalStyle({
+                top: `${modalY}px`,
+                position: 'fixed',
+                left: '50%',
+                transform: 'translateX(-50%)',
+            });
+        }
+    
         setVisibleReviewModal(true);
+    
     };
     
     const handleCloseReviewModal = () => {
@@ -248,6 +264,7 @@ const Experience = (props) => {
                     <ReviewModal 
                     expId={experienceId}
                     onClose={handleCloseReviewModal}
+                    style={modalStyle}
                 />)}
             </div>
             </Paper>

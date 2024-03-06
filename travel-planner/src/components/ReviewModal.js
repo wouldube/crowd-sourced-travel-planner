@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@mui/material';
 
-const ReviewModal = ({ onClose, expId }) => {
+const ReviewModal = ({ onClose, expId, style }) => {
     const [rating, setRating] = useState(5);
     const [description, setDescription] = useState('');
 
@@ -27,7 +27,7 @@ const ReviewModal = ({ onClose, expId }) => {
     };
 
     return (
-        <div className="review-modal">
+        <div className="review-modal" style={style}>
             <button onClick={onClose}>X</button>
             <h1>Review Experience</h1>
             <form onSubmit={handleSubmit}>
