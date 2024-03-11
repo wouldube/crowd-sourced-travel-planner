@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextField, Grid, Box, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField } from '@mui/material'
 
 const ReviewModal = ({ onClose, expId, style }) => {
     const [rating, setRating] = useState(5);
@@ -37,13 +37,12 @@ const ReviewModal = ({ onClose, expId, style }) => {
             <Box display="flex" justifyContent="flex-end">
                 <Button onClick={onClose}>X</Button>
             </Box>
-            <h1>Review Experience</h1>
+            <FormLabel>Review Experience</FormLabel>
             <form onSubmit={handleSubmit}>
-            <div>
-                    <label htmlFor="rating">Rating:</label>
+            <FormControl>
+                    <InputLabel htmlFor="rating">Rating:</InputLabel>
                     <select
-                        id="rating"
-                        value={rating}
+                        id="rating" value={rating}
                         onChange={(e) => setRating(e.target.value)}
                     >
                         <option value="5">5 Stars</option>
@@ -52,20 +51,15 @@ const ReviewModal = ({ onClose, expId, style }) => {
                         <option value="2">2 Stars</option>
                         <option value="1">1 Star</option>
                     </select>
-                </div>
 
                 <TextField
-                    fullWidth
-                    id="description"
-                    label="Description"
-                    multiline
-                    rows={4}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    id="description" label="Description"
+                    multiline rows={2}
+                    value={description} onChange={(e) => setDescription(e.target.value)}
                     margin="normal"
-                    variant="outlined"
                 />
-                <Button type="submit" variant="contained" color="primary" style={{ marginTop: '20px' }}>Submit Review</Button>
+                <Button type="submit">Submit Review</Button>
+                </FormControl>
             </form>
         </Grid>
     );

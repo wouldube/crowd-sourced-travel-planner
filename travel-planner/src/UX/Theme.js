@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles';
+import '@fontsource/urbanist';
 
 let Theme = createTheme({
     palette: {
@@ -12,6 +13,23 @@ let Theme = createTheme({
         divider: '#bbcaf4',
         background: { main: '#93d7ed' }
     },
+    MuiTypography: {
+        variants: [
+            {
+                props: { variant: 'h1' },
+                style: {
+                    fontFamily: 'urbanist',
+                    fontSize: '1rem'
+                }
+            }
+        ],
+        styleOverrides: {
+            root: {
+                fontFamily: 'urbanist',
+                fontSize: '1rem'
+            },
+        }
+    },
     components: {
         MuiButton: {
             defaultProps: {
@@ -19,8 +37,9 @@ let Theme = createTheme({
             },
             styleOverrides: {
                 root: {
-                    borderRadius: '3rem',
+                    borderRadius: "100%",
                     boxShadow: '0px 0px 10px 5px rgba(255, 255, 255, 0.3)',
+                    height: "50px", width: "50px",
                     '&:hover': {
                         backgroundColor: '#f7ebc6'
                     }
@@ -62,26 +81,27 @@ let Theme = createTheme({
             variants: [
                 {
                     props: { variant: 'welcoming' },
-                    style: { height: '200vh' }
+                    style: { height: '100vh' }
                 },
                 {
                     props: { variant: 'experiencesGrid' },
-                    style: { overflowX: 'scroll', width:'50vw', height: '200vh'}
+                    style: { overflowX: 'scroll', height: '100vh' }
                 },
                 {
                     props: { variant: 'experiencesMap' },
-                    style: { overflow: 'scroll', height: '55vh'}
+                    style: { overflow: 'scroll', height: '55vh' }
                 },
                 {
                     props: { variant: 'major' },
-                    style: { width: '80vw', height: '80vh' } //width: '80vw', height: '80vh'
+                    style: { width: '80vw', height: '80vh' }
                 }
             ],
             styleOverrides: {
                 root: {
                     borderRadius: '1rem', border: 'solid 3px #05594f',
                     boxShadow: '0px 0px 10px 5px rgba(0, 0, 0, 0.3)',
-                    background: 'radial-gradient(#FFFFFF, #098778)',                }
+                    background: 'radial-gradient(#FFFFFF, #098778)'
+                }
             }
         }
     }
