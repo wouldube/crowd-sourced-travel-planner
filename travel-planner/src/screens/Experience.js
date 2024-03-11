@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField, Select, option, ButtonGroup } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField, Select, option, ButtonGroup, Tooltip, IconButton } from '@mui/material'
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 
 const Experience = (props) => {
+
+    const [showEdit, setShowEdit] = useState(false);
+    const [inFavs, setInFavs] = useState(false);
+    const [showTrips, setShowTrips] = useState(false);
 
     // TODO: make page usable when user not logged in
 
@@ -21,23 +30,23 @@ const Experience = (props) => {
     })
     const [trips, setTrips] = useState([])
 
-    if (id == experience.owner) {
-        const show = document.getElementById("ownerTrue")
-        show.style.display = "block"
-    }
-
     useEffect(() => {
+        onLoad();
+    }, [])
 
-        fetch(`http://localhost:5000/experiences/${experienceId}`)
-            .then(response => response.json())
-            .then(data => setExperience(data))
-            .catch(error => console.error('Error fetching experience: ', error));
+    const onLoad = async () => {
+        const response = await fetch(`http://localhost:5000/experiences/${experienceId}`)
+        const data = await response.json()
+        setExperience(data)
         
         if (id) {
             favoriteButton()
         }
 
-    }, [])
+        if (id == data.owner) {
+            setShowEdit(true);
+        }
+    }
 
     const favoriteButton = async () => {
         const data = await fetch(`http://localhost:5000/user-info/${id}`)
@@ -45,17 +54,10 @@ const Experience = (props) => {
         const favList = user.favorites
 
         if (favList.indexOf(experience._id) >= 0) {
-            const show = document.getElementById("removeFav")
-            show.style.display = "block"
-
-            const hide = document.getElementById("addFav")
-            hide.style.display = "none"
+            setInFavs(true);
         }
         else {
-            const show = document.getElementById("addFav")
-            show.style.display = "block"
-            const hide = document.getElementById("removeFav")
-            hide.style.display = "none"
+            setInFavs(false);
         }
     }
 
@@ -65,10 +67,7 @@ const Experience = (props) => {
 
     // favorite an experience
     const favoriteExp = async () => {
-        if (!id) {
-            navigate('/')
-        }
-
+        if (id) {
         console.log('fav')
         console.log(id)
         const data = await fetch(`http://localhost:5000/user-info/${id}`)
@@ -91,6 +90,10 @@ const Experience = (props) => {
             console.log(updateUser)
 
             favoriteButton()
+        }
+        }
+        else {
+            navigate('/login')
         }
     }
 
@@ -123,8 +126,12 @@ const Experience = (props) => {
 
         setTrips(trips)
 
-        const show = document.getElementById("userTrips")
-        show.style.display = "block"
+        if (id) {
+            setShowTrips(true);
+        }
+        else {
+            navigate('/login')
+        }
     }
 
     const pickTrip = async (trip) => {
@@ -142,8 +149,7 @@ const Experience = (props) => {
             })
         }
 
-        const show = document.getElementById("userTrips")
-        show.style.display = "none"
+        setShowTrips(false);
     }
 
     const createTrip = () => {
@@ -186,51 +192,91 @@ const Experience = (props) => {
         navigate("/");
     }
 
+    // HIDDEN COMPONENTS
+
+    const EditButton = () => (
+        <Tooltip title="Edit Experience" followCursor>
+            <IconButton onClick={updateExp}>
+                <EditNoteIcon variant="contained"  className="button delete-button"/>
+            </IconButton>
+        </Tooltip>                
+    )
+    
+    const DeleteButton = () => (
+        <Tooltip title="Delete Experience" followCursor>
+            <IconButton onClick={deleteExp}>
+        <DeleteForeverIcon variant="contained"  className="button delete-button"/>
+            </IconButton>
+        </Tooltip>
+    )
+    
+    const UserTrips = () => (
+        <Tooltip>
+            {trips.map((trip, index) => (
+                <div key={index}>
+                    <button onClick={() => {pickTrip(trip)}} className="button delete-button">{trip.title}</button>
+                </div>
+            ))}
+            <Button onClick={createTrip} className="button delete-button">Create New Trip</Button>
+        </Tooltip>
+    )
+    
+    const Favorite = () => (
+        <Tooltip title="Add to Favorites" followCursor>
+            <IconButton onClick={favoriteExp}>
+                <FavoriteIcon variant="contained"  className="button delete-button"/>
+                {/* <FavoriteIcon onClick={favoriteExp} className="button delete-button"/> */}
+                {/* <Button variant="contained" onClick={deleteExp}>Delete</Button> */}
+            </IconButton>
+        </Tooltip>
+    )
+    
+    const Unfavorite = () => (
+        <Tooltip title="Remove Favorite" followCursor>
+            <IconButton onClick={unfavoriteExp}>
+                <FavoriteBorderOutlinedIcon variant="contained"  id="removeFav" className="button delete-button"/>
+                {/* <FavoriteBorderOutlinedIcon variant="contained" style={{display: "none"}} onClick={unfavoriteExp} id="removeFav"/> */}
+                {/* <Button variant="contained" onClick={deleteExp}>Delete</Button> */}
+            </IconButton>
+        </Tooltip>
+    )
+
     return (
         <Container>
             <Paper>
-            <h2>{experience.title}</h2>
-            <Grid container spacing={10}>
-            <Grid item xs={9}>
-            <ButtonGroup>
-                <div>
-                <Button variant="contained" onClick={addToTrip}>Add to Trip</Button>
-                <Button variant="contained" onClick={favoriteExp} id="addFav">Add to Favorites</Button>
-                <Button variant="contained" style={{display: "none"}} onClick={unfavoriteExp} id="removeFav">Remove Favorite</Button>
-                </div>
-            </ButtonGroup>
-            <div id="userTrips" style={{display: "none"}}>
-                <button onClick={createTrip}>Create New Trip</button>
-                {trips.map((trip, index) => (
-                    <div key={index}>
-                        <button onClick={() => {pickTrip(trip)}}>{trip.title}</button>
-                    </div>
-                ))}
-            </div>
-            <ButtonGroup>
-            <div id="ownerTrue" style={{display: "none"}}>
-                <Button variant="contained" onClick={updateExp}>Update</Button>
-                <Button variant="contained" onClick={deleteExp}>Delete</Button>
-            </div>
-            </ButtonGroup>
+            <Grid container spacing={1}>
+                {/* <h2></h2> */}
+                <Grid item xs={16}>
+                    <strong><h2>{experience.title}</h2></strong>
+                </Grid>
+                <Grid item xs={16}>
+                    <img src={experience.images[0]} style={{ width: "350px" }}></img>
+                </Grid>
+                <Grid item xs={12}>
+                    <span>{experience.description}</span>
+                </Grid>
+                <Grid item xs={12}>
+                    <span><strong>Location: </strong>{experience.location.coordinates[0]}, {experience.location.coordinates[1]}</span>
+                </Grid>
+                <Grid item xs={12}>
+                    <Tooltip title="Add to Trip" followCursor>
+                        <IconButton>
+                            <AddBoxOutlinedIcon onClick={addToTrip} className="button delete-button"/>
+                        </IconButton>
+                    </Tooltip>
+                    { showEdit ? <EditButton /> : null }
+                    { showEdit ? <DeleteButton /> : null }
+                </Grid>
+                <Grid item xs={12}>
+                    { showTrips ? <UserTrips /> : null }
+                    <Grid item xs={12}>
+                        { inFavs ? <Unfavorite /> : <Favorite />}
+                        
+                    </Grid>
+                    {/* <Button variant="contained" onClick={favoriteExp} id="addFav">Add to Favorites</Button> */}
+                    {/* <FavoriteBorderOutlinedIcon variant="contained" style={{display: "none"}} onClick={unfavoriteExp} id="removeFav">Remove Favorite</Button> */}
+                </Grid>
             </Grid>
-            <Grid item xs={4}>
-            <img src={experience.images[0]} style={{ width: "350px" }}></img>
-            </Grid>
-            <Grid item xs={8}>
-            <div style={{"textAlign": "left", "marginLeft":70}}>
-                <p>Description: </p>
-                <span>{experience.description}</span>
-            </div>
-            <div style={{"textAlign": "left", "marginLeft":70}}>
-                <p>Location: </p>
-                <span>{experience.location.coordinates[0]}, {experience.location.coordinates[1]}</span>
-            </div>
-            </Grid>
-            </Grid>
-            <div>
-                {/* review component */}
-            </div>
             </Paper>
         </Container>
     )
