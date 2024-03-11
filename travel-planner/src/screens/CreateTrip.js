@@ -1,5 +1,10 @@
 import { React, useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, Input, TextField } from '@mui/material'
+
+const firebase = require("firebase/app")
+const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
+const { firebaseConfig } = require("../firebase/firebase-config");
 
 const CreateTrip = (initialExp) => {
     /* Data & Experiences */
@@ -10,9 +15,11 @@ const CreateTrip = (initialExp) => {
     const [experiences, setExperiences] = useState([])
 
     const [allExperiences, setAllExperiences] = useState([])
-    
-    useEffect( () => { 
-        
+
+    const fb_app = firebase.initializeApp(firebaseConfig);
+    const storage = getStorage(fb_app);
+
+    useEffect(() => {
         if (!localStorage.getItem("id")) {
             // localStorage.setItem("path", "/trips/create-trip")
             navigate("/login")
@@ -21,7 +28,7 @@ const CreateTrip = (initialExp) => {
         const id = localStorage.getItem("id")
         setOwner(id)
 
-        const getExperiences = async() => {
+        const getExperiences = async () => {
             try {
                 console.log(owner)
                 const data = await fetch(`http://localhost:5000/my-experiences/${id}`)
@@ -35,21 +42,30 @@ const CreateTrip = (initialExp) => {
                 }
 
                 setAllExperiences(experiences)
-            } catch(error) { console.error('Error fetching data:', error) }
+            } catch (error) { console.error('Error fetching data:', error) }
         }
-        
-        getExperiences() }, [])
+
+        getExperiences()
+    }, [])
+
+    const addImage = async (newImage) => {
+        const imgFile = document.getElementById('image');
+        const imgRef = ref(storage, `/trips/${owner}/${newImage}`);
+        await uploadBytesResumable(imgRef, imgFile.files[0], { contentType: 'image/png' });
+        const downloadURL = await getDownloadURL(imgRef);
+        setImage(downloadURL);
+    }
 
     /* CreateTrip Done */
     const SaveTrip = async () => {
         try {
-            const trip = {title, description, image, owner, experiences}
+            const trip = { title, description, image, owner, experiences }
             await fetch(`http://localhost:5000/create-trip`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(trip)
             })
-        } catch(error) { console.error('Error Saving Trip:', error) }
+        } catch (error) { console.error('Error Saving Trip:', error) }
         navigate(`/trips`)
     }
 
@@ -57,37 +73,50 @@ const CreateTrip = (initialExp) => {
     const navigate = useNavigate()
 
     return (
-        <div>
-            <div>
-            <input
-                id="title" type="text" required
-                placeholder="Title" value={title}
-                onChange={(e) => {setTitle(e.target.value)}}
-            /><br/>
-            <input
-                id="description" type="text"
-                placeholder="Description" value={description}
-                onChange={(e) => setDescription(e.target.value)}
-            /><br/>
-            <input
-                id="image" type="text"
-                placeholder="images" value={image}
-                onChange={(e) => setImage(e.target.value)}
-            /><br/>
-            <button onClick={SaveTrip} className="explore-button">Create</button>
-            </div>
-
-            <div>
-            <p>Add some of your experiences to the trip!</p>
-            {allExperiences.map((exp, index) => (
-                <div key={index} className="TripsTrip">
-                    <h3>{exp.title}</h3>
-                    <p>{exp.description}</p>
-                    <button onClick={() => {setExperiences([...experiences, exp])}}>+</button>
-                </div>
-            ))}
-            </div>
-        </div>
+        <Container>
+            <Card>
+            New Trip!
+            <form>
+                <FormControl>
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <TextField
+                                id="title" label="Title" type="text" required
+                                value={title} onChange={(e) => { setTitle(e.target.value) }}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                id="description" label="Description" type="text"
+                                value={description} onChange={(e) => setDescription(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                id="image" label="Image" type="file" accept="image/*"
+                                onChange={(e) => addImage(e.target.value)}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Button type="submit" onClick={SaveTrip}>+</Button>
+                    <Divider/>
+                    <Divider/>
+                    <Divider/>
+                    Add some of your experiences to the trip!
+                    <Grid container sizing={3}>
+                        {allExperiences.map((exp, index) => (
+                            <Grid item key={index} xs={4}>
+                                <Card variant="experience">
+                                    <h3>{exp.title}</h3>
+                                    <Button onClick={() => { setExperiences([...experiences, exp]) }}>+</Button>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </FormControl>
+            </form>
+            </Card>
+        </Container>
     )
 }
 
