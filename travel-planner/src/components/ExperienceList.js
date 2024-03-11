@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, Button } from '@mui/material'
+import ReviewModal from './ReviewModal.js';
 
 const ExperienceList = ({setExpId}) => {
-
     const [experiences, setAllExperiences] = useState([]);
+
+    const [visibleReviewModal, setVisibleReviewModal] = useState(false);
+    const [reviewExpId, setReviewExpId] = useState();
+    const [modalStyle, setModalStyle] = useState({});
+
+
 
     const navigate = useNavigate()
 
@@ -17,22 +23,45 @@ const ExperienceList = ({setExpId}) => {
 
     const goToExperience = (expId) => {
         setExpId(expId)
-        console.log(expId)
+        //console.log(expId)
         navigate(`/experience`)
+    }
+
+    // Review
+    const handleReviewModal = (event, expId) => {
+        event.stopPropagation();
+        const { clientY } = event;
+
+        const modalY = clientY - 150;
+
+        // Set the modal style
+        setModalStyle({
+            top: `${modalY}px`,
+            position: 'fixed',
+            left: '50%',
+            transform: 'translateX(-50%)',
+        });
+    
+        setReviewExpId(expId)
+        setVisibleReviewModal(true)
+    }
+    
+    const handleCloseReviewModal = (event) => {
+        setVisibleReviewModal(false)
     }
 
     return (
         <Container>
             <strong>More Experiences to Explore...</strong>
             <Grid container spacing={3}>
-                {experiences.slice(-8).map((allexp) => (
-                    <Grid item xs={6}>
+                {experiences.slice(-8).map((allexp, index) => (
+                    <Grid item key={index} xs={6}>
                     <Card onClick={() => {goToExperience(allexp._id)}}>
                         <Grid container spacing={1}>
                             <Grid item xs={12}>
-                                <img src={allexp.images} style={{maxWidth: "100%" }}/>
+                                <img src={allexp.images} style={{borderRadius: "50px", maxWidth: "100%"}}/>
                             </Grid>
-                            <Grid item xs={16}>
+                            <Grid item xs={12}>
                                 <strong>{allexp.title}</strong>
                             </Grid>
                             <Grid item xs={12}>
@@ -42,16 +71,27 @@ const ExperienceList = ({setExpId}) => {
                                 <strong>Posted By: </strong>{allexp.owner}
                             </Grid>
                             <Grid item xs={12}>
-                                <strong>Rating: </strong>{allexp.reviews}
+                                <strong>Rating: </strong>{allexp.averageRating}
                             </Grid>
                             <Grid item xs={12}>
                                 {allexp.description}
+                            </Grid>
+                            <Grid item xs={12}>
+                                <button onClick={(event)=>{handleReviewModal(event, allexp._id)}} className="button delete-button">
+                                    Review
+                                </button>
                             </Grid>
                         </Grid>
                     </Card>
                     </Grid>
                 ))}
             </Grid>
+            {!!visibleReviewModal && 
+            <ReviewModal 
+                expId={reviewExpId}
+                onClose={handleCloseReviewModal}
+                style={modalStyle}
+            ></ReviewModal>}
         </Container>
     )
 }

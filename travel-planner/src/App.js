@@ -24,22 +24,18 @@ import UpdateExperience from './screens/UpdateExperience.js';
 import Experience from './screens/Experience.js';
 
 function App() {
-
-  const [experienceToUpdate, setExperienceToUpdate] = useState([])
-  const [favoriteToUpdate, setUserFavorites] = useState([])
-  const [experienceObject, setExperienceObject] = useState()
-  const [tripObject, setTripObject] = useState()
   const [expId, setExpId] = useState()
   const [initialExp, setInitialExp] = useState()
+  const [experienceToUpdate, setExperienceToUpdate] = useState([])
+  const [favoriteToUpdate, setUserFavorites] = useState([])
+  const [tripObject, setTripObject] = useState()
 
   return (
-    <div>
+    <main>
       <ThemeProvider theme={Theme}>
-        <Container>
           <BrowserRouter>
-            <Buttons/>
-            <Container>
-              {/* <Paper> */}
+          <Container>
+          <Buttons/>
                 <Routes>
                   <Route path="/" element={<Exploration setExpId={setExpId}/>} />
                   <Route path="create-exp" element={<CreateExperience />} />
@@ -58,13 +54,11 @@ function App() {
                   <Route path="search" element={<Search setExpId={setExpId}/>} />
                   <Route path="experience" element={<Experience expId={expId} setExperienceToUpdate={setExperienceToUpdate} setInitialExp={setInitialExp}/>} />
                 </Routes>
-              {/* </Paper> */}
-            </Container>
+          </Container>
           </BrowserRouter>
-        </Container>
       </ThemeProvider>
-    </div>
-  );
+    </main>
+  )
 }
 
 export default App;

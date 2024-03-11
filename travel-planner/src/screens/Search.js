@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField } from '@mui/material'
 
-const Search = ({setExpId}) => {
+const Search = ({ setExpId }) => {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -60,22 +60,24 @@ const Search = ({setExpId}) => {
                 </FormControl>
             </form>
             {error && <p className="error">{error}</p>}
-            {isLoading ? (
-                <p>Loading...</p>
-            ) : results.length > 0 ? (
-                results.map((result) => (
-                    <>
-                        <Card key={result._id} onClick={() => {goToExperience(result._id)}}>
-                            <h3>{result.title}</h3>
-                            <p>Rating: {result.averageRating || 0}</p>
-                            <p>{result.description}</p>
-                        </Card>
-                        <br />
-                    </>
-                ))
-            ) : (
-                <p>No results found.</p>
-            )}
+            <Grid container spacing={3}>
+                {isLoading ? (
+                    <p>Loading...</p>
+                ) : results.length > 0 ? (
+                    results.map((result) => (
+                        <Grid item xs={4}>
+                            <Card key={result._id} onClick={() => { goToExperience(result._id) }}>
+                                <h3>{result.title}</h3>
+                                <p>Rating: {result.averageRating || 0}</p>
+                                <p>{result.description}</p>
+                            </Card>
+                            <br />
+                        </Grid>
+                    ))
+                ) : (
+                    <p>No results found</p>
+                )}
+            </Grid>
         </Container>
     )
 }

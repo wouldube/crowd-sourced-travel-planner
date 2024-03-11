@@ -1,23 +1,22 @@
-import { React, useEffect, useState, } from 'react';
-import TripExperience from "./TripExperience";
+import { React, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, Divider, Chip, Button } from '@mui/material';
 
-const Trip = ({tripObject}) => {
-    /* Trip Data & Experiences */
+const Trip = ({ tripObject }) => {
     const [experiences, setExperiences] = useState([]);
-    
-    useEffect( () => { 
-        const getExperiences = async() => {
-            try {
-            const data = await fetch(`http://localhost:5000/trip/experiences/${tripObject._id}`)
-            const experiences = await data.json()
-            setExperiences(experiences)
-            } catch(error) { console.error('Error fetching data:', error) }
-        }
-        getExperiences() }, [])
+    const navigate = useNavigate()
 
-    /* Adjustments */
+    useEffect(() => {
+        const getExperiences = async () => {
+            try {
+                const data = await fetch(`http://localhost:5000/trip/experiences/${tripObject._id}`)
+                const experiences = await data.json()
+                setExperiences(experiences)
+            } catch (error) { console.error('Error fetching data:', error) }
+        }
+        getExperiences()
+    }, [])
+
     const deleteTrip = async () => {
         try {
             await fetch(`http://localhost:5000/delete-trip/${tripObject._id}`, {
@@ -25,37 +24,29 @@ const Trip = ({tripObject}) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(tripObject)
             })
-        } catch(error) { console.error('Error Deleting Trip:', error) }
+        } catch (error) { console.error('Error Deleting Trip:', error) }
         navigate(`/trips`)
     }
-    
-    /* Navigation */
-    const [component, which] = useState(0);
-    const navigate = useNavigate()
+
 
     return (
         <Container>
-        <div className="TripMap">
             <h3>{tripObject.title}</h3>
-            <Button onClick={() => {navigate(`update-trip`)}}>Edit?</Button>
-            <Button onClick={() => {deleteTrip()}}>Delete!</Button>
-            {component === 0 && (
-                <>
+            <Button onClick={() => { navigate(`update-trip`) }}>Edit?</Button>
+            <Button onClick={() => { deleteTrip() }}>Delete!</Button>
+            <Grid container sizing={3}>
                 {experiences.map((exp, index) => (
-                    <div key={index} className="TripsTrip">
-                        <Button onClick={()=>which(1)}>{exp.title}</Button>
-                        <p>{exp.description}</p>
-                    </div>
+                    <Grid item key={index} xs={4}>
+                        {(exp) && (
+                            <Card key={index} variant="experience" style={{
+                                backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(246, 225, 161, 0.3)), url(${exp.images[0]})`
+                            }}>
+                                <Container><h3>{exp.title}</h3></Container>
+                            </Card>
+                        )}
+                    </Grid>
                 ))}
-                </>
-            )}
-            {component === 1 && (
-                <>
-                <TripExperience/>
-                <Button onClick={()=>which(0)}>X</Button>
-                </>
-            )}
-        </div>
+            </Grid>
         </Container>
     )
 }

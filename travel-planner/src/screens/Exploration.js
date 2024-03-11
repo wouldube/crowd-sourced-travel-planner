@@ -19,20 +19,22 @@ const Exploration = ({setExpId}) => {
     return (
         <Container>
             <Grid container sizing={3}>
-                <Grid item xs={4}>
+                <Grid item xs={12}>
+                <Paper variant="experiencesMap">
+                        <ExperiencesMap setExpId={setExpId}/>
+                    </Paper>
+                    </Grid>
+
+                    <Grid item xs={4}>
                     <Paper variant="welcoming">
                         <Welcome />
                     </Paper>
-                </Grid>
+                    </Grid>
                 <Grid item xs={8}>
                     <Paper variant="experiencesGrid">
                         <ExperienceList setExpId={setExpId}/>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12}>
-                    <Paper variant="experiencesMap">
-                        <ExperiencesMap setExpId={setExpId}/>
-                    </Paper>
+                        </Paper>
+
                 </Grid>
             </Grid>
             {/*             

@@ -575,3 +575,19 @@ div {
   color: #666;
   font-size: 14px;
 }
+
+/* ReviewModal */
+.review-modal {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80%;
+  color: black;
+  background-color: #f9e8b5;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  min-height: 250px;
+  text-align: center;
+  position: fixed;
+}

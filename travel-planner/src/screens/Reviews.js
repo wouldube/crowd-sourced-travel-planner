@@ -113,25 +113,30 @@ const Reviews = () => {
             <br />
             <Divider />
             <br />
-            {reviews.length > 0 ? (
-                reviews.map(review => {
-                    // Find the experience that matches the review's experienceId
-                    const matchingExperience = experiences.find(exp => exp._id === review.experience);
-                    const experienceTitle = matchingExperience ? matchingExperience.title : "Unknown Experience";
-                    return (
-                        <Card key={review._id}>
-                            <p>Experience: {experienceTitle}</p>
-                            <p>Rating: {review.rating}</p>
-                            <p>Description: {review.description}</p>
-                            <Button onClick={() => handleDelete(review._id)} className="button delete-button">
-                                Delete
-                            </Button>
-                        </Card>
-                    )
-                })
-            ) : (
-                <p>No reviews found.</p>
-            )}
+            <Grid container spacing={3}>
+                {reviews.length > 0 ? (
+                    reviews.map(review => {
+                        // Find the experience that matches the review's experienceId
+                        const matchingExperience = experiences.find(exp => exp._id === review.experience);
+                        const experienceTitle = matchingExperience ? matchingExperience.title : "Unknown Experience";
+                        return (
+                            <Grid item xs={4}>
+                                <Card key={review._id}>
+                                    <p>Experience: {experienceTitle}</p>
+                                    <p>Rating: {review.rating}</p>
+                                    <p>Description: {review.description}</p>
+                                    <Button onClick={() => handleDelete(review._id)} className="button delete-button">
+                                        Delete
+                                    </Button>
+                                </Card>
+                            </Grid>
+                        )
+                    })
+                ) : (
+                    <p>No reviews found.</p>
+                )}
+            </Grid>
+
         </Container>
     )
 }

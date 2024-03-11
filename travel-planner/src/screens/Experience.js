@@ -6,6 +6,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import ReviewModal from '../components/ReviewModal.js';
 
 const Experience = (props) => {
 
@@ -16,6 +17,10 @@ const Experience = (props) => {
     // TODO: make page usable when user not logged in
 
     const navigate = useNavigate();
+
+    // Review
+    const [visibleReviewModal, setVisibleReviewModal] = useState(false);
+    const [modalStyle, setModalStyle] = useState({});
 
     const id = localStorage.getItem("id")
     const experienceId = props.expId
@@ -133,6 +138,31 @@ const Experience = (props) => {
             navigate('/login')
         }
     }
+    
+    // add review
+    const handleOpenReviewModal = (event) => {
+        if (event) {
+            event.stopPropagation();
+            const { clientY } = event;
+    
+            const modalY = clientY - 150;
+    
+            setModalStyle({
+                top: `${modalY}px`,
+                position: 'fixed',
+                left: '50%',
+                transform: 'translateX(-50%)',
+            });
+        }
+    
+        setVisibleReviewModal(true);
+    
+    };
+    
+    const handleCloseReviewModal = () => {
+        setVisibleReviewModal(false);
+    };
+    
 
     const pickTrip = async (trip) => {
         const expList = trip.experiences
@@ -277,6 +307,14 @@ const Experience = (props) => {
                     {/* <FavoriteBorderOutlinedIcon variant="contained" style={{display: "none"}} onClick={unfavoriteExp} id="removeFav">Remove Favorite</Button> */}
                 </Grid>
             </Grid>
+            <div>
+                {visibleReviewModal && (
+                    <ReviewModal 
+                    expId={experienceId}
+                    onClose={handleCloseReviewModal}
+                    style={modalStyle}
+                />)}
+            </div>
             </Paper>
         </Container>
     )
