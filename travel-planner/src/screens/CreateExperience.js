@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {Container, Paper, Grid, Box, Card, Button, FormLabel, FormControl, Input, TextField,} from '@mui/material'
+import {Container, Paper, Grid, Box, Card, Button, FormLabel, FormControl, Input, TextField, Divider, Tooltip,} from '@mui/material'
 
 const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
@@ -64,54 +64,62 @@ export const CreateExperience = () => {
 
   return (
     <Container>
-      <form>
-        <FormControl>
+      <Paper>
+        <Grid container justifyContent="center" spacing={2}  m={2} style={{width: "400px"}}>
+          <form>
+              <Grid item position xs={16}>
+                <FormControl>
+                  <h2>Create New Experience</h2>
+                  {/* <FormLabel>Create New Experience!</FormLabel> */}
+                  <TextField
+                      id="title" label="title" required value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                  />
+                  <TextField
+                    id="description" label="description" required value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                  <TextField
+                      type="number" id="lat" label="lat" required value={latitude}
+                      onChange={(e) => setLatitude(e.target.value) }
+                  />
+                  <TextField
+                      type="number" id="long" label="lat" required value={longitude}
+                      onChange={(e) => setLongitude(e.target.value) }
+                  />
+                  <Grid item xs={12}>
+                    <Input
+                        type="file" id="image" accept="image/*" label="image" required
+                        onChange={(e) => setImage(e.target.value) }
+                    />
+                  </Grid>
+                  {/* <div className="review">
+                        <div>
+                            <span>Rating: </span>
+                            <span>
+                                <MdOutlineStarBorder id="1"/>
+                                <MdOutlineStarBorder id="2"/>
+                                <MdOutlineStarBorder id="3"/>
+                                <MdOutlineStarBorder id="4"/>
+                                <MdOutlineStarBorder id="5"/>
+                            </span>
+                        </div>
 
-      <FormLabel>Create New Experience!</FormLabel>
-        <TextField
-            id="title" label="title" required value={title}
-            onChange={(e) => setTitle(e.target.value)}
-        />
-        <TextField
-            id="description" label="description" required value={description}
-            onChange={(e) => setDescription(e.target.value)}
-        />
-        <TextField
-            type="number" id="lat" label="lat" required value={latitude}
-            onChange={(e) => setLatitude(e.target.value) }
-        />
-        <TextField
-            type="number" id="long" label="lat" required value={longitude}
-            onChange={(e) => setLongitude(e.target.value) }
-        />
-        <Input
-            type="file" id="image" accept="image/*" label="image" required
-            onChange={(e) => setImage(e.target.value) }
-        />
-
-      {/* <div className="review">
-            <div>
-                <span>Rating: </span>
-                <span>
-                    <MdOutlineStarBorder id="1"/>
-                    <MdOutlineStarBorder id="2"/>
-                    <MdOutlineStarBorder id="3"/>
-                    <MdOutlineStarBorder id="4"/>
-                    <MdOutlineStarBorder id="5"/>
-                </span>
-            </div>
-
-            <div>
-                <label for="review">Review: </label>
-                <input type="text" id="review" name="review"></input>
-            </div>
-            </div> */}
-
-      <Button variant="contained" onClick={createExperience}>Create</Button>
-      <Button onClick={() => {navigate(`/UserExperiences`)}}>Cancel</Button>
-      </FormControl>
-      </form>
-      </Container>
+                        <div>
+                            <label for="review">Review: </label>
+                            <input type="text" id="review" name="review"></input>
+                        </div>
+                        </div> */}
+                  <Container>
+                    <Button variant="contained" onClick={createExperience}>Create</Button>
+                    <Button onClick={() => {navigate(`/UserExperiences`)}}>Cancel</Button>
+                  </Container>
+                </FormControl>
+              </Grid>
+          </form>
+        </Grid>
+      </Paper>
+    </Container>
   );
 };
 
