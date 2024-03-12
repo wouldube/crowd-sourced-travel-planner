@@ -33,17 +33,20 @@ const Trips = ({ setTripObject }) => {
 
     return (
         <Container>
-            <Button onClick={() => { navigate(`create-trip`) }}>Plan a New One!!</Button>
-            <Grid container spacing={3}>
-                {trips.map((trip, index) => (
-                    <Grid item key={index} xs={4}>
-                        <Card onClick={() => { TripClick(trip) }}>
-                            <p><strong>{trip.title}</strong></p>
-                            <p>{trip.description}</p>
-                        </Card>
-                    </Grid>
-                ))}
-            </Grid>
+            <Paper>
+                <Button onClick={() => { navigate(`create-trip`) }}>Plan A New Trip</Button>
+                <Grid container spacing={3}>
+                    {trips.map((trip, index) => (
+                        <Grid item key={index} xs={4}>
+                            <Card onClick={() => { TripClick(trip) }}>
+                                <p><strong>{trip.title}</strong></p>
+                                {/* <p><img src={trip.images} style={{maxWidth: "25%" }}/></p> */}
+                                <p>{trip.description}</p>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
+            </Paper>
         </Container>
     )
 }

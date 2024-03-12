@@ -5,15 +5,16 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 
-function UserExperiences({ setExperienceToUpdate }) {
+function UserExperiences( props ) {
 
     const id = localStorage.getItem("id")
     const [experiences, setUserExperiences] = useState([]);
+    const [viewTrips, setViewTrips] = useState(false);
     const [trips, setTrips] = useState([])
-    // if (id == experience.owner) {
-    //     const show = document.getElementById("ownerTrue")
-    //     show.style.display = "block"
-    // }
+
+    // const experienceId = props.expId
+    const setExperienceToUpdate = props.setExperienceToUpdate
+    const setInitialExp = props.setInitialExp
 
     const navigate = useNavigate();
 
@@ -37,7 +38,8 @@ function UserExperiences({ setExperienceToUpdate }) {
             expList.splice(index, 1);
         }
 
-        const updateUser = await fetch(`http://localhost:5000/user-info/${id}`, {
+        // ask about this tomorrow
+        const onUpdate = await fetch(`http://localhost:5000/user-info/${id}`, {
             method: "PUT",
             body: JSON.stringify({"experiences": expList}),
             headers: {
@@ -61,15 +63,37 @@ function UserExperiences({ setExperienceToUpdate }) {
 
         setTrips(trips)
 
-        const show = document.getElementById("userTrips")
-        show.style.display = "block"
+        if (id) {
+            setViewTrips(true);
+        }
+        else {
+            navigate('/login')
+        }
     }
 
+    const createTrip = (experience) => {
+        setInitialExp(experience)
+        navigate("/trips/create-trip");
+    }
+
+    const UserTrips = () => (
+        <Tooltip>
+            {trips.map((trip, index) => (
+                <div key={index}>
+                    <Button onClick={() => {pickTrip(trip)}} className="button delete-button">{trip.title}</Button>
+                </div>
+            ))}
+            <Button onClick={createTrip} className="button delete-button">Create New Trip</Button>
+        </Tooltip>
+    )
+    
     const pickTrip = async (trip) => {
         const expList = trip.experiences
+        // check line 93
+        const experience = experience.experiences
 
-        if (expList.indexOf(experiences._id) < 0) {
-            expList.push(experiences._id)
+        if (expList.indexOf(experience._id) < 0) {
+            expList.push(experience._id)
 
             const updateTrip = await fetch(`http://localhost:5000/update-trip/${trip._id}`, {
                 method: "PUT",
@@ -79,11 +103,8 @@ function UserExperiences({ setExperienceToUpdate }) {
                 },
             })
         }
-
-        const show = document.getElementById("userTrips")
-        show.style.display = "none"
+        setViewTrips(false);
     }
-
 
     const loadExperience = () => {
         if (!localStorage.getItem("id")) {
@@ -106,7 +127,7 @@ function UserExperiences({ setExperienceToUpdate }) {
     return (
         <Container>
             <Paper>
-                <h2>My Experiences</h2><strong></strong>
+                <h2>My Experiences</h2>
                 <Grid>
                     <Tooltip>
                         <Button onClick={() => { navigate(`/create-exp`) }}>Create New Experience</Button>
@@ -116,46 +137,44 @@ function UserExperiences({ setExperienceToUpdate }) {
                     {experiences.map((exp) => (
                         <Grid item xs={6}>
                             <Card>
-                            <Grid container spacing={1}>
-                                <Grid item xs={16}>
-                                    <strong>{exp.title}</strong>
+                                <Grid container spacing={1}>
+                                    <Grid item xs={16}>
+                                        <strong>{exp.title}</strong>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <img src={exp.images} style={{maxWidth: "100%" }}/>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <strong>Location: </strong>{exp.location.coordinates[0]}, {exp.location.coordinates[1]}
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <strong>Rating: </strong>{exp.averageRating}
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        {exp.description}
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Tooltip title="Add to Trip" followCursor>
+                                            <IconButton>
+                                                <AddBoxOutlinedIcon onClick={addToTrip} className="button delete-button"/>
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip title="Edit Experience" followCursor>
+                                            <IconButton>
+                                                <EditNoteIcon onClick={() => onUpdate(exp._id)} className="button delete-button"/>
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip title="Delete Experience" followCursor>
+                                            <IconButton>
+                                                <DeleteForeverIcon onClick={() => onDelete(exp)} className="button delete-button"/>
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        { viewTrips ? <UserTrips /> : null }
+                                    </Grid>
                                 </Grid>
-                                <Grid item xs={12}>
-                                    <img src={exp.images} style={{maxWidth: "100%" }}/>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <strong>Location: </strong>{exp.location.coordinates[0]}, {exp.location.coordinates[1]}
-                                </Grid>
-                                <Grid item xs={12}>
-                                    {exp.rating}
-                                </Grid>
-                                <Grid item xs={12}>
-                                    {exp.description}
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Tooltip title="Add to Trip" followCursor>
-                                        <IconButton>
-                                            <AddBoxOutlinedIcon onClick={() => addToTrip(exp._id)} className="button delete-button"/>
-                                        </IconButton>
-                                    </Tooltip>
-                                    {trips.map((trip, index) => (
-                                        <div key={index}>
-                                        <button onClick={() => {pickTrip(trip)}}>{trip.title}</button>
-                                        </div>
-                                    ))}
-                                    <Tooltip title="Edit Experience" followCursor>
-                                        <IconButton>
-                                            <EditNoteIcon onClick={() => onUpdate(exp._id)} className="button delete-button"/>
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title="Delete Experience" followCursor>
-                                        <IconButton>
-                                            <DeleteForeverIcon onClick={() => onDelete(exp)} className="button delete-button"/>
-                                        </IconButton>
-                                    </Tooltip>
-                                </Grid>
-                            </Grid>
-                        </Card>
+                            </Card>
                         </Grid>
                     ))}
                 </Grid>

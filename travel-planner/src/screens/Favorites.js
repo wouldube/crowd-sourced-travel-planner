@@ -5,6 +5,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 function Favorites() {
 
+    const [favId, setFavId] = useState([]);
     const [favorites, setFavorite] = useState([]);
     const navigate = useNavigate();
 
@@ -31,6 +32,11 @@ function Favorites() {
         loadFavorites()
     }
 
+    // const goToExperience = (favId) => {
+    //     setFavId(favId)
+    //     navigate(`/experience/`)
+    // }
+
     const loadFavorites = () => {
         if (!localStorage.getItem("id")) {
             navigate("/login")
@@ -56,6 +62,7 @@ function Favorites() {
                     {favorites.map((fav, index) => (
                         <Grid item key={index} xs={3}>
                             {(fav) && (
+                                // <Card key={fav._id} onClick={() => { goToExperience(fav._id) }}>
                                 <Card>
                                     <Grid container sizing={3}>
                                         <Grid item xs={12}>
@@ -71,7 +78,7 @@ function Favorites() {
                                             <strong>Posted By: </strong>{fav.owner}
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <strong>Rating: </strong> {fav.reviews}
+                                            <strong>Rating: </strong> {fav.averageRating}
                                         </Grid>
                                         <Grid item xs={12}>
                                             {fav.description}

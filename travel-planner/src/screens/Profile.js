@@ -38,22 +38,22 @@ const Profile = () => {
                     {login === 1 && ( */}
                 {/* // <div> */}
                 <Grid container justifyContent="center" spacing={1}>
-                    <Grid item position xs={12}>
+                    <Grid item position xs={10}>
                         <Card onClick={() => { navigate("/account") }}>
                                 My Account
                         </Card>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={10}>
                         <Card onClick={() => { navigate("/UserExperiences") }}>
                                 My Experiences
                         </Card>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={5}>
                         <Card onClick={() => { navigate("/favorites") }}>
                                 Favorites
                         </Card>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={5}>
                         <Card onClick={() => { navigate("/reviews") }}>
                                 Reviews
                         </Card>

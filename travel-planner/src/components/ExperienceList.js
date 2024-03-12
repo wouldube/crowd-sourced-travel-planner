@@ -67,9 +67,9 @@ const ExperienceList = ({setExpId}) => {
                             <Grid item xs={12}>
                                 <strong>Location: </strong>{allexp.location.coordinates[0]}, {allexp.location.coordinates[1]}
                             </Grid>
-                            <Grid item xs={12}>
+                            {/* <Grid item xs={12}>
                                 <strong>Posted By: </strong>{allexp.owner}
-                            </Grid>
+                            </Grid> */}
                             <Grid item xs={12}>
                                 <strong>Rating: </strong>{allexp.averageRating}
                             </Grid>
@@ -77,9 +77,9 @@ const ExperienceList = ({setExpId}) => {
                                 {allexp.description}
                             </Grid>
                             <Grid item xs={12}>
-                                <button onClick={(event)=>{handleReviewModal(event, allexp._id)}} className="button delete-button">
+                                <Button onClick={(event)=>{handleReviewModal(event, allexp._id)}} className="button delete-button">
                                     Review
-                                </button>
+                                </Button>
                             </Grid>
                         </Grid>
                     </Card>
