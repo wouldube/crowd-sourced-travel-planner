@@ -303,9 +303,9 @@ const Experience = (props) => {
                             <AddBoxOutlinedIcon onClick={addToTrip} className="button delete-button"/>
                         </IconButton>
                     </Tooltip>
+                    <ReviewButton />
                     { showEdit ? <EditButton /> : null }
                     { showEdit ? <DeleteButton /> : null }
-                    { showEdit ? <ReviewButton /> : null }
                 </Grid>
                 <Grid item xs={12}>
                     { showTrips ? <UserTrips /> : null }
