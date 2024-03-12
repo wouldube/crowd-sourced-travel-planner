@@ -79,64 +79,65 @@ const Reviews = () => {
 
     return (
         <Container>
-            <h2>My Reviews</h2>
-            <form onSubmit={handleSubmit}>
-                <FormControl>
-                    <select label="Experience"
-                        value={newReview.experienceId}
-                        onChange={(e) => setNewReview({ ...newReview, experienceId: e.target.value })}
-                        required
-                    >
-                        {experiences.map((exp) => (
-                            <option key={exp._id} value={exp._id}>{exp.title}</option>
-                        ))}
-                    </select>
-                    <select label="Rating"
-                        value={newReview.rating}
-                        onChange={(e) => setNewReview({ ...newReview, rating: parseInt(e.target.value) })}
-                    >
-                        <option value="5">5 Stars</option>
-                        <option value="4">4 Stars</option>
-                        <option value="3">3 Stars</option>
-                        <option value="2">2 Stars</option>
-                        <option value="1">1 Star</option>
-                    </select>
-                    <TextField label="Review"
-                        className="review-textarea"
-                        value={newReview.description}
-                        onChange={adjustTextareaHeight}
-                        required
-                    />
-                    <Button type="submit" className="button submit-button">Add Review</Button>
-                </FormControl>
-            </form>
-            <br />
-            <Divider />
-            <br />
-            <Grid container spacing={3}>
-                {reviews.length > 0 ? (
-                    reviews.map(review => {
-                        // Find the experience that matches the review's experienceId
-                        const matchingExperience = experiences.find(exp => exp._id === review.experience);
-                        const experienceTitle = matchingExperience ? matchingExperience.title : "Unknown Experience";
-                        return (
-                            <Grid item xs={4}>
-                                <Card key={review._id}>
-                                    <p>Experience: {experienceTitle}</p>
-                                    <p>Rating: {review.rating}</p>
-                                    <p>Description: {review.description}</p>
-                                    <Button onClick={() => handleDelete(review._id)} className="button delete-button">
-                                        Delete
-                                    </Button>
-                                </Card>
-                            </Grid>
-                        )
-                    })
-                ) : (
-                    <p>No reviews found.</p>
-                )}
-            </Grid>
-
+            <Paper>
+                <h2>My Reviews</h2>
+                <form onSubmit={handleSubmit}>
+                    <FormControl>
+                        <select label="Experience"
+                            value={newReview.experienceId}
+                            onChange={(e) => setNewReview({ ...newReview, experienceId: e.target.value })}
+                            required
+                        >
+                            {experiences.map((exp) => (
+                                <option key={exp._id} value={exp._id}>{exp.title}</option>
+                            ))}
+                        </select>
+                        <select label="Rating"
+                            value={newReview.rating}
+                            onChange={(e) => setNewReview({ ...newReview, rating: parseInt(e.target.value) })}
+                        >
+                            <option value="5">5 Stars</option>
+                            <option value="4">4 Stars</option>
+                            <option value="3">3 Stars</option>
+                            <option value="2">2 Stars</option>
+                            <option value="1">1 Star</option>
+                        </select>
+                        <TextField label="Review"
+                            className="review-textarea"
+                            value={newReview.description}
+                            onChange={adjustTextareaHeight}
+                            required
+                        />
+                        <Button type="submit" className="button submit-button">Add Review</Button>
+                    </FormControl>
+                </form>
+                <br />
+                <Divider />
+                <br />
+                <Grid container spacing={3}>
+                    {reviews.length > 0 ? (
+                        reviews.map(review => {
+                            // Find the experience that matches the review's experienceId
+                            const matchingExperience = experiences.find(exp => exp._id === review.experience);
+                            const experienceTitle = matchingExperience ? matchingExperience.title : "Unknown Experience";
+                            return (
+                                <Grid item xs={4}>
+                                    <Card key={review._id}>
+                                        <p>Experience: {experienceTitle}</p>
+                                        <p>Rating: {review.rating}</p>
+                                        <p>Description: {review.description}</p>
+                                        <Button onClick={() => handleDelete(review._id)} className="button delete-button">
+                                            Delete
+                                        </Button>
+                                    </Card>
+                                </Grid>
+                            )
+                        })
+                    ) : (
+                        <p>No reviews found.</p>
+                    )}
+                </Grid>
+            </Paper>
         </Container>
     )
 }

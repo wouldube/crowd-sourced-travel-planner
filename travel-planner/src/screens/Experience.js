@@ -244,7 +244,7 @@ const Experience = (props) => {
         <Tooltip>
             {trips.map((trip, index) => (
                 <div key={index}>
-                    <button onClick={() => {pickTrip(trip)}} className="button delete-button">{trip.title}</button>
+                    <Button onClick={() => {pickTrip(trip)}} className="button delete-button">{trip.title}</Button>
                 </div>
             ))}
             <Button onClick={createTrip} className="button delete-button">Create New Trip</Button>
@@ -299,12 +299,11 @@ const Experience = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                     { showTrips ? <UserTrips /> : null }
-                    <Grid item xs={12}>
-                        { inFavs ? <Unfavorite /> : <Favorite />}
-                        
-                    </Grid>
                     {/* <Button variant="contained" onClick={favoriteExp} id="addFav">Add to Favorites</Button> */}
                     {/* <FavoriteBorderOutlinedIcon variant="contained" style={{display: "none"}} onClick={unfavoriteExp} id="removeFav">Remove Favorite</Button> */}
+                </Grid>
+                <Grid item xs={12}>
+                    { inFavs ? <Unfavorite /> : <Favorite />}
                 </Grid>
             </Grid>
             <div>

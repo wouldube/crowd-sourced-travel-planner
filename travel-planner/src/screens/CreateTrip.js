@@ -1,6 +1,6 @@
 import { React, useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, Input, TextField } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, Input, TextField, Tooltip} from '@mui/material'
 
 const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
@@ -74,48 +74,56 @@ const CreateTrip = (initialExp) => {
 
     return (
         <Container>
-            <Card>
-            New Trip!
-            <form>
-                <FormControl>
-                    <Grid container>
+            {/* <Card> */}
+            <Paper>
+                <Grid container spacing={3}>
+                    <form>
                         <Grid item xs={12}>
-                            <TextField
-                                id="title" label="Title" type="text" required
-                                value={title} onChange={(e) => { setTitle(e.target.value) }}
-                            />
+                            <FormControl>
+                                <Container>
+                                    <h2>Plan a new trip!</h2>
+                                    <TextField
+                                        id="title" label="Title" type="text" required
+                                        value={title} onChange={(e) => { setTitle(e.target.value) }}
+                                    />
+                                </Container>
+                                <Container>
+                                    <TextField
+                                        id="description" label="Description" type="text"
+                                        value={description} onChange={(e) => setDescription(e.target.value)}
+                                    />
+                                </Container>
+                                <Container>
+                                    <TextField
+                                        id="image" label="Image" type="file" accept="image/*"
+                                        onChange={(e) => addImage(e.target.value)}
+                                    />
+                                </Container>
+                                <Container>
+                                    <Button type="submit" onClick={SaveTrip}>Create Trip</Button>
+                                </Container>
+                                <Divider/>
+                                <Divider/>
+                                <Divider/>
+                                <h4>Add some of your experiences to the trip!</h4>
+                                <Grid container sizing={3}>
+                                    {allExperiences.map((exp, index) => (
+                                        <Grid item key={index} xs={4}>
+                                            <Card variant="experience" style={{backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(246, 225, 161, 0.3)), url(${exp.images[0]})`}}>
+                                                <h4>{exp.title}</h4>
+                                                <Tooltip title="Add to Trip" followCursor>
+                                                    <Button onClick={() => { setExperiences([...experiences, exp]) }}>+</Button>
+                                                </Tooltip>
+                                            </Card>
+                                        </Grid>
+                                    ))}
+                                </Grid>
+                            </FormControl>
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                id="description" label="Description" type="text"
-                                value={description} onChange={(e) => setDescription(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                id="image" label="Image" type="file" accept="image/*"
-                                onChange={(e) => addImage(e.target.value)}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Button type="submit" onClick={SaveTrip}>+</Button>
-                    <Divider/>
-                    <Divider/>
-                    <Divider/>
-                    Add some of your experiences to the trip!
-                    <Grid container sizing={3}>
-                        {allExperiences.map((exp, index) => (
-                            <Grid item key={index} xs={4}>
-                                <Card variant="experience">
-                                    <h3>{exp.title}</h3>
-                                    <Button onClick={() => { setExperiences([...experiences, exp]) }}>+</Button>
-                                </Card>
-                            </Grid>
-                        ))}
-                    </Grid>
-                </FormControl>
-            </form>
-            </Card>
+                    </form>
+                </Grid>
+            </Paper>
+            {/* </Card> */}
         </Container>
     )
 }
