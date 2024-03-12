@@ -58,4 +58,10 @@ const getTripExperiences = async (id) => {
 
     return experiences
 }
-module.exports = { getAllUserTrips, getTripById, createTrip, updateTrip, deleteTrip, getTripExperiences }
+
+const getTrips = async () => {
+    const trips = await Trip.find();
+    return trips
+}
+
+module.exports = { getAllUserTrips, getTripById, createTrip, updateTrip, deleteTrip, getTripExperiences, getTrips }

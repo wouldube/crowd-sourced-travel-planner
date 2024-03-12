@@ -121,6 +121,11 @@ const deleteUser = async(id) => {
     return result.deletedCount;
 }
 
+const getUsers = async() => {
+    const users = await User.find();
+    return users
+}
+
 module.exports = { getUserById, getUserByUid, getUserExperiences, updateUserExperiences, deleteUserExperience, 
     getUserFavorites, getUserReviews, getUserTrips, updateUserTrips, 
-    createUser, updateUser, deleteUser };
+    createUser, updateUser, deleteUser, getUsers };
