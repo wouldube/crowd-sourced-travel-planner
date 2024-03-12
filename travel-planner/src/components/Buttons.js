@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, Button, ButtonGroup } from '@mui/material';
 
 const Buttons = () => {
+
     const navigate = useNavigate();
+    const [login, setLogin] = useState(false);
+
+    if (!login) {
+        if (localStorage.getItem("id")) {
+            setLogin(true);
+        }
+    }
+
+    const logout = () => {
+        localStorage.removeItem("id")
+        setLogin(false)
+        navigate('/')
+    }
+
+    // Components
+
+    const LoginButton = () => (
+        <Button onClick={() => navigate('/login')}>Login</Button>
+    )
+
+    const LogoutButton = () => (
+        <Button onClick={logout}>Logout</Button>
+    )
 
     return (
         <Container>
@@ -20,7 +44,9 @@ const Buttons = () => {
                     <Button onClick={() => navigate('/search')}>
                         Search
                     </Button>
-                    </ButtonGroup>
+                    {login ? <LogoutButton /> : <LoginButton />}
+            </ButtonGroup>
+            
         </Container>
     )
 }
