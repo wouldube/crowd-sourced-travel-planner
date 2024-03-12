@@ -5,7 +5,7 @@ const cors = require("cors");
 const { getAllExperiences, getExperienceById, createExperience, updateExperience, deleteExperience, searchExperiences } = require('../controllers/experienceController');
 const { createReview, getReviewsByExperienceId, getReviewById, getReviewsByUserId, updateReview, deleteReview } = require('../controllers/reviewController');
 const tripController = require("../controllers/tripController");
-const { getUserById, getUserByUid, getUserExperiences, getUserFavorites, getUserReviews, getUserTrips, createUser, updateUser, deleteUser } = require('../controllers/userController');
+const { getUserById, getUserByUid, getUserExperiences, getUserFavorites, getUserReviews, getUserTrips, createUser, updateUser, deleteUser, getUsers } = require('../controllers/userController');
 
 
 const corsOptions = {
@@ -184,6 +184,31 @@ router.delete('/delete-exp/:experience_id', async (req, res) => {
     try {
         const modifiedCount = await deleteExperience(id);
         res.json(modifiedCount);
+
+        // Delete from Trips
+        const trips = await tripController.getTrips();
+        for (let i = 0; i < trips.length; i++) {
+            let trip = trips[i]
+            let index = trip.experiences.indexOf(id)
+
+            if (index >= 0) {
+                trip.experiences.splice(index, 1);
+                tripController.updateTrip(trip._id, trip)
+            }
+        }
+
+        // Delete from Favorites
+        const users = await getUsers();
+        for (let i = 0; i < users.length; i++) {
+            let user = users[i]
+            let index = user.favorites.indexOf(id)
+
+            if (index >= 0) {
+                user.favorites.splice(index, 1);
+                updateUser(user._id, user)
+            }
+        }
+
     } catch (error) {
         console.error(`Error in DELETE /delete-exp/${experience_id}:`, error);
         res.status(500).json({ message: error.message });
