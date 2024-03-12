@@ -32,11 +32,6 @@ const Profile = () => {
     return (
         <Container>
             <Paper>
-                {/* {login === 0 && (
-                        // <div className="loginblur"></div>
-                    )}
-                    {login === 1 && ( */}
-                {/* // <div> */}
                 <Grid container justifyContent="center" spacing={1}>
                     <Grid item position xs={12}>
                         <Button onClick={() => { navigate("/account") }}>

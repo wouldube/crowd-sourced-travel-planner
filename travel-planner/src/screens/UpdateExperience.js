@@ -108,7 +108,7 @@ export const UpdateExperience = ({ experienceToUpdate }) => {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
-                <span>Geolocation</span>
+                <h3>Geolocation</h3>
                 <TextField label="Latitude"
                   type="number"
                   id="lat"
@@ -123,6 +123,7 @@ export const UpdateExperience = ({ experienceToUpdate }) => {
                   value={longitude}
                   onChange={(e) => setLongitude(e.target.value)}
                 />
+                <h3>Update Photos</h3>
                 <img src={images} style={{ width: "220px" }} />
                 <TextField
                   type="file"
@@ -131,6 +132,7 @@ export const UpdateExperience = ({ experienceToUpdate }) => {
                   onChange={(e) => addImage([e.target.value])}
                 />
                 <Divider/>
+                <br></br>
                 <Container>
                   <Button type="submit" onClick={updateExperience}>Update</Button>
                   <Button onClick={() => { navigate(`/UserExperiences`) }}>Cancel</Button>
