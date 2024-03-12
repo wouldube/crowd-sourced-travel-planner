@@ -33,7 +33,8 @@ const Trips = ({ setTripObject }) => {
 
     return (
         <Container>
-            <Button onClick={() => { navigate(`create-trip`) }}>Plan a New One!!</Button>
+            <Paper>
+            <Button onClick={() => { navigate(`create-trip`) }}>+</Button>
             <Grid container spacing={3}>
                 {trips.map((trip, index) => (
                     <Grid item key={index} xs={4}>
@@ -44,6 +45,7 @@ const Trips = ({ setTripObject }) => {
                     </Grid>
                 ))}
             </Grid>
+            </Paper>
         </Container>
     )
 }

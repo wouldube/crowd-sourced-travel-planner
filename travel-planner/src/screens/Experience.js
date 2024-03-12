@@ -9,7 +9,6 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import ReviewModal from '../components/ReviewModal.js';
 
 const Experience = (props) => {
-
     const [showEdit, setShowEdit] = useState(false);
     const [inFavs, setInFavs] = useState(false);
     const [showTrips, setShowTrips] = useState(false);
@@ -30,20 +29,17 @@ const Experience = (props) => {
     const [experience, setExperience] = useState({
         title: '',
         images: [''],
-        location: {coordinates:["",""]},
+        location: { coordinates: ["", ""] },
         description: '',
     })
     const [trips, setTrips] = useState([])
 
-    useEffect(() => {
-        onLoad();
-    }, [])
 
     const onLoad = async () => {
         const response = await fetch(`http://localhost:5000/experiences/${experienceId}`)
         const data = await response.json()
         setExperience(data)
-        
+
         if (id) {
             favoriteButton()
         }
@@ -53,6 +49,10 @@ const Experience = (props) => {
         }
     }
 
+    useEffect(() => {
+        onLoad();
+    }, [])
+    
     const favoriteButton = async () => {
         const data = await fetch(`http://localhost:5000/user-info/${id}`)
         const user = await data.json()
@@ -73,29 +73,29 @@ const Experience = (props) => {
     // favorite an experience
     const favoriteExp = async () => {
         if (id) {
-        console.log('fav')
-        console.log(id)
-        const data = await fetch(`http://localhost:5000/user-info/${id}`)
-        const user = await data.json()
-        const favList = user.favorites
+            console.log('fav')
+            console.log(id)
+            const data = await fetch(`http://localhost:5000/user-info/${id}`)
+            const user = await data.json()
+            const favList = user.favorites
 
-        console.log(favList)
+            console.log(favList)
 
-        if (favList.indexOf(experience._id) < 0) {
-            favList.push(experience._id)
+            if (favList.indexOf(experience._id) < 0) {
+                favList.push(experience._id)
 
-            const updateUser = await fetch(`http://localhost:5000/user-info/${id}`, {
-                method: "PUT",
-                body: JSON.stringify({"favorites": favList}),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+                const updateUser = await fetch(`http://localhost:5000/user-info/${id}`, {
+                    method: "PUT",
+                    body: JSON.stringify({ "favorites": favList }),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
 
-            console.log(updateUser)
+                console.log(updateUser)
 
-            favoriteButton()
-        }
+                favoriteButton()
+            }
         }
         else {
             navigate('/login')
@@ -114,7 +114,7 @@ const Experience = (props) => {
 
         const updateUser = await fetch(`http://localhost:5000/user-info/${id}`, {
             method: "PUT",
-            body: JSON.stringify({"favorites": favList}),
+            body: JSON.stringify({ "favorites": favList }),
             headers: {
                 "Content-Type": "application/json",
             },
@@ -138,15 +138,15 @@ const Experience = (props) => {
             navigate('/login')
         }
     }
-    
+
     // add review
     const handleOpenReviewModal = (event) => {
         if (event) {
             event.stopPropagation();
             const { clientY } = event;
-    
+
             const modalY = clientY - 150;
-    
+
             setModalStyle({
                 top: `${modalY}px`,
                 position: 'fixed',
@@ -154,15 +154,15 @@ const Experience = (props) => {
                 transform: 'translateX(-50%)',
             });
         }
-    
+
         setVisibleReviewModal(true);
-    
+
     };
-    
+
     const handleCloseReviewModal = () => {
         setVisibleReviewModal(false);
     };
-    
+
 
     const pickTrip = async (trip) => {
         const expList = trip.experiences
@@ -172,7 +172,7 @@ const Experience = (props) => {
 
             const updateTrip = await fetch(`http://localhost:5000/update-trip/${trip._id}`, {
                 method: "PUT",
-                body: JSON.stringify({"experiences": expList}),
+                body: JSON.stringify({ "experiences": expList }),
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -214,7 +214,7 @@ const Experience = (props) => {
 
         const updateUser = await fetch(`http://localhost:5000/user-info/${id}`, {
             method: "PUT",
-            body: JSON.stringify({"experiences": expList}),
+            body: JSON.stringify({ "experiences": expList }),
             headers: {
                 "Content-Type": "application/json",
             },
@@ -226,95 +226,111 @@ const Experience = (props) => {
 
     const EditButton = () => (
         <Tooltip title="Edit Experience" followCursor>
-            <IconButton onClick={updateExp}>
-                <EditNoteIcon variant="contained"  className="button delete-button"/>
-            </IconButton>
-        </Tooltip>                
-    )
-    
-    const DeleteButton = () => (
-        <Tooltip title="Delete Experience" followCursor>
-            <IconButton onClick={deleteExp}>
-        <DeleteForeverIcon variant="contained"  className="button delete-button"/>
-            </IconButton>
+            <Button onClick={updateExp}>
+                <EditNoteIcon variant="contained" />
+            </Button>
         </Tooltip>
     )
-    
+
+    const DeleteButton = () => (
+        <Tooltip title="Delete Experience" followCursor>
+            <Button onClick={deleteExp}>
+                <DeleteForeverIcon />
+            </Button>
+        </Tooltip>
+    )
+
     const UserTrips = () => (
         <Tooltip>
             {trips.map((trip, index) => (
                 <div key={index}>
-                    <button onClick={() => {pickTrip(trip)}} className="button delete-button">{trip.title}</button>
+                    <Button onClick={() => { pickTrip(trip) }}>{trip.title}</Button>
                 </div>
             ))}
-            <Button onClick={createTrip} className="button delete-button">Create New Trip</Button>
+            <Button onClick={createTrip}>Create New Trip</Button>
         </Tooltip>
     )
-    
+
     const Favorite = () => (
         <Tooltip title="Add to Favorites" followCursor>
-            <IconButton onClick={favoriteExp}>
-                <FavoriteIcon variant="contained"  className="button delete-button"/>
-                {/* <FavoriteIcon onClick={favoriteExp} className="button delete-button"/> */}
-                {/* <Button variant="contained" onClick={deleteExp}>Delete</Button> */}
-            </IconButton>
+            <Button onClick={favoriteExp}>
+                <FavoriteBorderOutlinedIcon variant="contained" />
+            </Button>
         </Tooltip>
     )
-    
+
     const Unfavorite = () => (
         <Tooltip title="Remove Favorite" followCursor>
-            <IconButton onClick={unfavoriteExp}>
-                <FavoriteBorderOutlinedIcon variant="contained"  id="removeFav" className="button delete-button"/>
-                {/* <FavoriteBorderOutlinedIcon variant="contained" style={{display: "none"}} onClick={unfavoriteExp} id="removeFav"/> */}
-                {/* <Button variant="contained" onClick={deleteExp}>Delete</Button> */}
-            </IconButton>
+            <Button onClick={unfavoriteExp}>
+                <FavoriteIcon variant="contained" id="removeFav" />
+            </Button>
         </Tooltip>
     )
 
     return (
         <Container>
             <Paper>
-            <Grid container spacing={1}>
-                {/* <h2></h2> */}
-                <Grid item xs={16}>
-                    <strong><h2>{experience.title}</h2></strong>
-                </Grid>
-                <Grid item xs={16}>
-                    <img src={experience.images[0]} style={{ width: "350px" }}></img>
-                </Grid>
-                <Grid item xs={12}>
-                    <span>{experience.description}</span>
-                </Grid>
-                <Grid item xs={12}>
-                    <span><strong>Location: </strong>{experience.location.coordinates[0]}, {experience.location.coordinates[1]}</span>
-                </Grid>
-                <Grid item xs={12}>
-                    <Tooltip title="Add to Trip" followCursor>
-                        <IconButton>
-                            <AddBoxOutlinedIcon onClick={addToTrip} className="button delete-button"/>
-                        </IconButton>
-                    </Tooltip>
-                    { showEdit ? <EditButton /> : null }
-                    { showEdit ? <DeleteButton /> : null }
-                </Grid>
-                <Grid item xs={12}>
-                    { showTrips ? <UserTrips /> : null }
-                    <Grid item xs={12}>
-                        { inFavs ? <Unfavorite /> : <Favorite />}
-                        
+                <Grid container spacing={3}>
+                    <Grid item xs={4}>
+                        <Grid container spacing={1}>
+                            <Grid item xs={12}>
+                                <strong><h2>{experience.title}</h2></strong>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <span><strong>Location</strong><br />
+                                    {experience.location.coordinates[0]}, {experience.location.coordinates[1]}</span>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <img src={experience.images[0]} style={{ width: "100%", borderRadius: "50px" }}></img>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <span>{experience.description}</span>
+                            </Grid>
+                        </Grid>
                     </Grid>
-                    {/* <Button variant="contained" onClick={favoriteExp} id="addFav">Add to Favorites</Button> */}
-                    {/* <FavoriteBorderOutlinedIcon variant="contained" style={{display: "none"}} onClick={unfavoriteExp} id="removeFav">Remove Favorite</Button> */}
+                    <Grid item xs={8}>
+                        <Grid container justifyContent="space-evenly">
+                            <Grid item xs={2}>
+                                <Tooltip title="Add to Trip" followCursor>
+                                    <Button>
+                                        <AddBoxOutlinedIcon onClick={addToTrip} />
+                                    </Button>
+                                </Tooltip>
+                            </Grid>
+                            {showEdit ?
+                                <>
+                                    <Grid item xs={2}>
+                                        <EditButton />
+                                    </Grid>
+                                    <Grid item xs={2}>
+                                        <DeleteButton />
+                                    </Grid>
+                                </>
+                                : null}
+                            {showTrips ?
+                                <Grid item xs={2}>
+                                    <UserTrips />
+                                </Grid>
+                                : null}
+                            <Grid item xs={2}>
+                                {inFavs ? <Unfavorite /> : <Favorite />}
+                            </Grid>
+                        </Grid>
+                        {visibleReviewModal && (
+                            <Grid item xs={2}>
+                                <ReviewModal
+                                    expId={experienceId}
+                                    onClose={handleCloseReviewModal}
+                                    style={modalStyle}
+                                />
+                            </Grid>
+                        )}
+                        <Card style={{ height: "50vh", overflowY: "scroll" }}>
+                            <h3>reviews?</h3>
+                        </Card>
+                    </Grid>
+
                 </Grid>
-            </Grid>
-            <div>
-                {visibleReviewModal && (
-                    <ReviewModal 
-                    expId={experienceId}
-                    onClose={handleCloseReviewModal}
-                    style={modalStyle}
-                />)}
-            </div>
             </Paper>
         </Container>
     )

@@ -36,6 +36,7 @@ function App() {
           <BrowserRouter>
           <Container>
           <Buttons/>
+          <br/><br/><br/><br/><br/>
                 <Routes>
                   <Route path="/" element={<Exploration setExpId={setExpId}/>} />
                   <Route path="create-exp" element={<CreateExperience />} />

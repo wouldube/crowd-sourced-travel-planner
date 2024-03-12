@@ -37,9 +37,9 @@ let Theme = createTheme({
             },
             styleOverrides: {
                 root: {
-                    borderRadius: "100%",
+                    borderRadius: "100px",
                     boxShadow: '0px 0px 10px 5px rgba(255, 255, 255, 0.3)',
-                    height: "50px", width: "50px",
+                    height: "100px", width: "100px", transform: "scale(0.75)",
                     '&:hover': {
                         backgroundColor: '#f7ebc6'
                     }
@@ -66,7 +66,7 @@ let Theme = createTheme({
                     background: 'radial-gradient(#FFFFFF, #f6e1a1)',
                     transition: '0.3s ease',
                     '&:hover': {
-                        background: 'radial-gradient(#FFFFFF 50%, #f6e1a1)',
+                        background: 'radial-gradient(#FFFFFF 30%, #f6e1a1)',
                         backgroundPosition: 'center', backgroundSize: 'cover',
                     },
                     backgroundPosition: 'center', backgroundSize: 'cover',

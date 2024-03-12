@@ -42,28 +42,34 @@ const Search = ({ setExpId }) => {
 
     return (
         <Container>
-            <h2>Search Experiences</h2>
-            <form onSubmit={handleSearch}>
-                <FormControl>
-                    <TextField
-                        type="text"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Enter search keywords"
-                        className="search-input"
-                    />
-                    <Button type="submit" disabled={isLoading}>
-                        {isLoading ? 'Searching...' : 'Search'}
-                        <br />
-                    </Button>
-                    <br />
-                </FormControl>
-            </form>
-            {error && <p className="error">{error}</p>}
-                <Grid container spacing={3}>
+            <Paper style={{ width: "80vw" }}>
+                <h2>Search Experiences</h2>
+                <form onSubmit={handleSearch}>
+                    <FormControl>
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <TextField
+                                    type="text"
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    placeholder="Enter search keywords"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Button type="submit" disabled={isLoading}>
+                                    {isLoading ? 'Searching...' : 'Search'}
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </FormControl>
+                </form>
+            </Paper>
+            <Paper style={{ width: "80vw" }}>
+                {error && <p className="error">{error}</p>}
+                <Grid container justifyContent="center" spacing={3}>
                     {isLoading ? (
                         <p>Loading...</p>
-                    ) : results.length > 0 ? (
+                    ) : (results.length > 0 ? (
                         results.map((result) => (
                             <Grid item xs={4}>
                                 <Card key={result._id} onClick={() => { goToExperience(result._id) }}>
@@ -76,8 +82,10 @@ const Search = ({ setExpId }) => {
                         ))
                     ) : (
                         <p>No results found</p>
+                    )
                     )}
                 </Grid>
+            </Paper>
         </Container>
     )
 }

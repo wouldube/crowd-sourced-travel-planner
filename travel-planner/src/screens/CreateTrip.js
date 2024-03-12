@@ -1,6 +1,6 @@
 import { React, useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, Input, TextField } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, Input, TextField, CardActions, CardContent, CardHeader } from '@mui/material'
 
 const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
@@ -74,48 +74,51 @@ const CreateTrip = (initialExp) => {
 
     return (
         <Container>
-            <Card>
-            New Trip!
             <form>
                 <FormControl>
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <TextField
-                                id="title" label="Title" type="text" required
-                                value={title} onChange={(e) => { setTitle(e.target.value) }}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                id="description" label="Description" type="text"
-                                value={description} onChange={(e) => setDescription(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                id="image" label="Image" type="file" accept="image/*"
-                                onChange={(e) => addImage(e.target.value)}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Button type="submit" onClick={SaveTrip}>+</Button>
-                    <Divider/>
-                    <Divider/>
-                    <Divider/>
-                    Add some of your experiences to the trip!
-                    <Grid container sizing={3}>
-                        {allExperiences.map((exp, index) => (
-                            <Grid item key={index} xs={4}>
-                                <Card variant="experience">
-                                    <h3>{exp.title}</h3>
-                                    <Button onClick={() => { setExperiences([...experiences, exp]) }}>+</Button>
-                                </Card>
+                    <Paper>
+                        New Trip!
+
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <TextField
+                                    id="title" label="Title" type="text" required
+                                    value={title} onChange={(e) => { setTitle(e.target.value) }}
+                                />
                             </Grid>
-                        ))}
-                    </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    id="description" label="Description" type="text"
+                                    value={description} onChange={(e) => setDescription(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    id="image" label="Image" type="file" accept="image/*"
+                                    onChange={(e) => addImage(e.target.value)}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Button type="submit" onClick={SaveTrip}>+</Button>
+                    </Paper>
+                    <Paper>
+                        Add some of your experiences to the trip!
+                        <Grid container sizing={3}>
+                            {allExperiences.map((exp, index) => (
+                                <Grid item key={index} xs={4}>
+                                    <Card variant="experience">
+                                        <CardContent style={{bottom: "5vh", transform: "scale(0.8)" }}>
+                                            <Button style={{bottom: "5vh" }} onClick={() => { setExperiences([...experiences, exp]) }}>+</Button>
+                                            <p style={{marginTop: "-5vh" }}>{exp.title}</p>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </Paper>
+
                 </FormControl>
             </form>
-            </Card>
         </Container>
     )
 }

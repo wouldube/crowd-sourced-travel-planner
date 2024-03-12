@@ -140,7 +140,7 @@ function UserExperiences({ setExperienceToUpdate }) {
                                     </Tooltip>
                                     {trips.map((trip, index) => (
                                         <div key={index}>
-                                        <button onClick={() => {pickTrip(trip)}}>{trip.title}</button>
+                                        <Button onClick={() => {pickTrip(trip)}}>{trip.title}</Button>
                                         </div>
                                     ))}
                                     <Tooltip title="Edit Experience" followCursor>

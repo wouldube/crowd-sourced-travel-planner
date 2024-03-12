@@ -69,6 +69,7 @@ export const CreateExperience = () => {
           <form>
               <Grid item position xs={16}>
                 <FormControl>
+                  <Container>
                   <h2>Create New Experience</h2>
                   {/* <FormLabel>Create New Experience!</FormLabel> */}
                   <TextField
@@ -114,6 +115,8 @@ export const CreateExperience = () => {
                     <Button variant="contained" onClick={createExperience}>Create</Button>
                     <Button onClick={() => {navigate(`/UserExperiences`)}}>Cancel</Button>
                   </Container>
+                  </Container>
+
                 </FormControl>
               </Grid>
           </form>
