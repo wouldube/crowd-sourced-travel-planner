@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField, Tooltip } from '@mui/material'
 
 const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
@@ -88,50 +88,58 @@ export const UpdateExperience = ({ experienceToUpdate }) => {
 
   return (
     <Container>
-      <h3>Update Experience</h3>
-      <form>
-        <FormControl>
-          <TextField label="title"
-            type="text"
-            id="title"
-            required
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <TextField label="description"
-            type="text"
-            id="description"
-            required
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <span>Geolocation</span>
-          <TextField label="Latitude"
-            type="number"
-            id="lat"
-            required
-            value={latitude}
-            onChange={(e) => setLatitude(e.target.value)}
-          />
-          <TextField label="Longitude"
-            type="number"
-            id="long"
-            required
-            value={longitude}
-            onChange={(e) => setLongitude(e.target.value)}
-          />
-          <img src={images} style={{ width: "220px" }} />
-          <TextField
-            type="file"
-            id="image"
-            accept="image/*"
-            onChange={(e) => addImage([e.target.value])}
-          />
-          <Button type="submit" onClick={updateExperience}>Update</Button>
-          <Divider/>
-          <Button onClick={() => { navigate(`/UserExperiences`) }}>Cancel</Button>
-        </FormControl>
-      </form>
+      <Paper>
+        <Grid container justifyContent="center" spacing={2}  m={2} style={{width: "400px"}}>
+          <form>
+            <Grid item position xs={16}>
+              <FormControl>
+                <h2>Update Experience</h2>
+                <TextField label="title"
+                  type="text"
+                  id="title"
+                  required
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <TextField label="description"
+                  type="text"
+                  id="description"
+                  required
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+                <span>Geolocation</span>
+                <TextField label="Latitude"
+                  type="number"
+                  id="lat"
+                  required
+                  value={latitude}
+                  onChange={(e) => setLatitude(e.target.value)}
+                />
+                <TextField label="Longitude"
+                  type="number"
+                  id="long"
+                  required
+                  value={longitude}
+                  onChange={(e) => setLongitude(e.target.value)}
+                />
+                <img src={images} style={{ width: "220px" }} />
+                <TextField
+                  type="file"
+                  id="image"
+                  accept="image/*"
+                  onChange={(e) => addImage([e.target.value])}
+                />
+                <Divider/>
+                <Container>
+                  <Button type="submit" onClick={updateExperience}>Update</Button>
+                  <Button onClick={() => { navigate(`/UserExperiences`) }}>Cancel</Button>
+                </Container>
+              </FormControl>
+            </Grid>  
+          </form>
+        </Grid>
+      </Paper>
     </Container>
 )}
 
