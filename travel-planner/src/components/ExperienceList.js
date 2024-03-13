@@ -77,10 +77,10 @@ const ExperienceList = ({ setExpId }) => {
                                     <strong>Location</strong><br />
                                     {allexp.location.coordinates[0]}, {allexp.location.coordinates[1]}
                                 </Grid>
-                                <Grid item xs={12}>
+                                {/* <Grid item xs={12}>
                                     <strong>Posted By</strong><br />
                                     {allexp.owner}
-                                </Grid>
+                                </Grid> */}
                                 <Grid item xs={12}>
                                     <Rating
                                         value={allexp.averageRating}

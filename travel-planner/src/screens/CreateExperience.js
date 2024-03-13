@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {Container, Paper, Grid, Box, Card, Button, FormLabel, FormControl, Input, TextField, Divider, Tooltip,} from '@mui/material'
+import {Container, Paper, Grid, Box, Card, Button, FormLabel, FormControl, Input, TextField, Divider, Tooltip, Rating} from '@mui/material'
 
 const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
@@ -23,8 +23,16 @@ export const CreateExperience = () => {
   const [description, setDescription] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const [review, setReview] = useState("");
+  const [newReview, setNewReview] = useState({ experienceId: '', rating: 5, description: "" });
   const [id, setId] = useState("");
   let [image, setImage] = useState(null);
+
+  const adjustTextareaHeight = (e) => {
+    e.target.style.height = 'inherit';
+    e.target.style.height = `${e.target.scrollHeight}px`;
+    setNewReview({ ...newReview, description: e.target.value });
+  };
 
   const createExperience = async () => {
     try {
@@ -44,15 +52,18 @@ export const CreateExperience = () => {
     const newExperience = { title, description, coordinates, image:downloadURL, id };
     const response = await fetch("http://localhost:5000/create-exp", {
       method: "POST",
-      body: JSON.stringify(newExperience),
+      body: JSON.stringify(newExperience, {
+        rating: newReview.rating,
+        description: newReview.description,
+        owner: localStorage.getItem("id"),
+        experience: newReview.experienceId
+    }),
       headers: {
         "Content-Type": "application/json",
       },
     });
     if (response.status === 200) {
-      // do something
       console.log(response);
-      // navigate("/create-exp");
     } else {
       // handle error
       console.log("error");
@@ -94,6 +105,18 @@ export const CreateExperience = () => {
                     <Input
                         type="file" id="image" accept="image/*" label="image" required
                         onChange={(e) => setImage(e.target.value) }
+                    />
+                  </Grid>
+                  <h3>Leave the first review!</h3>
+                  <Grid item xs={12}>
+                    <Rating id="rating" label="Rating" value={newReview.rating} precision={0.1}
+                              onChange={(e) => setNewReview({ ...newReview, rating: parseInt(e.target.value) })}
+                    />
+                    <TextField label="Review"
+                        className="review-textarea"
+                        value={newReview.description}
+                        onChange={adjustTextareaHeight}
+                        required
                     />
                   </Grid>
                   <Divider/>
