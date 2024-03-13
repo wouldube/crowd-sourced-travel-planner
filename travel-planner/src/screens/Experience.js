@@ -204,23 +204,7 @@ const Experience = (props) => {
             body: JSON.stringify(experience)
         });
 
-        const data = await fetch(`http://localhost:5000/user-info/${id}`)
-        const user = await data.json()
-        const expList = user.experiences
-
-        const index = expList.indexOf(experience._id)
-        if (index > -1) {
-            expList.splice(index, 1);
-        }
-
-        const updateUser = await fetch(`http://localhost:5000/user-info/${id}`, {
-            method: "PUT",
-            body: JSON.stringify({ "experiences": expList }),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        navigate("/");
+        navigate('/');
     }
 
     // HIDDEN COMPONENTS
