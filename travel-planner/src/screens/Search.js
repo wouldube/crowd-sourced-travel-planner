@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Rating, Button, FormControl, FormLabel, InputLabel, TextField } from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search'
 
 const Search = ({ setExpId }) => {
     const [query, setQuery] = useState('');
@@ -70,11 +71,12 @@ const Search = ({ setExpId }) => {
                     {isLoading ? (
                         <p>Loading...</p>
                     ) : (results.length > 0 ? (
-                        results.map((result) => (
-                            <Grid item xs={4}>
+                        results.map((result, index) => (
+                            <Grid item key={index} xs={4}>
                                 <Card key={result._id} onClick={() => { goToExperience(result._id) }}>
                                     <h3>{result.title}</h3>
-                                    <p>Rating: {result.averageRating || 0}</p>
+                                    <Rating id="rating" value={result.averageRating || 0} precision={0.1}
+                                                readOnly />
                                     <p>{result.description}</p>
                                 </Card>
                                 <br />
