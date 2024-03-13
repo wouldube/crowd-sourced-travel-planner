@@ -53,31 +53,41 @@ const Login = () => {
 
     return (
         <Container id="log-in">
-            <h2>Login</h2>
-            <div id="badLogin" style={{display: "none", width: "100%"}}>
-            <Alert severity="error" >Invalid username or password!</Alert>
-            <br/>
-            </div>
-            <form>
-                <FormControl>
-                    <TextField label="email"
-                        type="email"
-                        name="email"
-                        id="email"
-                        required
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <TextField label="passsword"
-                        type="password"
-                        name="pass"
-                        id="pass"
-                        required
-                        onChange={(e) => setPass(e.target.value)}
-                    />
-                    <Button type="submit" onClick={authLogin}>Login</Button>
-                </FormControl>
-            </form>
-            <Button onClick={() => { navigate(`/register`) }}>Create an Account</Button>
+            <Paper>
+                <h2>Login</h2>
+                <div id="badLogin" style={{ display: "none", width: "100%" }}>
+                    <Alert severity="error" >Invalid username or password!</Alert>
+                    <br />
+                </div>
+                <form>
+                    <FormControl>
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <TextField label="email"
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    required
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField label="passsword"
+                                    type="password"
+                                    name="pass"
+                                    id="pass"
+                                    required
+                                    onChange={(e) => setPass(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Button type="submit" onClick={authLogin}>Login</Button>
+                            </Grid>
+                        </Grid>
+                    </FormControl>
+                </form>
+                <Button onClick={() => { navigate(`/register`) }}>Create an Account</Button>
+            </Paper>
         </Container>
     )
 }
