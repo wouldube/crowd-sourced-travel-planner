@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, FormGroup, InputLabel, TextField } from '@mui/material'
 
 const firebase = require("firebase/app")
 const { firebaseConfig } = require("../firebase/firebase-config");
@@ -132,87 +132,92 @@ const Account = () => {
 
     return (
         <Container>
+            <Button onClick={logOut}>Logout</Button>
+
             <Grid container>
-                <Grid item xs={6}>
-            <Paper>
-            <form>
-                <FormControl>
-                <img src={image} style={{ width: "75px" }} />
-                <TextField
-                    type="file"
-                    id="image"
-                    accept="image/*"
-                    onChange={(e) => setImage(e.target.value)}
-                />
-                <TextField label="name"
-                    type="text"
-                    name="name"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <TextField label="bio"
-                    type="text"
-                    name="bio"
-                    id="bio"
-                    value={bio}
-                    onChange={(e) => setBio(e.target.value)}
-                />
-                <TextField label="username"
-                    type="text"
-                    name="username"
-                    id="username"
-                    required
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <br/>
-                <Button variant="contained" type="submit" onClick={updateUser} value="Submit">submit</Button>
-            </FormControl>
-            </form>
-            </Paper>
-            </Grid>
-            <Grid item xs={6}>
-                <Paper>
+                <Grid item xs={12}>
+                    <Paper>
+                        <form>
+                            <FormControl>
+                                <Container>
+                                    <img src={image} style={{ width: "75px" }} />
+                                    <TextField
+                                        type="file"
+                                        id="image"
+                                        accept="image/*"
+                                        onChange={(e) => setImage(e.target.value)}
+                                    />
+                                    <TextField label="name"
+                                        type="text"
+                                        name="name"
+                                        id="name"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />
+                                    <TextField label="bio"
+                                        type="text"
+                                        name="bio"
+                                        id="bio"
+                                        value={bio}
+                                        onChange={(e) => setBio(e.target.value)}
+                                    />
+                                    <TextField label="username"
+                                        type="text"
+                                        name="username"
+                                        id="username"
+                                        required
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
+                                    />
+                                    <Button variant="contained" type="submit" onClick={updateUser} value="Submit">submit</Button>
+                                </Container>
+                            </FormControl>
+                        </form>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper>
 
-            <form>
-            <FormControl>
-                <FormLabel>Update Email & Password</FormLabel>
-                <TextField label="email"
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={email}
-                    required
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <TextField label="password"
-                    type="password"
-                    name="pass"
-                    id="pass"
-                    value={pass}
-                    required
-                    onChange={(e) => setPass(e.target.value)}
-                />
-                <TextField label="newPass"
-                    type="password"
-                    name="newPass"
-                    id="newPass"
-                    value={newPass}
-                    onChange={(e) => setNewPass(e.target.value)}
-                />
-                <br/>
-                <Button variant="contained" type="submit" onClick={updateEmailandPass} value="Submit">submit</Button>
-            </FormControl>
-            </form>
-            </Paper>
-            </Grid>
+                        <form>
+                            <FormControl>
+                                <Container>
+
+                                    <FormLabel>Update Email & Password</FormLabel>
+                                    <TextField label="email"
+                                        type="email"
+                                        name="email"
+                                        id="email"
+                                        value={email}
+                                        required
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                    <TextField label="password"
+                                        type="password"
+                                        name="pass"
+                                        id="pass"
+                                        value={pass}
+                                        required
+                                        onChange={(e) => setPass(e.target.value)}
+                                    />
+                                    <TextField label="newPass"
+                                        type="password"
+                                        name="newPass"
+                                        id="newPass"
+                                        value={newPass}
+                                        onChange={(e) => setNewPass(e.target.value)}
+                                    />
+                                    <br />
+                                    <Button variant="contained" type="submit" onClick={updateEmailandPass} value="Submit">submit</Button>
+                                </Container>
+                            </FormControl>
+                        </form>
+                    </Paper>
+                </Grid>
             </Grid>
 
-            <Divider/>
-                <Button onClick={logOut}>Logout</Button>
+            <Divider />
 
-                
+
         </Container >
     )
 }

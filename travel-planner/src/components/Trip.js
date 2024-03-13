@@ -1,6 +1,8 @@
 import { React, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button } from '@mui/material';
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, Tooltip, IconButton } from '@mui/material';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 const Trip = ({ tripObject }) => {
     const [experiences, setExperiences] = useState([]);
@@ -31,22 +33,35 @@ const Trip = ({ tripObject }) => {
 
     return (
         <Container>
-            <h3>{tripObject.title}</h3>
-            <Button onClick={() => { navigate(`update-trip`) }}>Edit?</Button>
-            <Button onClick={() => { deleteTrip() }}>Delete!</Button>
-            <Grid container sizing={3}>
-                {experiences.map((exp, index) => (
-                    <Grid item key={index} xs={4}>
-                        {(exp) && (
-                            <Card key={index} variant="experience" style={{
-                                backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(246, 225, 161, 0.3)), url(${exp.images[0]})`
-                            }}>
-                                <Container><h3>{exp.title}</h3></Container>
-                            </Card>
-                        )}
-                    </Grid>
-                ))}
-            </Grid>
+            <Paper>
+                <h3>{tripObject.title}</h3>
+                <Tooltip title="Edit Trip" followCursor>
+                    <Button onClick={() => { navigate(`update-trip`) }}>
+                        <EditNoteIcon />
+                    </Button>
+                </Tooltip>
+                <Tooltip title="Delete Trip" followCursor>
+                    <Button onClick={() => { navigate(`update-trip`) }}>
+                        <DeleteForeverIcon />
+                    </Button>
+                </Tooltip>
+                <Grid container sizing={3}>
+                    {experiences.map((exp, index) => (
+                        <>
+                            {(exp) && (
+
+                                <Grid item key={index} xs={4}>
+                                    <Card key={index} variant="experience" style={{
+                                        backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(246, 225, 161, 0.3)), url(${exp.images[0]})`
+                                    }}>
+                                        <Container><h3>{exp.title}</h3></Container>
+                                    </Card>
+                                </Grid>
+                            )}
+                        </>
+                    ))}
+                </Grid>
+            </Paper>
         </Container>
     )
 }

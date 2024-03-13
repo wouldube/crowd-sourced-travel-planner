@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Welcome from '../components/Welcome';
 import ExperiencesMap from '../components/ExperiencesMap.js';
 import ExperienceList from '../components/ExperienceList.js';
 import { Container, Paper, Grid, Box, Card, Divider, Button } from '@mui/material';
 
-const Exploration = ({setExpId}) => {
+const Exploration = ({ setExpId }) => {
     const [initial, isInitial] = useState(0);
     const [component, which] = useState(0);
+
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -20,20 +21,19 @@ const Exploration = ({setExpId}) => {
         <Container>
             <Grid container sizing={3}>
                 <Grid item xs={12}>
-                <Paper variant="experiencesMap">
-                        <ExperiencesMap setExpId={setExpId}/>
+                    <Paper variant="experiencesMap">
+                        <ExperiencesMap setExpId={setExpId} />
                     </Paper>
-                    </Grid>
-
-                    <Grid item xs={4}>
+                </Grid>
+                <Grid item xs={4}>
                     <Paper variant="welcoming">
                         <Welcome />
                     </Paper>
-                    </Grid>
+                </Grid>
                 <Grid item xs={8}>
                     <Paper variant="experiencesGrid">
-                        <ExperienceList setExpId={setExpId}/>
-                        </Paper>
+                        <ExperienceList setExpId={setExpId} />
+                    </Paper>
 
                 </Grid>
             </Grid>

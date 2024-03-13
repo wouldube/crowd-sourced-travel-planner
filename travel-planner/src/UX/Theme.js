@@ -1,17 +1,80 @@
 import { createTheme } from '@mui/material/styles';
+import Comfortaa from '@fontsource/comfortaa'
 
 let Theme = createTheme({
     palette: {
-        primary: { main: '#f6e1a1' },
-        secondary: { main: '#bbcaf4' },
-        action: {
-            active: '#bbcaf4',
-            hover: '#bbcaf4',
-            selected: '#bbcaf4'
+        primary: {
+            main: '#75CFEB',
+            light: '#8DD6EC'
         },
-        divider: '#bbcaf4',
-        background: { main: '#93d7ed' }
+        secondary: {
+            main: '#098778',
+            dark: '#05594f'
+        },
+        action: {
+            active: '#c1e8f5',
+            hover: '#c1e8f5',
+            selected: '#c1e8f5'
+        },
+        divider: '#c1e8f5',
+        background: { main: '#5abbdc' }
     },
+    typography: {
+        fontFamily: 'comfortaa',
+        variants: [
+            {
+                props: { variant: 'p' },
+                style: {
+                    fontFamily: 'comfortaa'
+                }
+            },
+            {
+                props: { variant: 'h1' },
+                style: {
+                    fontFamily: 'comfortaa'
+                }
+            },
+            {
+                props: { variant: 'h2' },
+                style: {
+                    fontFamily: 'comfortaa'
+                }
+            },
+            {
+                props: { variant: 'h3' },
+                style: {
+                    fontFamily: 'comfortaa'
+                }
+            },
+            {
+                props: { variant: 'CardContent' },
+                style: {
+                    fontFamily: 'comfortaa'
+                }
+            },
+            {
+                props: { variant: 'h5' },
+                style: {
+                    fontFamily: 'comfortaa'
+                }
+            },
+            {
+                props: { variant: 'h6' },
+                style: {
+                    fontFamily: 'comfortaa'
+                }
+            },
+        ],
+    },
+    // typography: {
+    //     fontFamily: 'comfortaa',
+    //     styleOverrides: {
+    //         root: {
+    //             fontFamily: 'comfortaa'
+    //         }
+    //     }
+    // },
+    spacing: 10,
     components: {
         MuiButton: {
             defaultProps: {
@@ -19,10 +82,12 @@ let Theme = createTheme({
             },
             styleOverrides: {
                 root: {
-                    borderRadius: '3rem',
+                    aspectRatio: "1 / 1",
+                    borderRadius: "100px", maxHeight: "100px", maxWeight: "100px",
                     boxShadow: '0px 0px 10px 5px rgba(255, 255, 255, 0.3)',
+                    background: 'radial-gradient(#D7F0F8, #75CFEB)',
                     '&:hover': {
-                        backgroundColor: '#f7ebc6'
+                        boxShadow: '0px 0px 25px 5px rgba(255, 255, 255, 0.7)',
                     }
                 }
             }
@@ -32,8 +97,8 @@ let Theme = createTheme({
                 {
                     props: { variant: 'experience' },
                     style: {
-                        opacity: '1', borderRadius: '50%',
-                        height: '150px', width: '150px',
+                        opacity: '1', borderRadius: '100%',
+                        aspectRatio: "1 / 1", width: "fit-content",
                         boxShadow: '0px 1px 10px 5px rgba(255, 255, 255, 0.3)',
                         backgroundPosition: 'center', backgroundSize: 'cover',
                         '&:hover': { animation: 'ExperienceInteraction1 1s forwards' }
@@ -42,12 +107,15 @@ let Theme = createTheme({
             ],
             styleOverrides: {
                 root: {
-                    borderRadius: '1rem', border: 'solid 3px #f6e1a1',
+                    fontFamily: 'comfortaa',
+                    borderRadius: '1rem', border: 'solid 3px #8DD6EC',
                     boxShadow: '0px 0px 10px 3px rgba(0, 0, 0, 0.2)',
-                    background: 'radial-gradient(#FFFFFF, #f6e1a1)',
+                    background: '#75CFEB',//radial-gradient(#FFFFFF 30%, #75CFEB)',
+
+                    // background: 'radial-gradient(#FFFFFF, #75CFEB)',
                     transition: '0.3s ease',
                     '&:hover': {
-                        background: 'radial-gradient(#FFFFFF 50%, #f6e1a1)',
+                        background: '#75CFEB',//radial-gradient(#FFFFFF 30%, #75CFEB)',
                         backgroundPosition: 'center', backgroundSize: 'cover',
                     },
                     backgroundPosition: 'center', backgroundSize: 'cover',
@@ -62,26 +130,28 @@ let Theme = createTheme({
             variants: [
                 {
                     props: { variant: 'welcoming' },
-                    style: { height: '200vh' }
+                    style: { height: '100vh' }
                 },
                 {
                     props: { variant: 'experiencesGrid' },
-                    style: { overflowX: 'scroll', width:'50vw', height: '200vh'}
+                    style: { overflowX: 'scroll', height: '100vh' }
                 },
                 {
                     props: { variant: 'experiencesMap' },
-                    style: { overflow: 'scroll', height: '55vh'}
+                    style: { overflow: 'scroll', height: '55vh' }
                 },
                 {
                     props: { variant: 'major' },
-                    style: { width: '80vw', height: '80vh' } //width: '80vw', height: '80vh'
+                    style: { width: '80vw', height: '80vh' }
                 }
             ],
             styleOverrides: {
                 root: {
+                    fontFamily: 'comfortaa',
                     borderRadius: '1rem', border: 'solid 3px #05594f',
                     boxShadow: '0px 0px 10px 5px rgba(0, 0, 0, 0.3)',
-                    background: 'radial-gradient(#FFFFFF, #098778)',                }
+                    background: 'radial-gradient(#c1e8f5, #098778)'
+                }
             }
         }
     }

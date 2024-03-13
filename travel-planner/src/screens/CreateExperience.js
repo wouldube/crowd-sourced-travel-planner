@@ -69,6 +69,7 @@ export const CreateExperience = () => {
           <form>
               <Grid item position xs={16}>
                 <FormControl>
+                  <Container>
                   <h2>Create New Experience</h2>
                   {/* <FormLabel>Create New Experience!</FormLabel> */}
                   <TextField
@@ -79,6 +80,7 @@ export const CreateExperience = () => {
                     id="description" label="description" required value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
+                  <h3>Geolocation</h3>
                   <TextField
                       type="number" id="lat" label="lat" required value={latitude}
                       onChange={(e) => setLatitude(e.target.value) }
@@ -87,12 +89,15 @@ export const CreateExperience = () => {
                       type="number" id="long" label="lat" required value={longitude}
                       onChange={(e) => setLongitude(e.target.value) }
                   />
+                  <h3>Upload Photos</h3>
                   <Grid item xs={12}>
                     <Input
                         type="file" id="image" accept="image/*" label="image" required
                         onChange={(e) => setImage(e.target.value) }
                     />
                   </Grid>
+                  <Divider/>
+                  <br></br>
                   {/* <div className="review">
                         <div>
                             <span>Rating: </span>
@@ -114,6 +119,8 @@ export const CreateExperience = () => {
                     <Button variant="contained" onClick={createExperience}>Create</Button>
                     <Button onClick={() => {navigate(`/UserExperiences`)}}>Cancel</Button>
                   </Container>
+                  </Container>
+
                 </FormControl>
               </Grid>
           </form>
