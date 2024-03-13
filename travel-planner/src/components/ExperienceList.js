@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, Rating, Button } from '@mui/material'
+import RateReviewIcon from '@mui/icons-material/RateReview';
 import ReviewModal from './ReviewModal.js';
 
 const ExperienceList = ({ setExpId }) => {
@@ -92,7 +93,7 @@ const ExperienceList = ({ setExpId }) => {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Button onClick={(event) => { handleReviewModal(event, allexp._id) }}>
-                                        Review
+                                    <RateReviewIcon/>
                                     </Button>
                                 </Grid>
                             </Grid>
