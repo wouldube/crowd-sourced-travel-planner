@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField, Select, option } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Rating, Button, FormControl, FormLabel, InputLabel, TextField, Select, option } from '@mui/material'
 
 const Reviews = () => {
     const [reviews, setReviews] = useState([]);
@@ -92,23 +92,16 @@ const Reviews = () => {
                                 <option key={exp._id} value={exp._id}>{exp.title}</option>
                             ))}
                         </select>
-                        <select label="Rating"
-                            value={newReview.rating}
+                        <Rating id="rating" label="Rating" value={newReview.rating} precision={0.1}
                             onChange={(e) => setNewReview({ ...newReview, rating: parseInt(e.target.value) })}
-                        >
-                            <option value="5">5 Stars</option>
-                            <option value="4">4 Stars</option>
-                            <option value="3">3 Stars</option>
-                            <option value="2">2 Stars</option>
-                            <option value="1">1 Star</option>
-                        </select>
+                        />
                         <TextField label="Review"
                             className="review-textarea"
                             value={newReview.description}
                             onChange={adjustTextareaHeight}
                             required
                         />
-                        <Button type="submit" className="button submit-button">Add Review</Button>
+                        <Button type="submit">Add Review</Button>
                     </FormControl>
                 </form>
                 <br />
@@ -123,9 +116,10 @@ const Reviews = () => {
                             return (
                                 <Grid item xs={4}>
                                     <Card key={review._id}>
-                                        <p>Experience: {experienceTitle}</p>
-                                        <p>Rating: {review.rating}</p>
-                                        <p>Description: {review.description}</p>
+                                        <p>{experienceTitle}</p>
+                                        <Rating id="rating" value={review.rating} precision={0.1}
+                                            readOnly />
+                                        <p><b>{review.description}</b></p>
                                         <Button onClick={() => handleDelete(review._id)} className="button delete-button">
                                             Delete
                                         </Button>

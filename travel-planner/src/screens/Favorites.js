@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, Chip, Button, Tooltip, IconButton } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, Chip, Rating, Button, Tooltip, IconButton } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 function Favorites() {
@@ -60,40 +60,44 @@ function Favorites() {
                 <strong>My Favorite Experiences</strong>
                 <Grid container sizing={3}>
                     {favorites.map((fav, index) => (
-                        <Grid item key={index} xs={3}>
+                        <>
                             {(fav) && (
-                                // <Card key={fav._id} onClick={() => { goToExperience(fav._id) }}>
-                                <Card>
-                                    <Grid container sizing={3}>
-                                        <Grid item xs={12}>
-                                            <strong>{fav.title}</strong>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <img src={fav.images} style={{ maxWidth: "100%" }} />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <strong>Location: </strong> {fav.location.coordinates[0]}, {fav.location.coordinates[1]}
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <strong>Posted By: </strong>{fav.owner}
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <strong>Rating: </strong> {fav.averageRating}
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            {fav.description}
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <Tooltip title="Remove Favorite" followCursor>
-                                                <IconButton>
-                                                    <FavoriteIcon onClick={() => unfavorite(fav)} className="button delete-button" />
-                                                </IconButton>
-                                            </Tooltip>
-                                        </Grid>
-                                    </Grid>
-                                </Card>
+                                <Grid item key={index} xs={3}>
+
+                                {/* // <Card key={fav._id} onClick={() => { goToExperience(fav._id) }}> */}
+                                        <Card>
+                                            <Grid container sizing={3}>
+                                                <Grid item xs={12}>
+                                                    <strong>{fav.title}</strong>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <img src={fav.images} style={{ maxWidth: "100%" }} />
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <strong>Location: </strong> {fav.location.coordinates[0]}, {fav.location.coordinates[1]}
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <strong>Posted By: </strong>{fav.owner}
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <Rating id="rating" value={fav.averageRating} precision={0.1}
+                                                        readOnly />
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    {fav.description}
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <Tooltip title="Remove Favorite" followCursor>
+                                                        <IconButton>
+                                                            <FavoriteIcon onClick={() => unfavorite(fav)} />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </Grid>
+                                            </Grid>
+                                        </Card>
+                                </Grid>
                             )}
-                        </Grid>
+                        </>
                     ))}
                 </Grid>
             </Paper>

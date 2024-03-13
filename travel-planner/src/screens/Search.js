@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Rating, Button, FormControl, FormLabel, InputLabel, TextField } from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search'
 
 const Search = ({ setExpId }) => {
     const [query, setQuery] = useState('');
@@ -42,33 +43,40 @@ const Search = ({ setExpId }) => {
 
     return (
         <Container>
-            <h2>Search Experiences</h2>
-            <form onSubmit={handleSearch}>
-                <FormControl>
-                    <TextField
-                        type="text"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Enter search keywords"
-                        className="search-input"
-                    />
-                    <Button type="submit" disabled={isLoading}>
-                        {isLoading ? 'Searching...' : 'Search'}
-                        <br />
-                    </Button>
-                    <br />
-                </FormControl>
-            </form>
-            {error && <p className="error">{error}</p>}
-                <Grid container spacing={3}>
+            <Paper style={{ width: "80vw" }}>
+                <h2>Search Experiences</h2>
+                <form onSubmit={handleSearch}>
+                    <FormControl>
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <TextField
+                                    type="text"
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    placeholder="Enter search keywords"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Button type="submit" disabled={isLoading}>
+                                    {isLoading ? 'Searching...' : 'Search'}
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </FormControl>
+                </form>
+            </Paper>
+            <Paper style={{ width: "80vw" }}>
+                {error && <p className="error">{error}</p>}
+                <Grid container justifyContent="center" spacing={3}>
                     {isLoading ? (
                         <p>Loading...</p>
-                    ) : results.length > 0 ? (
-                        results.map((result) => (
-                            <Grid item xs={4}>
+                    ) : (results.length > 0 ? (
+                        results.map((result, index) => (
+                            <Grid item key={index} xs={4}>
                                 <Card key={result._id} onClick={() => { goToExperience(result._id) }}>
                                     <h3>{result.title}</h3>
-                                    <p>Rating: {result.averageRating || 0}</p>
+                                    <Rating id="rating" value={result.averageRating || 0} precision={0.1}
+                                                readOnly />
                                     <p>{result.description}</p>
                                 </Card>
                                 <br />
@@ -76,8 +84,10 @@ const Search = ({ setExpId }) => {
                         ))
                     ) : (
                         <p>No results found</p>
+                    )
                     )}
                 </Grid>
+            </Paper>
         </Container>
     )
 }

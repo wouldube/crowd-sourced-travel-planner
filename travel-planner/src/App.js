@@ -34,8 +34,9 @@ function App() {
     <main>
       <ThemeProvider theme={Theme}>
           <BrowserRouter>
-          <Container>
+          {/* <Container> */}
           <Buttons/>
+          <Container>
                 <Routes>
                   <Route path="/" element={<Exploration setExpId={setExpId}/>} />
                   <Route path="create-exp" element={<CreateExperience />} />
@@ -54,7 +55,9 @@ function App() {
                   <Route path="search" element={<Search setExpId={setExpId}/>} />
                   <Route path="experience" element={<Experience expId={expId} setExperienceToUpdate={setExperienceToUpdate} setInitialExp={setInitialExp}/>} />
                 </Routes>
-          </Container>
+                </Container>
+
+          {/* </Container> */}
           </BrowserRouter>
       </ThemeProvider>
     </main>

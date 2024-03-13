@@ -33,35 +33,35 @@ const Trip = ({ tripObject }) => {
 
     return (
         <Container>
-            {/* <Paper> */}
+            <Paper>
                 <h3>{tripObject.title}</h3>
-                {/* Icon buttons were not working so I commented them out for now */}
-                {/* <Tooltip title="Edit Trip" followCursor>
-                    <IconButton>
-                        <EditNoteIcon nClick={() => { navigate(`update-trip`) }} className="button delete-button"/>
-                    </IconButton>
+                <Tooltip title="Edit Trip" followCursor>
+                    <Button onClick={() => { navigate(`update-trip`) }}>
+                        <EditNoteIcon />
+                    </Button>
                 </Tooltip>
                 <Tooltip title="Delete Trip" followCursor>
-                    <IconButton>
-                        <DeleteForeverIcon onClick={() => { deleteTrip() }} className="button delete-button"/>
-                    </IconButton>
-                </Tooltip> */}
-                <Button onClick={() => { navigate(`update-trip`) }}>Edit?</Button>
-                <Button onClick={() => { deleteTrip() }}>Delete!</Button>
+                    <Button onClick={() => { navigate(`update-trip`) }}>
+                        <DeleteForeverIcon />
+                    </Button>
+                </Tooltip>
                 <Grid container sizing={3}>
                     {experiences.map((exp, index) => (
-                        <Grid item key={index} xs={4}>
+                        <>
                             {(exp) && (
-                                <Card key={index} variant="experience" style={{
-                                    backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(246, 225, 161, 0.3)), url(${exp.images[0]})`
-                                }}>
-                                    <Container><h3>{exp.title}</h3></Container>
-                                </Card>
+
+                                <Grid item key={index} xs={4}>
+                                    <Card key={index} variant="experience" style={{
+                                        backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(246, 225, 161, 0.3)), url(${exp.images[0]})`
+                                    }}>
+                                        <Container><h3>{exp.title}</h3></Container>
+                                    </Card>
+                                </Grid>
                             )}
-                        </Grid>
+                        </>
                     ))}
                 </Grid>
-            {/* </Paper> */}
+            </Paper>
         </Container>
     )
 }
