@@ -58,7 +58,7 @@ router.post('/new-user', async (req, res) => {
     // Create User (will be moved into register route when firebase is set up)
     try {
         const { uid, email, username, name, bio } = req.body;
-        console.log(req.body)
+        // console.log(req.body)
         const numCreated = await createUser(uid, email, username, name, bio);
         res.status(201).json(numCreated); // if numCreated = 0 -> create unsuccessful
     } catch (error) {
@@ -70,9 +70,8 @@ router.post('/new-user', async (req, res) => {
 
 router.put('/user-info/:id', async (req, res) => {
     // Update User
-    // TODO: Add back profile picture stuff
-    console.log("updating")
-    console.log(req.body)
+    // console.log("updating")
+    // console.log(req.body)
     try {
         const userUpdate = req.body;
         const numUpdated = await updateUser(req.params.id, userUpdate);
@@ -102,7 +101,7 @@ router.delete('/user-info/:id', async (req, res) => {
 // Route to get all experiences
 router.get('/experiences', async (req, res) => {
     try {
-        console.log("GET request to /experiences");
+        // console.log("GET request to /experiences");
         const allExperiences = await getAllExperiences();
         res.json(allExperiences);
     } catch (error) {
@@ -114,7 +113,7 @@ router.get('/experiences', async (req, res) => {
 // Route to get a specific experience by its ID
 router.get('/experiences/:id', async (req, res) => {
     try {
-        console.log(`GET request to /experiences/${req.params.id}`);
+        // console.log(`GET request to /experiences/${req.params.id}`);
         const experience = await getExperienceById(req.params.id);
         if (!experience) {
             return res.status(404).json({ message: "Experience not found" });
@@ -159,8 +158,8 @@ router.post("/create-exp", async (req, res) => {
 });
 
 router.put('/update-exp/:experience_id', async (req, res) => {
-    console.log("updating")
-    console.log(req.body)
+    //console.log("updating")
+    //console.log(req.body)
     const experience_id = req.params.experience_id;
     const filter = {"_id": experience_id};
     const update = req.body;
@@ -181,9 +180,19 @@ router.put('/update-exp/:experience_id', async (req, res) => {
 router.delete('/delete-exp/:experience_id', async (req, res) => {
     // Delete an experience
     const id = req.params.experience_id;
+    let { owner } = req.body;
     try {
         const modifiedCount = await deleteExperience(id);
-        res.json(modifiedCount);
+
+        // Delete from User's Experiences
+        const user = await getUserById(owner)
+        const expList = user.experiences
+
+        let expIndex = expList.indexOf(id)
+        if (expIndex > -1) {
+            expList.splice(expIndex, 1);
+        }
+        const deleted = await updateUser(owner, {'experiences' : expList})
 
         // Delete from Trips
         const trips = await tripController.getTrips();
@@ -193,7 +202,7 @@ router.delete('/delete-exp/:experience_id', async (req, res) => {
 
             if (index >= 0) {
                 trip.experiences.splice(index, 1);
-                tripController.updateTrip(trip._id, trip)
+                await tripController.updateTrip(trip._id, trip)
             }
         }
 
@@ -205,9 +214,11 @@ router.delete('/delete-exp/:experience_id', async (req, res) => {
 
             if (index >= 0) {
                 user.favorites.splice(index, 1);
-                updateUser(user._id, user)
+                await updateUser(user._id, user)
             }
         }
+
+        res.json(deleted);
 
     } catch (error) {
         console.error(`Error in DELETE /delete-exp/${experience_id}:`, error);
@@ -245,7 +256,7 @@ module.exports = router;
 router.get('/trips/:id', async (req, res) => {
     // Fetch the user's trips
     try {
-        console.log(`GET request to /trips`)
+        // console.log(`GET request to /trips`)
         const allUserTrips = await getUserTrips(req.params.id)
         res.json(allUserTrips)
     } catch (error) {
@@ -257,7 +268,7 @@ router.get('/trips/:id', async (req, res) => {
 router.get('/trip/:id', async (req, res) => {
     // Fetch specific trip details
     try {
-        console.log(`GET request to trip ${req.params.id}`)
+        // console.log(`GET request to trip ${req.params.id}`)
         const trip =  await tripController.getTripById(req.params.id)
         if (!trip) {
             return res.status(404).json({ message: "Trip not found" })
@@ -272,7 +283,7 @@ router.get('/trip/:id', async (req, res) => {
 router.get('/trip/experiences/:id', async (req, res) => {
     // Fetch specific trip experiences
     try {
-        console.log(`GET request to trip's experiences ${req.params.id}`)
+        // console.log(`GET request to trip's experiences ${req.params.id}`)
         const experiences =  await tripController.getTripExperiences(req.params.id)
         res.json(experiences)
     } catch (error) {
@@ -284,7 +295,7 @@ router.get('/trip/experiences/:id', async (req, res) => {
 router.post('/create-trip', async (req, res) => {
     // Create a new trip
     try {
-        console.log(`POST request for trip`)
+        // console.log(`POST request for trip`)
         const trip =  await tripController.createTrip(req.body)
         res.status(200).json(trip)
     } catch (error) {
@@ -296,7 +307,7 @@ router.post('/create-trip', async (req, res) => {
 router.put('/update-trip/:id', async (req, res) => {
     // Update an existing trip
     try {
-        console.log(`PUT request for trip`)
+        // console.log(`PUT request for trip`)
         const trip =  await tripController.updateTrip(req.params.id, req.body)
         res.json(trip)
     } catch (error) {
@@ -308,7 +319,7 @@ router.put('/update-trip/:id', async (req, res) => {
 router.delete('/delete-trip/:id', async (req, res) => {
     // Delete a trip
     try {
-        console.log(`DELETE request for trip`)
+        // console.log(`DELETE request for trip`)
         const trip =  await tripController.deleteTrip(req.params.id, req.body.owner)
         res.json({ message: "Trip deleted!"})
     } catch (error) {
@@ -411,10 +422,10 @@ router.post('/profile/:username', (req, res) => {
 
 router.get('/my-experiences/:id', async (req, res) => {
     // Fetch and display experiences created by the user
-    console.log(req.params.id)
+    // console.log(req.params.id)
     try {
         const experiences = await getUserExperiences(req.params.id);
-        console.log(experiences)
+        // console.log(experiences)
         res.json(experiences);
     } catch (error) {
         console.error(`Error in retrieving user experiences`, error);
@@ -424,10 +435,10 @@ router.get('/my-experiences/:id', async (req, res) => {
 
 router.get('/my-favorites/:id', async (req, res) => {
     // Fetch and display experiences favorited by the user
-    console.log(req.params.id)
+    // console.log(req.params.id)
     try {
         const favorites = await getUserFavorites(req.params.id);
-        console.log(favorites)
+        // console.log(favorites)
         res.json(favorites);
     } catch (error) {
         console.error(`Error in retrieving user favorites`, error);
