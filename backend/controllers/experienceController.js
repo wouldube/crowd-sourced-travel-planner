@@ -19,12 +19,12 @@ const getExperienceById = async (id) => {
 }
 
 //Create
-const createExperience = async (title, description, location, images, id) => {
+const createExperience = async (title, description, location, review, images, id) => {
     // left out reviews for now
     const owner = await User.findById({"_id": id});
 
     const experience = new Experience({ title, description, 
-        location, images, owner });
+        location, review, images, owner });
     
     const result = await experience.save();
     

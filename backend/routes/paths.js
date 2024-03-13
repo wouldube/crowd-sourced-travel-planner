@@ -129,7 +129,7 @@ router.get('/experiences/:id', async (req, res) => {
 router.post("/create-exp", async (req, res) => {
     // Create a new experience
 
-    let { title, description, coordinates, image, id } = req.body;
+    let { title, description, coordinates, review, image, id } = req.body;
     
     coordinates = [Number(coordinates['latitude']), Number(coordinates['longitude'])];
 
@@ -139,7 +139,7 @@ router.post("/create-exp", async (req, res) => {
     // console.log('Coordinates:', coordinates);
     // console.log('Image:', image);
         
-    if (!title || !description || !coordinates || !image ) {
+    if (!title || !description || !coordinates || !review || !image ) {
         return res.status(400).json({ message: "Missing required fields" });
     }
     
@@ -149,6 +149,7 @@ router.post("/create-exp", async (req, res) => {
       title,
       description,
       location,
+      review,
       image,
       id
     );
