@@ -6,6 +6,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import RateReviewIcon from '@mui/icons-material/RateReview';
 import ReviewModal from '../components/ReviewModal.js';
 
 const Experience = (props) => {
@@ -267,6 +268,14 @@ const Experience = (props) => {
         </Tooltip>
     )
 
+    const ReviewButton = () => (
+        <Tooltip title="Write a Review" followCursor>
+            <IconButton onClick={handleOpenReviewModal}>
+                <RateReviewIcon variant="contained"  id="removeFav" className="button delete-button" />
+            </IconButton>
+        </Tooltip>
+    );    
+
     return (
         <Container>
             <Paper>
@@ -329,7 +338,6 @@ const Experience = (props) => {
                             <h3>reviews?</h3>
                         </Card>
                     </Grid>
-
                 </Grid>
             </Paper>
         </Container>

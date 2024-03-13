@@ -59,7 +59,6 @@ function UserExperiences(props) {
     const addToTrip = async () => {
         const data = await fetch(`http://localhost:5000/trips/${id}`)
         const trips = await data.json()
-        console.log(trips)
 
         setTrips(trips)
 
@@ -76,21 +75,20 @@ function UserExperiences(props) {
         navigate("/trips/create-trip");
     }
 
-    const UserTrips = () => (
+    const UserTrips = (experience) => (
         <Tooltip>
             {trips.map((trip, index) => (
                 <div key={index}>
-                    <Button onClick={() => { pickTrip(trip) }}>{trip.title}</Button>
+                    <Button onClick={() => { pickTrip(trip, experience) }}>{trip.title}</Button>
                 </div>
             ))}
             <Button onClick={createTrip}>Create New Trip</Button>
         </Tooltip>
     )
-
-    const pickTrip = async (trip) => {
+    
+    const pickTrip = async (trip, experience) => {
         const expList = trip.experiences
         // check line 93
-        const experience = experience.experiences
 
         if (expList.indexOf(experience._id) < 0) {
             expList.push(experience._id)
@@ -172,7 +170,7 @@ function UserExperiences(props) {
                                         </Tooltip>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        {viewTrips ? <UserTrips /> : null}
+                                        { viewTrips ? <UserTrips experience={ exp }  /> : null }
                                     </Grid>
                                 </Grid>
                             </Card>
