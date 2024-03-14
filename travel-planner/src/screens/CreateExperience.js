@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
   FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
   Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
-
 const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
 const { firebaseConfig } = require("../firebase/firebase-config");
@@ -25,6 +24,13 @@ export const CreateExperience = () => {
   const [description, setDescription] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+
+  const [initialReview, setInitialReview] = useState({
+    rating: 5,
+    description: ""
+  });
+
+  const [review, setReview] = useState("");
   const [id, setId] = useState("");
   let [image, setImage] = useState(null);
 
@@ -41,9 +47,8 @@ export const CreateExperience = () => {
     const upload = await uploadBytesResumable(imgRef, imgFile.files[0], { contentType: 'image/png' })
     const downloadURL = await getDownloadURL(imgRef);
     setImage(downloadURL)
-    console.log(downloadURL)
 
-    const newExperience = { title, description, coordinates, image:downloadURL, id };
+    const newExperience = { title, description, coordinates, image:downloadURL, id, initialReview };
     const response = await fetch("http://localhost:5000/create-exp", {
       method: "POST",
       body: JSON.stringify(newExperience),
@@ -52,12 +57,10 @@ export const CreateExperience = () => {
       },
     });
     if (response.status === 200) {
-      // do something
-      console.log(response);
-      // navigate("/create-exp");
+      console.log(await response.json());
     } else {
       // handle error
-      console.log("error");
+      console.log("Error creating experience");
     }
     navigate("/");
   } catch (error) {
@@ -95,6 +98,23 @@ export const CreateExperience = () => {
                     <TextField
                         type="file" id="image" accept="image/*" label="image" required
                         onChange={(e) => setImage(e.target.value) }
+                    />
+                  </Grid>
+                  <h3>Leave the first review!</h3>
+                  <Grid item xs={12}>
+                    <Rating 
+                      id="rating" 
+                      label="Rating" 
+                      value={initialReview.rating} 
+                      precision={0.1}
+                      onChange={(event, newValue) => setInitialReview({ ...initialReview, rating: newValue })}
+                    />
+                    <TextField 
+                      label="Review"
+                      className="review-textarea"
+                      value={initialReview.description}
+                      onChange={(e) => setInitialReview({...initialReview, description: e.target.value})}
+                      required
                     />
                   </Grid>
                   <Divider/>

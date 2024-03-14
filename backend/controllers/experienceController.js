@@ -1,4 +1,5 @@
 const { Experience, User } = require('../models/schema');
+const { createReview } = require('./reviewController');
 
 // experience CRUD functions
 
@@ -19,19 +20,22 @@ const getExperienceById = async (id) => {
 }
 
 //Create
-const createExperience = async (title, description, location, images, id) => {
-    // left out reviews for now
-    const owner = await User.findById({"_id": id});
+const createExperience = async (title, description, location, images, id, initialReview) => {
 
+    const owner = await User.findById({"_id": id});
     const experience = new Experience({ title, description, 
         location, images, owner });
     
     const result = await experience.save();
-    
     let user_exp = owner.experiences;
     user_exp.push(result._id)
 
     await User.updateOne({"_id": id}, {"experiences": user_exp})
+
+    // Checking if review was submitted
+    if (initialReview){
+        await createReview(initialReview.rating, initialReview.description, id, result._id);
+    }
     
     return result
 }

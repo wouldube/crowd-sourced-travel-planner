@@ -128,7 +128,7 @@ router.get('/experiences/:id', async (req, res) => {
 router.post("/create-exp", async (req, res) => {
     // Create a new experience
 
-    let { title, description, coordinates, image, id } = req.body;
+    let { title, description, coordinates, image, id, initialReview } = req.body;
     
     coordinates = [Number(coordinates['latitude']), Number(coordinates['longitude'])];
 
@@ -149,7 +149,8 @@ router.post("/create-exp", async (req, res) => {
       description,
       location,
       image,
-      id
+      id,
+      initialReview
     );
     
     res

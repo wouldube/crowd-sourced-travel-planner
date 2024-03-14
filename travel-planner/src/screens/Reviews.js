@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
     FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
     Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+
 const Reviews = () => {
     const [reviews, setReviews] = useState([]);
     const [experiences, setExperiences] = useState([]);
@@ -121,9 +123,12 @@ const Reviews = () => {
                                         <Rating id="rating" value={review.rating} precision={0.1}
                                             readOnly />
                                         <p><b>{review.description}</b></p>
-                                        <Button onClick={() => handleDelete(review._id)} className="button delete-button">
+                                        <Tooltip title="Delete Review" followCursor>
+                                            <DeleteForeverIcon onClick={() => handleDelete(review._id)} Button />
+                                            {/* <Button onClick={() => handleDelete(review._id)} className="button delete-button">
                                             Delete
-                                        </Button>
+                                        </Button> */}
+                                        </Tooltip>
                                     </Card>
                                 </Grid>
                             )

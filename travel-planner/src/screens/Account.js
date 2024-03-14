@@ -134,7 +134,7 @@ const Account = () => {
 
     return (
         <Container>
-            <Button onClick={logOut}>Logout</Button>
+            {/* <Button onClick={logOut}>Logout</Button> */}
 
             <Grid container>
                 <Grid item xs={12}>
