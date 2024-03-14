@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, FormGroup, InputLabel, TextField } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+    FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
 
 const firebase = require("firebase/app")
 const { firebaseConfig } = require("../firebase/firebase-config");
@@ -169,7 +171,7 @@ const Account = () => {
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
                                     />
-                                    <Button variant="contained" type="submit" onClick={updateUser} value="Submit">submit</Button>
+                                    <Button type="submit" onClick={updateUser} value="Submit">submit</Button>
                                 </Container>
                             </FormControl>
                         </form>
@@ -207,7 +209,7 @@ const Account = () => {
                                         onChange={(e) => setNewPass(e.target.value)}
                                     />
                                     <br />
-                                    <Button variant="contained" type="submit" onClick={updateEmailandPass} value="Submit">submit</Button>
+                                    <Button type="submit" onClick={updateEmailandPass} value="Submit">submit</Button>
                                 </Container>
                             </FormControl>
                         </form>
