@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Rating, Button, FormControl, FormLabel, InputLabel, TextField, Select, option } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, Divider, Chip, Rating, Button, FormControl, FormLabel, InputLabel, TextField, Select, option, Tooltip } from '@mui/material'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const Reviews = () => {
     const [reviews, setReviews] = useState([]);
@@ -120,9 +121,12 @@ const Reviews = () => {
                                         <Rating id="rating" value={review.rating} precision={0.1}
                                             readOnly />
                                         <p><b>{review.description}</b></p>
-                                        <Button onClick={() => handleDelete(review._id)} className="button delete-button">
+                                        <Tooltip title="Delete Review" followCursor>
+                                            <DeleteForeverIcon onClick={() => handleDelete(review._id)} Button />
+                                            {/* <Button onClick={() => handleDelete(review._id)} className="button delete-button">
                                             Delete
-                                        </Button>
+                                        </Button> */}
+                                        </Tooltip>
                                     </Card>
                                 </Grid>
                             )
