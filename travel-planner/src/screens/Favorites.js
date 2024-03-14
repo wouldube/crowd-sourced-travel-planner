@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, Chip, Rating, Button, Tooltip, IconButton } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+    FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 function Favorites() {
@@ -58,7 +60,7 @@ function Favorites() {
         <Container>
             <Paper>
                 <strong>My Favorite Experiences</strong>
-                <Grid container sizing={3}>
+                <Grid container spacing={3}>
                     {favorites.map((fav, index) => (
                         <>
                             {(fav) && (
@@ -66,12 +68,12 @@ function Favorites() {
 
                                 {/* // <Card key={fav._id} onClick={() => { goToExperience(fav._id) }}> */}
                                         <Card>
-                                            <Grid container sizing={3}>
+                                            <Grid container spacing={3}>
                                                 <Grid item xs={12}>
                                                     <strong>{fav.title}</strong>
                                                 </Grid>
                                                 <Grid item xs={12}>
-                                                    <img src={fav.images} style={{ maxWidth: "100%" }} />
+                                                    <img src={fav.images} style={{ borderRadius: "50px", maxWidth: "100%" }} />
                                                 </Grid>
                                                 <Grid item xs={12}>
                                                     <strong>Location: </strong> {fav.location.coordinates[0]}, {fav.location.coordinates[1]}

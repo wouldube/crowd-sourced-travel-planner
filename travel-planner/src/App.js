@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Container, Paper } from '@mui/material';
+import { Container } from '@mui/material';
 
 // screens and components
 import Exploration from './screens/Exploration'
@@ -33,32 +33,29 @@ function App() {
   return (
     <main>
       <ThemeProvider theme={Theme}>
-          <BrowserRouter>
-          {/* <Container> */}
-          <Buttons/>
+        <BrowserRouter>
+          <Buttons />
           <Container>
-                <Routes>
-                  <Route path="/" element={<Exploration setExpId={setExpId}/>} />
-                  <Route path="create-exp" element={<CreateExperience />} />
-                  <Route path="profile" element={<Profile />} />
-                  <Route path="account" element={<Account />} />
-                  <Route path="register" element={<Register />} />
-                  <Route path="login" element={<Login />} />
-                  <Route path="UserExperiences" element={<UserExperiences setExperienceToUpdate={setExperienceToUpdate} />} />
-                  <Route path="update-exp" element={<UpdateExperience experienceToUpdate={experienceToUpdate} />} />
-                  <Route path="favorites" element={<Favorites favoriteToUpdate={favoriteToUpdate} setUserFavorites={setUserFavorites} />} />
-                  <Route path="reviews" element={<Reviews />} />
-                  <Route path="trips" element={<Trips setTripObject={setTripObject} />} />
-                  <Route path="trips/trip" element={<Trip tripObject={tripObject} />} />
-                  <Route path="trips/create-trip" element={<CreateTrip initialExp={initialExp}/>} />
-                  <Route path="trips/trip/update-trip" element={<UpdateTrip tripObject={tripObject} />} />
-                  <Route path="search" element={<Search setExpId={setExpId}/>} />
-                  <Route path="experience" element={<Experience expId={expId} setExperienceToUpdate={setExperienceToUpdate} setInitialExp={setInitialExp}/>} />
-                </Routes>
-                </Container>
-
-          {/* </Container> */}
-          </BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Exploration setExpId={setExpId} />} />
+              <Route path="create-exp" element={<CreateExperience />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="account" element={<Account />} />
+              <Route path="register" element={<Register />} />
+              <Route path="login" element={<Login />} />
+              <Route path="UserExperiences" element={<UserExperiences setExperienceToUpdate={setExperienceToUpdate} />} />
+              <Route path="update-exp" element={<UpdateExperience experienceToUpdate={experienceToUpdate} />} />
+              <Route path="favorites" element={<Favorites favoriteToUpdate={favoriteToUpdate} setUserFavorites={setUserFavorites} />} />
+              <Route path="reviews" element={<Reviews />} />
+              <Route path="trips" element={<Trips setTripObject={setTripObject} />} />
+              <Route path="trips/trip" element={<Trip tripObject={tripObject} />} />
+              <Route path="trips/create-trip" element={<CreateTrip initialExp={initialExp} />} />
+              <Route path="trips/trip/update-trip" element={<UpdateTrip tripObject={tripObject} />} />
+              <Route path="search" element={<Search setExpId={setExpId} />} />
+              <Route path="experience" element={<Experience expId={expId} setExperienceToUpdate={setExperienceToUpdate} setInitialExp={setInitialExp} />} />
+            </Routes>
+          </Container>
+        </BrowserRouter>
       </ThemeProvider>
     </main>
   )

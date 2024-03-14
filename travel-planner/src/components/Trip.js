@@ -1,6 +1,8 @@
 import { React, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, Tooltip, IconButton } from '@mui/material';
+import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+    FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 
@@ -45,14 +47,13 @@ const Trip = ({ tripObject }) => {
                         <DeleteForeverIcon />
                     </Button>
                 </Tooltip>
-                <Grid container sizing={3}>
+                <Grid container spacing={3}>
                     {experiences.map((exp, index) => (
                         <>
                             {(exp) && (
-
                                 <Grid item key={index} xs={4}>
-                                    <Card key={index} variant="experience" style={{
-                                        backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(246, 225, 161, 0.3)), url(${exp.images[0]})`
+                                    <Card variant="experience" style={{
+                                        backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7)), url(${exp.images[0]})`
                                     }}>
                                         <Container><h3>{exp.title}</h3></Container>
                                     </Card>

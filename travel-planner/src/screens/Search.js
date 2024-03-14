@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Rating, Button, FormControl, FormLabel, InputLabel, TextField } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+    FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search'
 
 const Search = ({ setExpId }) => {
@@ -64,6 +66,7 @@ const Search = ({ setExpId }) => {
                         </Grid>
                     </FormControl>
                 </form>
+
             </Paper>
             <Paper style={{ width: "80vw" }}>
                 {error && <p className="error">{error}</p>}
@@ -76,14 +79,16 @@ const Search = ({ setExpId }) => {
                                 <Card key={result._id} onClick={() => { goToExperience(result._id) }}>
                                     <h3>{result.title}</h3>
                                     <Rating id="rating" value={result.averageRating || 0} precision={0.1}
-                                                readOnly />
+                                        readOnly />
                                     <p>{result.description}</p>
                                 </Card>
                                 <br />
                             </Grid>
                         ))
                     ) : (
-                        <p>No results found</p>
+                        <Grid itemxs={12}>
+                            <p>No results found</p>
+                        </Grid>
                     )
                     )}
                 </Grid>

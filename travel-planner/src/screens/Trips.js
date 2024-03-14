@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button } from '@mui/material';
+import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+    FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
 
 const Trips = ({ setTripObject }) => {
     const [trips, setTrips] = useState([]);
@@ -34,19 +36,18 @@ const Trips = ({ setTripObject }) => {
     return (
         <Container>
             <Paper>
-            <Button onClick={() => { navigate(`create-trip`) }}>+</Button>
-            <Grid container spacing={3}>
-                {trips.map((trip, index) => (
-                    <Grid item key={index} xs={4}>
-                        <Card onClick={() => { TripClick(trip) }}>
-                            <p><strong>{trip.title}</strong></p>
-                                                            {/* <p><img src={trip.images} style={{maxWidth: "25%" }}/></p> */}
-
-                            <p>{trip.description}</p>
-                        </Card>
-                    </Grid>
-                ))}
-            </Grid>
+                <Button onClick={() => { navigate(`create-trip`) }}>+</Button>
+                <Grid container spacing={3}>
+                    {trips.map((trip, index) => (
+                        <Grid item key={index} xs={4}>
+                            <Card onClick={() => { TripClick(trip) }}>
+                                <CardContent><h3>{trip.title}</h3>
+                                    {/* <CardMedia image={trip.images[0]}></CardMedia> */}
+                                    {trip.description}</CardContent>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
             </Paper>
         </Container>
     )

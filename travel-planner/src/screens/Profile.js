@@ -1,12 +1,11 @@
 import { React, useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import Links from '../components/Buttons.js';
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, CardMedia } from '@mui/material';
 
+import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+    FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
 
 const Profile = () => {
-    const [login, check] = useState(0);
-
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
 
@@ -19,7 +18,6 @@ const Profile = () => {
         }
 
         const id = localStorage.getItem("id")
-        check(1)
 
         fetch(`http://flip1.engr.oregonstate.edu:9278/user-info/${id}`)
             .then(response => response.json())
@@ -32,38 +30,39 @@ const Profile = () => {
     return (
         <Container>
             <Paper>
-                <Grid container justifyContent="center" spacing={1}>
-                    <Grid item position xs={12}>
-                        <Button onClick={() => { navigate("/account") }}>
-                                My Account
-                        </Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Card onClick={() => { navigate("/UserExperiences") }}
-                        style={{
-                            height:"30vh",
-                            background: `url("../components/ExperiencesMap.png")`,
-                        }}>
+                <Container>
+                    <Grid container spacing={3}>
+                        <Grid item position xs={12}>
+                            <Button onClick={() => { navigate("/account") }}>
+                                <p>{username}</p>
+                            </Button>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Card onClick={() => { navigate("/UserExperiences") }}
+                                style={{ height: "30vh",
+                                    backgroundImage: `url("../components/ExperiencesMap.png")`
+                                }}>
                                 My Experiences
-                        </Card>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Card onClick={() => { navigate("/favorites") }}
-                        style={{
-                            height:"25vh",
-                        }}>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Card onClick={() => { navigate("/favorites") }}
+                                style={{
+                                    height: "25vh",
+                                }}>
                                 Favorites
-                        </Card>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Card onClick={() => { navigate("/reviews") }}
-                                                style={{
-                                                    height:"25vh",
-                                                }}>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Card onClick={() => { navigate("/reviews") }}
+                                style={{
+                                    height: "25vh",
+                                }}>
                                 Reviews
-                        </Card>
+                            </Card>
+                        </Grid>
                     </Grid>
-                </Grid>
+                </Container>
             </Paper>
         </Container>
     )

@@ -1,6 +1,8 @@
 import React from 'react';
 import ImageCarousel from './ImageCarousel';
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, Tooltip, IconButton } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+  FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
+  Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
 
 const Welcome = () => {
   return (

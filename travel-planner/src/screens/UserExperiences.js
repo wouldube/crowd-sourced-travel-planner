@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Rating, Button, Tooltip, IconButton } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+    FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -67,7 +69,7 @@ function UserExperiences(props) {
             <Button onClick={createTrip}>Create New Trip</Button>
         </Tooltip>
     )
-    
+
     const pickTrip = async (trip, experience) => {
         const expList = trip.experiences
         // check line 93
@@ -110,7 +112,7 @@ function UserExperiences(props) {
                 <h2>My Experiences</h2>
                 <Grid>
                     <Tooltip>
-                        <Button onClick={() => { navigate(`/create-exp`) }}>Create New Experience</Button>
+                        <Button onClick={() => { navigate(`/create-exp`) }}>+</Button>
                     </Tooltip>
                 </Grid>
                 <Grid container spacing={2}>
@@ -122,7 +124,7 @@ function UserExperiences(props) {
                                         <strong>{exp.title}</strong>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <img src={exp.images} style={{ maxWidth: "100%" }} />
+                                        <img src={exp.images} style={{ borderRadius: "50px", maxWidth: "100%" }} />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <strong>Location: </strong>{exp.location.coordinates[0]}, {exp.location.coordinates[1]}
@@ -152,7 +154,7 @@ function UserExperiences(props) {
                                         </Tooltip>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        { viewTrips ? <UserTrips experience={ exp }  /> : null }
+                                        {viewTrips ? <UserTrips experience={exp} /> : null}
                                     </Grid>
                                 </Grid>
                             </Card>

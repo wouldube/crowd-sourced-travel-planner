@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import UserSetup from '../components/UserSetup.js';
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField, Select, option } from '@mui/material'
-
+import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+    FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
 const Register = () => {
 
     const [email, setEmail] = useState("");

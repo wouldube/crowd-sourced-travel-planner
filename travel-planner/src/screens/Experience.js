@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, Divider, Chip, Button, FormControl, FormLabel, InputLabel, TextField, Select, option, ButtonGroup, Tooltip, IconButton } from '@mui/material'
+import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+    FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -53,7 +55,7 @@ const Experience = (props) => {
     useEffect(() => {
         onLoad();
     }, [])
-    
+
     const favoriteButton = async () => {
         const data = await fetch(`http://flip1.engr.oregonstate.edu:9278/user-info/${id}`)
         const user = await data.json()
@@ -212,7 +214,7 @@ const Experience = (props) => {
     const EditButton = () => (
         <Tooltip title="Edit Experience" followCursor>
             <Button onClick={updateExp}>
-                <EditNoteIcon variant="contained" />
+                <EditNoteIcon/>
             </Button>
         </Tooltip>
     )
@@ -239,7 +241,7 @@ const Experience = (props) => {
     const Favorite = () => (
         <Tooltip title="Add to Favorites" followCursor>
             <Button onClick={favoriteExp}>
-                <FavoriteBorderOutlinedIcon variant="contained" />
+                <FavoriteBorderOutlinedIcon/>
             </Button>
         </Tooltip>
     )
@@ -247,7 +249,7 @@ const Experience = (props) => {
     const Unfavorite = () => (
         <Tooltip title="Remove Favorite" followCursor>
             <Button onClick={unfavoriteExp}>
-                <FavoriteIcon variant="contained" id="removeFav" />
+                <FavoriteIcon id="removeFav"/>
             </Button>
         </Tooltip>
     )
@@ -255,10 +257,10 @@ const Experience = (props) => {
     const ReviewButton = () => (
         <Tooltip title="Write a Review" followCursor>
             <IconButton onClick={handleOpenReviewModal}>
-                <RateReviewIcon variant="contained"  id="removeFav" className="button delete-button" />
+                <RateReviewIcon id="removeFav"/>
             </IconButton>
         </Tooltip>
-    );    
+    );
 
     return (
         <Container>

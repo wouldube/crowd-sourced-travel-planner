@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Paper, Grid, Box, Card, Button, CardContent } from '@mui/material';
+import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+  FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
+  Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
 
 const ExperiencesMap = ({ setExpId }) => {
   /* The Experiences & Randomization */
@@ -14,7 +16,7 @@ const ExperiencesMap = ({ setExpId }) => {
       const experiences = await data.json()
 
       let randoms = []
-      for (let i = 0; i < 15; i++) {
+      for (let i = 0; i < 25; i++) {
         let randomnum = Math.floor(Math.random() * (experiences.length - 1))
         randoms.push(experiences[randomnum])
       }
@@ -31,12 +33,6 @@ const ExperiencesMap = ({ setExpId }) => {
     navigate(`/experience`)
   }
 
-  /* Map Illustration */
-  // Experiences Points
-  let mappoints = []
-  for (let i = 0; i < 15; i++) {
-    mappoints.push(Math.floor(Math.random() * 6) + 2)
-  }
 
   useEffect(() => {
     getExperiences()
@@ -50,17 +46,31 @@ const ExperiencesMap = ({ setExpId }) => {
       {randomizedExperiences && (
         <Grid container>
           {randomizedExperiences.map((exp, index) => (
-            <Grid item xs={mappoints[index]} key={index}>
-              <Card variant="experience" onClick={() => { goToExperience(exp._id) }}
-                style={{
-                  backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(246, 225, 161, 0.3)), url(${exp.images[0]})`
-                }}>
-                <CardContent>{exp.title}</CardContent>
-              </Card>
+            <Grid item xs={Math.floor(Math.random() * 6) + 2} key={index}>
+              <>
+                {(index % 2 === 0) ? (
+                  < Card variant="experience" onClick={() => { goToExperience(exp._id) }}
+                    style={{
+                      backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7)), url(${exp.images[0]})`,
+                      animation: `experiences1 10s infinite alternate`,
+                    }}>
+                    <CardContent>{exp.title}</CardContent>
+                  </Card>
+                ) : (
+                <Card variant="experience" onClick={() => { goToExperience(exp._id) }}
+                  style={{
+                    backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7)), url(${exp.images[0]})`,
+                    animation: `experiences2 10s infinite alternate`,
+                  }}>
+                  <CardContent>{exp.title}</CardContent>
+                </Card>
+              )}
+              </>
             </Grid>
           ))}
         </Grid>
-      )}
+      )
+      }
     </Container >
   )
 }
