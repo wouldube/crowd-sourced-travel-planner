@@ -23,16 +23,15 @@ export const CreateExperience = () => {
   const [description, setDescription] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+
+  const [initialReview, setInitialReview] = useState({
+    rating: 5,
+    description: ""
+  });
+
   const [review, setReview] = useState("");
-  const [newReview, setNewReview] = useState({ experienceId: '', rating: 5, description: "" });
   const [id, setId] = useState("");
   let [image, setImage] = useState(null);
-
-  const adjustTextareaHeight = (e) => {
-    e.target.style.height = 'inherit';
-    e.target.style.height = `${e.target.scrollHeight}px`;
-    setNewReview({ ...newReview, description: e.target.value });
-  };
 
   const createExperience = async () => {
     try {
@@ -47,26 +46,20 @@ export const CreateExperience = () => {
     const upload = await uploadBytesResumable(imgRef, imgFile.files[0], { contentType: 'image/png' })
     const downloadURL = await getDownloadURL(imgRef);
     setImage(downloadURL)
-    console.log(downloadURL)
 
-    const newExperience = { title, description, coordinates, image:downloadURL, id };
+    const newExperience = { title, description, coordinates, image:downloadURL, id, initialReview };
     const response = await fetch("http://localhost:5000/create-exp", {
       method: "POST",
-      body: JSON.stringify(newExperience, {
-        rating: newReview.rating,
-        description: newReview.description,
-        owner: localStorage.getItem("id"),
-        experience: newReview.experienceId
-    }),
+      body: JSON.stringify(newExperience),
       headers: {
         "Content-Type": "application/json",
       },
     });
     if (response.status === 200) {
-      console.log(response);
+      console.log(await response.json());
     } else {
       // handle error
-      console.log("error");
+      console.log("Error creating experience");
     }
     navigate("/");
   } catch (error) {
@@ -82,7 +75,6 @@ export const CreateExperience = () => {
                 <FormControl>
                   <Container>
                   <h2>Create New Experience</h2>
-                  {/* <FormLabel>Create New Experience!</FormLabel> */}
                   <TextField
                       id="title" label="title" required value={title}
                       onChange={(e) => setTitle(e.target.value)}
@@ -109,35 +101,23 @@ export const CreateExperience = () => {
                   </Grid>
                   <h3>Leave the first review!</h3>
                   <Grid item xs={12}>
-                    <Rating id="rating" label="Rating" value={newReview.rating} precision={0.1}
-                              onChange={(e) => setNewReview({ ...newReview, rating: parseInt(e.target.value) })}
+                    <Rating 
+                      id="rating" 
+                      label="Rating" 
+                      value={initialReview.rating} 
+                      precision={0.1}
+                      onChange={(event, newValue) => setInitialReview({ ...initialReview, rating: newValue })}
                     />
-                    <TextField label="Review"
-                        className="review-textarea"
-                        value={newReview.description}
-                        onChange={adjustTextareaHeight}
-                        required
+                    <TextField 
+                      label="Review"
+                      className="review-textarea"
+                      value={initialReview.description}
+                      onChange={(e) => setInitialReview({...initialReview, description: e.target.value})}
+                      required
                     />
                   </Grid>
                   <Divider/>
                   <br></br>
-                  {/* <div className="review">
-                        <div>
-                            <span>Rating: </span>
-                            <span>
-                                <MdOutlineStarBorder id="1"/>
-                                <MdOutlineStarBorder id="2"/>
-                                <MdOutlineStarBorder id="3"/>
-                                <MdOutlineStarBorder id="4"/>
-                                <MdOutlineStarBorder id="5"/>
-                            </span>
-                        </div>
-
-                        <div>
-                            <label for="review">Review: </label>
-                            <input type="text" id="review" name="review"></input>
-                        </div>
-                        </div> */}
                   <Container>
                     <Button variant="contained" onClick={createExperience}>Create</Button>
                     <Button onClick={() => {navigate(`/UserExperiences`)}}>Cancel</Button>
