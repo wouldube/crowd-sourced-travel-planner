@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+    FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
 
 const firebase = require("firebase/app")
 const { firebaseConfig } = require("../firebase/firebase-config");
@@ -68,34 +71,34 @@ const UserSetup = ({email, pass}) => {
             <form>
                 <div>
                 <label htmlFor="username">Username: </label>
-                <input 
+                <TextField 
                     type="text" 
                     name="username" 
                     id="username" 
                     required
                     onChange={(e) => setUsername(e.target.value)}>
-                </input>
+                </TextField>
                 </div>
                 <div>
                 <label htmlFor="name">Name: </label>
-                <input 
+                <TextField 
                     type="text" 
                     name="name" 
                     id="name" 
                     onChange={(e) => setName(e.target.value)}>
-                </input>
+                </TextField>
                 </div>
                 <div>
                 <label htmlFor="bio">Bio: </label>
-                <input 
+                <TextField 
                     type="text" 
                     name="bio" 
                     id="bio" 
                     onChange={(e) => setBio(e.target.value)}>
-                </input>
+                </TextField>
                 </div>
                 <div>
-                <input type="submit" onClick={newUser} value="Submit"></input>
+                <TextField type="submit" onClick={newUser} value="Submit"></TextField>
                 </div>
             </form>
         </div>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {Container, Paper, Grid, Box, Card, Button, FormLabel, FormControl, Input, TextField, Divider, Tooltip,} from '@mui/material'
+import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+  FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
+  Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
 
 const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
@@ -70,8 +72,7 @@ export const CreateExperience = () => {
               <Grid item position xs={16}>
                 <FormControl>
                   <Container>
-                  <h2>Create New Experience</h2>
-                  {/* <FormLabel>Create New Experience!</FormLabel> */}
+                  <FormLabel>Create New Experience!</FormLabel>
                   <TextField
                       id="title" label="title" required value={title}
                       onChange={(e) => setTitle(e.target.value)}
@@ -91,36 +92,17 @@ export const CreateExperience = () => {
                   />
                   <h3>Upload Photos</h3>
                   <Grid item xs={12}>
-                    <Input
+                    <TextField
                         type="file" id="image" accept="image/*" label="image" required
                         onChange={(e) => setImage(e.target.value) }
                     />
                   </Grid>
                   <Divider/>
-                  <br></br>
-                  {/* <div className="review">
-                        <div>
-                            <span>Rating: </span>
-                            <span>
-                                <MdOutlineStarBorder id="1"/>
-                                <MdOutlineStarBorder id="2"/>
-                                <MdOutlineStarBorder id="3"/>
-                                <MdOutlineStarBorder id="4"/>
-                                <MdOutlineStarBorder id="5"/>
-                            </span>
-                        </div>
-
-                        <div>
-                            <label for="review">Review: </label>
-                            <input type="text" id="review" name="review"></input>
-                        </div>
-                        </div> */}
                   <Container>
-                    <Button variant="contained" onClick={createExperience}>Create</Button>
+                    <Button onClick={createExperience}>Create</Button>
                     <Button onClick={() => {navigate(`/UserExperiences`)}}>Cancel</Button>
                   </Container>
                   </Container>
-
                 </FormControl>
               </Grid>
           </form>

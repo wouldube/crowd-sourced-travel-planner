@@ -20,61 +20,9 @@ let Theme = createTheme({
         background: { main: '#5abbdc' }
     },
     typography: {
-        fontFamily: 'comfortaa',
-        variants: [
-            {
-                props: { variant: 'p' },
-                style: {
-                    fontFamily: 'comfortaa'
-                }
-            },
-            {
-                props: { variant: 'h1' },
-                style: {
-                    fontFamily: 'comfortaa'
-                }
-            },
-            {
-                props: { variant: 'h2' },
-                style: {
-                    fontFamily: 'comfortaa'
-                }
-            },
-            {
-                props: { variant: 'h3' },
-                style: {
-                    fontFamily: 'comfortaa'
-                }
-            },
-            {
-                props: { variant: 'CardContent' },
-                style: {
-                    fontFamily: 'comfortaa'
-                }
-            },
-            {
-                props: { variant: 'h5' },
-                style: {
-                    fontFamily: 'comfortaa'
-                }
-            },
-            {
-                props: { variant: 'h6' },
-                style: {
-                    fontFamily: 'comfortaa'
-                }
-            },
-        ],
+        fontFamily: 'comfortaa', fontWeightMedium: 'bolder'
     },
-    // typography: {
-    //     fontFamily: 'comfortaa',
-    //     styleOverrides: {
-    //         root: {
-    //             fontFamily: 'comfortaa'
-    //         }
-    //     }
-    // },
-    spacing: 10,
+    spacing: 5,
     components: {
         MuiButton: {
             defaultProps: {
@@ -97,25 +45,25 @@ let Theme = createTheme({
                 {
                     props: { variant: 'experience' },
                     style: {
-                        opacity: '1', borderRadius: '100%',
+                        opacity: '1', borderRadius: '100%', position: 'relative',
                         aspectRatio: "1 / 1", width: "fit-content",
                         boxShadow: '0px 1px 10px 5px rgba(255, 255, 255, 0.3)',
                         backgroundPosition: 'center', backgroundSize: 'cover',
-                        '&:hover': { animation: 'ExperienceInteraction1 1s forwards' }
+                        transition: "transform boxShadow zIndex 1.5s ease",
+                        '&:hover': {
+                            transform: "scale(1.3)", zIndex: "5",
+                            boxShadow: "0px 1px 20px 10px rgba(255, 255, 255, 0.9)",
+                        },
                     }
                 }
             ],
             styleOverrides: {
                 root: {
-                    fontFamily: 'comfortaa',
                     borderRadius: '1rem', border: 'solid 3px #8DD6EC',
                     boxShadow: '0px 0px 10px 3px rgba(0, 0, 0, 0.2)',
-                    background: '#75CFEB',//radial-gradient(#FFFFFF 30%, #75CFEB)',
-
-                    // background: 'radial-gradient(#FFFFFF, #75CFEB)',
-                    transition: '0.3s ease',
+                    background: '#75CFEB', transition: '0.3s ease',
                     '&:hover': {
-                        background: '#75CFEB',//radial-gradient(#FFFFFF 30%, #75CFEB)',
+                        background: '#75CFEB',
                         backgroundPosition: 'center', backgroundSize: 'cover',
                     },
                     backgroundPosition: 'center', backgroundSize: 'cover',

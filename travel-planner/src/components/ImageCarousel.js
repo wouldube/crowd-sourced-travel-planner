@@ -16,7 +16,7 @@ const ImageCarousel = () => {
   };
 
   return (
-    <div className="carousel-container" onMouseOver={goToNextImage} style={{height:"30vh"}}>
+    <div className="carousel-container" onMouseOver={goToNextImage}>
       <img src={images[currentImageIndex]} alt="Travel destination" />
     </div>
   );
