@@ -14,7 +14,7 @@ const ReviewModal = ({ onClose, expId, style }) => {
             experience: expId,
         };
 
-        fetch(`http://localhost:5000/reviews`, {
+        fetch(`http://flip1.engr.oregonstate.edu:9278/reviews`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -21,7 +21,7 @@ const Profile = () => {
         const id = localStorage.getItem("id")
         check(1)
 
-        fetch(`http://localhost:5000/user-info/${id}`)
+        fetch(`http://flip1.engr.oregonstate.edu:9278/user-info/${id}`)
             .then(response => response.json())
             .then(user => {
                 setUsername(user.username);

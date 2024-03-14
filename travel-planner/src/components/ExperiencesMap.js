@@ -10,7 +10,7 @@ const ExperiencesMap = ({ setExpId }) => {
 
   const getExperiences = async () => {
     try {
-      const data = await fetch("http://localhost:5000/experiences")
+      const data = await fetch("http://flip1.engr.oregonstate.edu:9278/experiences")
       const experiences = await data.json()
 
       let randoms = []

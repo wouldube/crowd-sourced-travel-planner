@@ -31,7 +31,7 @@ const CreateTrip = (initialExp) => {
         const getExperiences = async () => {
             try {
                 console.log(owner)
-                const data = await fetch(`http://localhost:5000/my-experiences/${id}`)
+                const data = await fetch(`http://flip1.engr.oregonstate.edu:9278/my-experiences/${id}`)
                 const experiences = await data.json()
                 console.log(experiences)
 
@@ -60,7 +60,7 @@ const CreateTrip = (initialExp) => {
     const SaveTrip = async () => {
         try {
             const trip = { title, description, image, owner, experiences }
-            await fetch(`http://localhost:5000/create-trip`, {
+            await fetch(`http://flip1.engr.oregonstate.edu:9278/create-trip`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(trip)

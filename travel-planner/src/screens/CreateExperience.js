@@ -48,7 +48,7 @@ export const CreateExperience = () => {
     setImage(downloadURL)
 
     const newExperience = { title, description, coordinates, image:downloadURL, id, initialReview };
-    const response = await fetch("http://localhost:5000/create-exp", {
+    const response = await fetch("http://flip1.engr.oregonstate.edu:9278/create-exp", {
       method: "POST",
       body: JSON.stringify(newExperience),
       headers: {

@@ -37,7 +37,7 @@ const Experience = (props) => {
 
 
     const onLoad = async () => {
-        const response = await fetch(`http://localhost:5000/experiences/${experienceId}`)
+        const response = await fetch(`http://flip1.engr.oregonstate.edu:9278/experiences/${experienceId}`)
         const data = await response.json()
         setExperience(data)
 
@@ -55,7 +55,7 @@ const Experience = (props) => {
     }, [])
     
     const favoriteButton = async () => {
-        const data = await fetch(`http://localhost:5000/user-info/${id}`)
+        const data = await fetch(`http://flip1.engr.oregonstate.edu:9278/user-info/${id}`)
         const user = await data.json()
         const favList = user.favorites
 
@@ -76,7 +76,7 @@ const Experience = (props) => {
         if (id) {
             console.log('fav')
             console.log(id)
-            const data = await fetch(`http://localhost:5000/user-info/${id}`)
+            const data = await fetch(`http://flip1.engr.oregonstate.edu:9278/user-info/${id}`)
             const user = await data.json()
             const favList = user.favorites
 
@@ -85,7 +85,7 @@ const Experience = (props) => {
             if (favList.indexOf(experience._id) < 0) {
                 favList.push(experience._id)
 
-                const updateUser = await fetch(`http://localhost:5000/user-info/${id}`, {
+                const updateUser = await fetch(`http://flip1.engr.oregonstate.edu:9278/user-info/${id}`, {
                     method: "PUT",
                     body: JSON.stringify({ "favorites": favList }),
                     headers: {
@@ -104,7 +104,7 @@ const Experience = (props) => {
     }
 
     const unfavoriteExp = async () => {
-        const data = await fetch(`http://localhost:5000/user-info/${id}`)
+        const data = await fetch(`http://flip1.engr.oregonstate.edu:9278/user-info/${id}`)
         const user = await data.json()
         const favList = user.favorites
 
@@ -113,7 +113,7 @@ const Experience = (props) => {
             favList.splice(index, 1);
         }
 
-        const updateUser = await fetch(`http://localhost:5000/user-info/${id}`, {
+        const updateUser = await fetch(`http://flip1.engr.oregonstate.edu:9278/user-info/${id}`, {
             method: "PUT",
             body: JSON.stringify({ "favorites": favList }),
             headers: {
@@ -126,7 +126,7 @@ const Experience = (props) => {
 
     // add exp to trip
     const addToTrip = async () => {
-        const data = await fetch(`http://localhost:5000/trips/${id}`)
+        const data = await fetch(`http://flip1.engr.oregonstate.edu:9278/trips/${id}`)
         const trips = await data.json()
         console.log(trips)
 
@@ -171,7 +171,7 @@ const Experience = (props) => {
         if (expList.indexOf(experience._id) < 0) {
             expList.push(experience._id)
 
-            const updateTrip = await fetch(`http://localhost:5000/update-trip/${trip._id}`, {
+            const updateTrip = await fetch(`http://flip1.engr.oregonstate.edu:9278/update-trip/${trip._id}`, {
                 method: "PUT",
                 body: JSON.stringify({ "experiences": expList }),
                 headers: {
@@ -196,7 +196,7 @@ const Experience = (props) => {
 
     // if owner delete experience
     const deleteExp = async () => {
-        const response = await fetch(`http://localhost:5000/delete-exp/${experience._id}`, {
+        const response = await fetch(`http://flip1.engr.oregonstate.edu:9278/delete-exp/${experience._id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

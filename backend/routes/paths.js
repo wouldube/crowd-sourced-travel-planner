@@ -9,7 +9,7 @@ const { getUserById, getUserByUid, getUserExperiences, getUserFavorites, getUser
 
 
 const corsOptions = {
-  origin: "http://localhost:3000", 
+  origin: "http://flip1.engr.oregonstate.edu:3000", 
 };
 
 const router = express.Router();

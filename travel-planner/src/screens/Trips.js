@@ -7,7 +7,7 @@ const Trips = ({ setTripObject }) => {
 
     const getTrips = async (id) => {
         try {
-            const data = await fetch(`http://localhost:5000/trips/${id}`)
+            const data = await fetch(`http://flip1.engr.oregonstate.edu:9278/trips/${id}`)
             const trips = await data.json()
             setTrips(trips)
         } catch (error) { console.error('Error fetching data:', error) }

@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
+    "stop": "./node_modules/forever/bin/forever stop server.js",
     "dev": "nodemon server.js"
   },
   "keywords": [],
@@ -16,6 +17,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "firebase": "^10.7.1",
+    "forever": "^4.0.3",
     "mongoose": "^8.0.0"
   }
 }

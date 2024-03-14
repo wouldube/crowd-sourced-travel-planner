@@ -29,7 +29,7 @@ const UpdateTrip = ({ tripObject }) => {
 
         const getExperiences = async () => {
             try {
-                const data = await fetch(`http://localhost:5000/my-experiences/${id}`)
+                const data = await fetch(`http://flip1.engr.oregonstate.edu:9278/my-experiences/${id}`)
                 const experiences = await data.json()
                 const exp_ids  = []
 
@@ -40,7 +40,7 @@ const UpdateTrip = ({ tripObject }) => {
                 console.log(tripObject.experiences)
                 for (let i = 0; i < tripObject.experiences.length; i++) {
                     if (exp_ids.indexOf(tripObject.experiences[i]) < 0) {
-                        let expData = await fetch(`http://localhost:5000/experiences/${tripObject.experiences[i]}`)
+                        let expData = await fetch(`http://flip1.engr.oregonstate.edu:9278/experiences/${tripObject.experiences[i]}`)
                         let exp = await expData.json()
                         experiences.push(exp)
                     }
@@ -65,7 +65,7 @@ const UpdateTrip = ({ tripObject }) => {
                 image: image,
                 experiences: experiences
             }
-            await fetch(`http://localhost:5000/update-trip/${tripObject._id}`, {
+            await fetch(`http://flip1.engr.oregonstate.edu:9278/update-trip/${tripObject._id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(trip)

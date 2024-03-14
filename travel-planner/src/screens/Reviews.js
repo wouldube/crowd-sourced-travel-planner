@@ -14,7 +14,7 @@ const Reviews = () => {
         if (!userId) {
             navigate("/login");
         } else {
-            fetch(`http://localhost:5000/my-experiences/${userId}`)
+            fetch(`http://flip1.engr.oregonstate.edu:9278/my-experiences/${userId}`)
                 .then(response => response.json())
                 .then(data => {
                     setExperiences(data);
@@ -24,7 +24,7 @@ const Reviews = () => {
                 })
                 .catch(error => console.error('Error fetching experiences:', error));
 
-            fetch(`http://localhost:5000/user/${userId}/reviews`)
+            fetch(`http://flip1.engr.oregonstate.edu:9278/user/${userId}/reviews`)
                 .then(response => response.json())
                 .then(data => {
                     setReviews(data);
@@ -34,7 +34,7 @@ const Reviews = () => {
     }, [navigate]);
 
     const handleDelete = (reviewId) => {
-        fetch(`http://localhost:5000/reviews/${reviewId}`, {
+        fetch(`http://flip1.engr.oregonstate.edu:9278/reviews/${reviewId}`, {
             method: 'DELETE',
         })
             .then(response => {
@@ -51,7 +51,7 @@ const Reviews = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch(`http://localhost:5000/reviews`, {
+        fetch(`http://flip1.engr.oregonstate.edu:9278/reviews`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

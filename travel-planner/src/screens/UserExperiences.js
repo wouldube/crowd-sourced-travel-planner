@@ -21,7 +21,7 @@ function UserExperiences(props) {
     const onDelete = async (experience) => {
         const id = localStorage.getItem("id")
         if (id) {
-            const response = await fetch(`http://localhost:5000/delete-exp/${experience._id}`, {
+            const response = await fetch(`http://flip1.engr.oregonstate.edu:9278/delete-exp/${experience._id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -39,7 +39,7 @@ function UserExperiences(props) {
     }
 
     const addToTrip = async () => {
-        const data = await fetch(`http://localhost:5000/trips/${id}`)
+        const data = await fetch(`http://flip1.engr.oregonstate.edu:9278/trips/${id}`)
         const trips = await data.json()
 
         setTrips(trips)
@@ -75,7 +75,7 @@ function UserExperiences(props) {
         if (expList.indexOf(experience._id) < 0) {
             expList.push(experience._id)
 
-            const updateTrip = await fetch(`http://localhost:5000/update-trip/${trip._id}`, {
+            const updateTrip = await fetch(`http://flip1.engr.oregonstate.edu:9278/update-trip/${trip._id}`, {
                 method: "PUT",
                 body: JSON.stringify({ "experiences": expList }),
                 headers: {
@@ -94,7 +94,7 @@ function UserExperiences(props) {
 
         const id = localStorage.getItem("id")
 
-        fetch(`http://localhost:5000/my-experiences/${id}`)
+        fetch(`http://flip1.engr.oregonstate.edu:9278/my-experiences/${id}`)
             .then(response => response.json())
             .then(experiences => setUserExperiences(experiences))
             .catch(error => console.error('Error fetching data:', error));

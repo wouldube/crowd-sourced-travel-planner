@@ -16,7 +16,7 @@ const Search = ({ setExpId }) => {
         setIsLoading(true);
         setError(null);
 
-        fetch(`http://localhost:5000/search?query=${encodeURIComponent(query)}`)
+        fetch(`http://flip1.engr.oregonstate.edu:9278/search?query=${encodeURIComponent(query)}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);

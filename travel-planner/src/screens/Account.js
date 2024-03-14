@@ -33,7 +33,7 @@ const Account = () => {
 
         const id = localStorage.getItem("id")
 
-        fetch(`http://localhost:5000/user-info/${id}`)
+        fetch(`http://flip1.engr.oregonstate.edu:9278/user-info/${id}`)
             .then(response => response.json())
             .then(user => {
                 setUser(user);
@@ -78,7 +78,7 @@ const Account = () => {
             user = { username, name, bio, image: downloadURL };
         }
 
-        const response = await fetch(`http://localhost:5000/user-info/${id}`, {
+        const response = await fetch(`http://flip1.engr.oregonstate.edu:9278/user-info/${id}`, {
             method: "PUT",
             body: JSON.stringify(user),
             headers: {
@@ -109,7 +109,7 @@ const Account = () => {
                     updatePassword(currentUser, newPass)
                 }
 
-                fetch(`http://localhost:5000/user-info/${id}`, {
+                fetch(`http://flip1.engr.oregonstate.edu:9278/user-info/${id}`, {
                     method: "PUT",
                     body: JSON.stringify(update),
                     headers: {

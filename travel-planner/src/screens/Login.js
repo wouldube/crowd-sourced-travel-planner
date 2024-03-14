@@ -27,7 +27,7 @@ const Login = () => {
                 uid = userCredential.user.uid;
 
                 // DEBUG
-                const response = await fetch(`http://localhost:5000/user/${uid}`, {
+                const response = await fetch(`http://flip1.engr.oregonstate.edu:9278/user/${uid}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

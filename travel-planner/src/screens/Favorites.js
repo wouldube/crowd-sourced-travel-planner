@@ -12,7 +12,7 @@ function Favorites() {
 
     const unfavorite = async (favorite) => {
         const id = localStorage.getItem("id")
-        const data = await fetch(`http://localhost:5000/user-info/${id}`)
+        const data = await fetch(`http://flip1.engr.oregonstate.edu:9278/user-info/${id}`)
         const user = await data.json()
         const favList = user.favorites
 
@@ -21,7 +21,7 @@ function Favorites() {
             favList.splice(index, 1);
         }
 
-        const updateUser = await fetch(`http://localhost:5000/user-info/${id}`, {
+        const updateUser = await fetch(`http://flip1.engr.oregonstate.edu:9278/user-info/${id}`, {
             method: "PUT",
             body: JSON.stringify({ "favorites": favList }),
             headers: {
@@ -44,7 +44,7 @@ function Favorites() {
 
         const id = localStorage.getItem("id")
 
-        fetch(`http://localhost:5000/my-favorites/${id}`)
+        fetch(`http://flip1.engr.oregonstate.edu:9278/my-favorites/${id}`)
             .then(response => response.json())
             .then(favorites => setFavorite(favorites))
             .catch(error => console.error('Error fetching data:', error));

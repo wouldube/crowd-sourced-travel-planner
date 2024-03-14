@@ -11,7 +11,7 @@ const Trip = ({ tripObject }) => {
     useEffect(() => {
         const getExperiences = async () => {
             try {
-                const data = await fetch(`http://localhost:5000/trip/experiences/${tripObject._id}`)
+                const data = await fetch(`http://flip1.engr.oregonstate.edu:9278/trip/experiences/${tripObject._id}`)
                 const experiences = await data.json()
                 setExperiences(experiences)
             } catch (error) { console.error('Error fetching data:', error) }
@@ -21,7 +21,7 @@ const Trip = ({ tripObject }) => {
 
     const deleteTrip = async () => {
         try {
-            await fetch(`http://localhost:5000/delete-trip/${tripObject._id}`, {
+            await fetch(`http://flip1.engr.oregonstate.edu:9278/delete-trip/${tripObject._id}`, {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(tripObject)

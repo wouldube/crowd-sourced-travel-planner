@@ -16,7 +16,7 @@ const ExperienceList = ({ setExpId }) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetch("http://localhost:5000/experiences")
+        fetch("http://flip1.engr.oregonstate.edu:9278/experiences")
             .then(response => response.json())
             .then(experiences => setAllExperiences(experiences))
             .catch(error => console.error('Error fetching data:', error));

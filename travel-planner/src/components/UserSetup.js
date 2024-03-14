@@ -37,7 +37,7 @@ const UserSetup = ({email, pass}) => {
 
         // Upload Profile Image to Firebase
         
-        const response = await fetch("http://localhost:5000/new-user", {
+        const response = await fetch("http://flip1.engr.oregonstate.edu:9278/new-user", {
             method: "POST",
             body: JSON.stringify(user),
             headers: {
@@ -45,7 +45,7 @@ const UserSetup = ({email, pass}) => {
             },
         });
 
-        const new_user = await fetch(`http://localhost:5000/user/${uid}`, {
+        const new_user = await fetch(`http://flip1.engr.oregonstate.edu:9278/user/${uid}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

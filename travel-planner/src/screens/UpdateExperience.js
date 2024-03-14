@@ -38,7 +38,7 @@ export const UpdateExperience = ({ experienceToUpdate }) => {
 
     const id = localStorage.getItem("id")
 
-    fetch(`http://localhost:5000/experiences/${experienceToUpdate}`)
+    fetch(`http://flip1.engr.oregonstate.edu:9278/experiences/${experienceToUpdate}`)
       .then(response => response.json())
       .then(experience => {
         setExperience(experience);
@@ -77,7 +77,7 @@ export const UpdateExperience = ({ experienceToUpdate }) => {
     // image stuff
 
 
-    const response = await fetch(`http://localhost:5000/update-exp/${experienceToUpdate}`, {
+    const response = await fetch(`http://flip1.engr.oregonstate.edu:9278/update-exp/${experienceToUpdate}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
