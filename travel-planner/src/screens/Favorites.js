@@ -57,7 +57,7 @@ function Favorites() {
     }, []);
 
     return (
-        <Container>
+        <Container style={{display: "flex", alignItems: "center", flexDirection:"column"}}>
             <Paper>
                 <strong>My Favorite Experiences</strong>
                 <Grid container spacing={3}>
