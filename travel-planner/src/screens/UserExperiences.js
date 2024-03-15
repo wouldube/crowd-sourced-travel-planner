@@ -112,7 +112,7 @@ function UserExperiences(props) {
                 <h2>My Experiences</h2>
                 <Grid>
                     <Tooltip>
-                        <Button onClick={() => { navigate(`/create-exp`) }}>+</Button>
+                        <Button onClick={() => { navigate(`/create-exp`) }}>Create New Experience</Button>
                     </Tooltip>
                 </Grid>
                 <Grid container spacing={2}>
