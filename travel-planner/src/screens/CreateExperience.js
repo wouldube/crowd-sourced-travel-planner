@@ -68,14 +68,14 @@ export const CreateExperience = () => {
   }};
 
   return (
-    <Container>
+    <Container style={{display: "flex", alignItems: "center", flexDirection:"column"}}>
       <Paper>
         <Grid container justifyContent="center" spacing={2}  m={2} style={{width: "400px"}}>
           <form>
               <Grid item position xs={16}>
                 <FormControl>
                   <Container>
-                  <FormLabel>Create New Experience!</FormLabel>
+                  <h3>Create New Experience!</h3>
                   <TextField
                       id="title" label="title" required value={title}
                       onChange={(e) => setTitle(e.target.value)}
@@ -97,6 +97,12 @@ export const CreateExperience = () => {
                   <Grid item xs={12}>
                     <TextField
                         type="file" id="image" accept="image/*" label="image" required
+                        InputLabelProps={{
+                          style: { padding: '0px 0' },
+                        }}
+                        inputProps={{
+                          style: { padding: '30px 0' },
+                        }}
                         onChange={(e) => setImage(e.target.value) }
                     />
                   </Grid>
