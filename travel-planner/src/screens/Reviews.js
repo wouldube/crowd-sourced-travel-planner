@@ -16,7 +16,7 @@ const Reviews = () => {
         if (!userId) {
             navigate("/login");
         } else {
-            fetch(`http://localhost:5000/my-experiences/${userId}`)
+            fetch(`http://localhost:5000/experiences`)
                 .then(response => response.json())
                 .then(data => {
                     setExperiences(data);
@@ -81,7 +81,7 @@ const Reviews = () => {
 
 
     return (
-        <Container>
+        <Container style={{display: "flex", alignItems: "center", flexDirection:"column"}}>
             <Paper>
                 <h2>My Reviews</h2>
                 <form onSubmit={handleSubmit}>
