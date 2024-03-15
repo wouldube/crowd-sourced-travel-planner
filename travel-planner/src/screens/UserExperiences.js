@@ -66,7 +66,7 @@ function UserExperiences(props) {
                     <Button onClick={() => { pickTrip(trip, experience) }}>{trip.title}</Button>
                 </div>
             ))}
-            <Button onClick={createTrip}>Create New Trip</Button>
+            {/* <Button onClick={createTrip}>Create New Trip</Button> */}
         </Tooltip>
     )
 
@@ -111,7 +111,7 @@ function UserExperiences(props) {
             <Paper>
                 <h2>My Experiences</h2>
                 <Grid>
-                    <Tooltip>
+                    <Tooltip title="Create New Experience!" followCursor>
                         <Button onClick={() => { navigate(`/create-exp`) }}>+</Button>
                     </Tooltip>
                 </Grid>
