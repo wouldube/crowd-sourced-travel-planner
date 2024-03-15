@@ -23,29 +23,29 @@ const Buttons = () => {
     // Components
 
     const LoginButton = () => (
-        <Button onClick={() => navigate('/login')} style={{height:"7vh"}}>Login</Button>
+        <Button onClick={() => navigate('/login')} style={{height:"7vh", minWidth:"80px"}}>Login</Button>
     )
 
     const LogoutButton = () => (
-        <Button onClick={logout} style={{height:"7vh"}}>Logout</Button>
+        <Button onClick={logout} style={{height:"7vh", minWidth:"80px"}}>Logout</Button>
     )
 
     return (
-        <Container>
+        <Container style={{display: "flex", alignItems: "center", flexDirection: "column"}}>
             <Card onClick={() => navigate('/')} style={{ borderRadius: "100px"}}>
                 <h3>Travel<br />
                     Planner</h3>
             </Card>
             {/* <Box style={{ position: "fixed", bottom: "70%", left: "50%", transform: "translate(-50%, -50%)", zIndex: "10"}}> */}
-                <ButtonGroup variant="contained" style={{borderRadius:"50px", justifyContent:"center"}}>
-                    <Button onClick={() => navigate('/trips')} style={{height:"7vh"}}>
+                <ButtonGroup variant="contained" style={{borderRadius:"50px", justifyContent:"center", flexWrap:"wrap"}}>
+                    <Button onClick={() => navigate('/trips')} style={{height:"7vh", minWidth:"80px"}}>
                         Trips
                     </Button>
-                    <Button onClick={() => navigate('/profile')} style={{height:"7vh"}}>
+                    <Button onClick={() => navigate('/profile')} style={{height:"7vh", minWidth:"80px"}}>
                         Profile
                     </Button>
                         {login ? <LogoutButton /> : <LoginButton />}
-                    <Button onClick={() => navigate('/search')} style={{height:"7vh"}}>
+                    <Button onClick={() => navigate('/search')} style={{height:"7vh", minWidth:"80px"}}>
                         Search
                     </Button>
                 </ButtonGroup>
