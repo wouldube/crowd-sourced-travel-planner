@@ -44,8 +44,8 @@ const Search = ({ setExpId }) => {
     }
 
     return (
-        <Container>
-            <Paper style={{ width: "80vw" }}>
+        <Container style={{display: "flex", alignItems: "center", flexDirection:"column"}}>
+            <Paper style={{ width: "100%" }}>
                 <h2>Search Experiences</h2>
                 <form onSubmit={handleSearch}>
                     <FormControl>
@@ -68,7 +68,7 @@ const Search = ({ setExpId }) => {
                 </form>
 
             </Paper>
-            <Paper style={{ width: "80vw" }}>
+            <Paper style={{ width: "100%" }}>
                 {error && <p className="error">{error}</p>}
                 <Grid container justifyContent="center" spacing={3}>
                     {isLoading ? (
