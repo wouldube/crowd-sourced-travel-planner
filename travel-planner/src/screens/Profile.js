@@ -37,15 +37,15 @@ const Profile = () => {
                                 <p>{username}</p>
                             </Button>
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} style={{ display:"flex", alignItems: "center",}}>
                             <Card onClick={() => { navigate("/UserExperiences") }}
-                                style={{ height: "30vh",
+                                style={{ height: "30vh", 
                                     backgroundImage: `url("../components/ExperiencesMap.png")`
                                 }}>
                                 My Experiences
                             </Card>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={6} style={{ display:"flex", alignItems: "center",}}>
                             <Card onClick={() => { navigate("/favorites") }}
                                 style={{
                                     height: "25vh",
@@ -53,7 +53,7 @@ const Profile = () => {
                                 Favorites
                             </Card>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={6} style={{ display:"flex", alignItems: "center",}}>
                             <Card onClick={() => { navigate("/reviews") }}
                                 style={{
                                     height: "25vh",
