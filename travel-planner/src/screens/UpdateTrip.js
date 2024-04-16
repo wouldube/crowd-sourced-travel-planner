@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
     FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
     Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
-
+import AddIcon from '@mui/icons-material/Add';
 const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
 const { firebaseConfig } = require("../firebase/firebase-config");
@@ -92,6 +92,7 @@ const UpdateTrip = ({ tripObject }) => {
             <Card>
                 <form>
                     <FormControl>
+                        <h2>Update your current trip!</h2>
                         <Grid container>
                             <Grid item xs={12}>
                                 <TextField
@@ -113,15 +114,27 @@ const UpdateTrip = ({ tripObject }) => {
                             </Grid>
                         </Grid>
                         <Button type="submit" onClick={SaveTrip}>Update</Button>
-                        Add some of your experiences to the trip!
+                        <br></br>
+                        <h2>Add some of your experiences to the trip!</h2>
                         <Grid container spacing={3}>
                             {allExperiences.map((exp, index) => (
                                 <Grid item key={index} xs={4}>
-                                    <Card variant="experience" style={{
+                                    {/* <Card variant="experience" style={{
                                         backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7)), url(${exp.images[0]})`
                                     }}>
                                         <Container><h3>{exp.title}</h3></Container>
                                         <Button onClick={() => { setExperiences([...experiences, exp]) }}>+</Button>
+                                    </Card> */}
+                                    <Card variant="experience" style={{
+                                        backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7)), url(${exp.images[0]})`}}>
+                                        <CardContent style={{ height: "150vh", transform: "scale(0.9)" }}>
+                                            <h2 style={{ display:"block", width:"100%", height:"100px" }}>{exp.title}</h2>
+                                            <Tooltip title="Add to Trip" followCursor>
+                                                <Button>
+                                                    <AddIcon onClick={() => { setExperiences([...experiences, exp]) }}/>
+                                                </Button>
+                                            </Tooltip>
+                                        </CardContent>
                                     </Card>
                                 </Grid>
                             ))}
