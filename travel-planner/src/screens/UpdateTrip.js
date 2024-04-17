@@ -5,6 +5,7 @@ import {
     FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
     Button, ButtonGroup, IconButton, Tooltip, Rating, Divider
 } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
@@ -81,6 +82,7 @@ const UpdateTrip = ({ tripObject }) => {
             <Paper>
                 <form>
                     <FormControl>
+                        <h2>Update your current trip!</h2>
                         <Grid container>
                             <Grid item xs={12}>
                                 <TextField
@@ -115,15 +117,19 @@ const UpdateTrip = ({ tripObject }) => {
                                     {experiences.map((exp, index) => (
                                         <Grid item key={index} xs={4}>
                                             <Card variant="experience" style={{
-                                                backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7))`
+                                                // backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7)), url(${exp.images[0]})`
                                             }}>
-                                                <Container><h3>{exp.title}</h3></Container>
-                                                <Button onClick={() => {
-                                                    setExperiences(experiences.filter(experience => experience !== exp))
-                                                    setFavoriteExperiences([...favoriteExperiences, exp])
-                                                }} style={{
-                                                    transform: 'scale(0.5)'
-                                                }}>Remove</Button>
+                                                <CardContent style={{ height: "150vh", transform: "scale(0.9)" }}>
+                                                    <h2 style={{ display: "block", width: "100%", height: "100px" }}>{exp.title}</h2>
+                                                    <Tooltip title="Remove from Trip" followCursor>
+                                                        <Button onClick={() => {
+                                                            setExperiences(experiences.filter(experience => experience !== exp))
+                                                            setFavoriteExperiences([...favoriteExperiences, exp])
+                                                        }}>
+                                                            Remove
+                                                        </Button>
+                                                    </Tooltip>
+                                                </CardContent>
                                             </Card>
                                         </Grid>
                                     ))}
@@ -138,21 +144,27 @@ const UpdateTrip = ({ tripObject }) => {
                                             <Card variant="experience" style={{
                                                 // backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7)), url(${exp.images[0]})`
                                             }}>
-                                                <Container><h3>{exp.title}</h3></Container>
-                                                <Button onClick={() => {
-                                                    setExperiences([...experiences, exp]);
-                                                    setFavoriteExperiences(favoriteExperiences.filter(experience => experience !== exp))                                                    
-                                                }}>Add</Button>
+                                                <CardContent style={{ height: "150vh", transform: "scale(0.9)" }}>
+                                                    <h2 style={{ display: "block", width: "100%", height: "100px" }}>{exp.title}</h2>
+                                                    <Tooltip title="Add to Trip" followCursor>
+                                                        <Button onClick={() => {
+                                                            setExperiences([...experiences, exp]);
+                                                            setFavoriteExperiences(favoriteExperiences.filter(experience => experience !== exp))
+                                                        }}>
+                                                            Add
+                                                        </Button>
+                                                    </Tooltip>
+                                                </CardContent>
                                             </Card>
                                         </Grid>
                                     ))}
                                 </Grid>
                             </Grid>
-                        </Grid>
-                    </FormControl>
-                </form>
-            </Paper>
-        </Container>
+                        </Grid >
+                    </FormControl >
+                </form >
+            </Paper >
+        </Container >
     )
 }
 

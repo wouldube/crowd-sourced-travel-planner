@@ -16,7 +16,6 @@ function UserExperiences(props) {
 
     // const experienceId = props.expId
     const setExperienceToUpdate = props.setExperienceToUpdate
-    const setInitialExp = props.setInitialExp
 
     const navigate = useNavigate();
 
@@ -55,7 +54,6 @@ function UserExperiences(props) {
     }
 
     const createTrip = (experience) => {
-        setInitialExp(experience)
         navigate("/trips/create-trip");
     }
 
@@ -66,7 +64,7 @@ function UserExperiences(props) {
                     <Button onClick={() => { pickTrip(trip, experience) }}>{trip.title}</Button>
                 </div>
             ))}
-            {/* <Button onClick={createTrip}>Create New Trip</Button> */}
+            <Button onClick={() => {createTrip(experience)}}>Create New Trip</Button>
         </Tooltip>
     )
 
