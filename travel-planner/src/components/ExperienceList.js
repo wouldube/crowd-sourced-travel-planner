@@ -94,9 +94,11 @@ const ExperienceList = ({ setExpId }) => {
                                     {allexp.description}
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Button onClick={(event) => { handleReviewModal(event, allexp._id) }}>
-                                    <RateReviewIcon/>
-                                    </Button>
+                                    <Tooltip title="Leave a review!" followCursor>
+                                        <Button onClick={(event) => { handleReviewModal(event, allexp._id) }}>
+                                        <RateReviewIcon/>
+                                        </Button>
+                                    </Tooltip>
                                 </Grid>
                             </Grid>
                         </Card>

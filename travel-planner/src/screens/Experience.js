@@ -36,6 +36,7 @@ const Experience = (props) => {
         description: '',
     })
     const [trips, setTrips] = useState([])
+    const [address, setAddress] = useState("")
 
 
     const onLoad = async () => {
@@ -50,6 +51,17 @@ const Experience = (props) => {
         if (id == data.owner) {
             setShowEdit(true);
         }
+
+        let coord1 = data.location.coordinates[0]
+        let coord2 = data.location.coordinates[1]
+
+        let url = `https://api.geoapify.com/v1/geocode/reverse?lat=${coord1}&lon=${coord2}&type=amenity&lang=en&limit=1&format=json&apiKey=abce6a14428f49d49ef299b1016bf4b2`
+        
+        const location_json = await fetch(url);
+        const location_data = await location_json.json();
+        if (location_data.results.length != 0)
+            setAddress(location_data.results[0].formatted)  
+
     }
 
     useEffect(() => {
@@ -273,7 +285,8 @@ const Experience = (props) => {
                             </Grid>
                             <Grid item xs={12}>
                                 <span><strong>Location</strong><br />
-                                    {experience.location.coordinates[0]}, {experience.location.coordinates[1]}</span>
+                                    {experience.location.coordinates[0]}, {experience.location.coordinates[1]}<br/>
+                                    <br/>{address}</span>
                             </Grid>
                             <Grid item xs={12}>
                                 <img src={experience.images[0]} style={{ width: "100%", borderRadius: "50px" }}></img>
