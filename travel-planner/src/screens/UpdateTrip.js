@@ -1,8 +1,10 @@
 import { React, useEffect, useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+import {
+    Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
     FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
-    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider
+} from '@mui/material';
 
 const firebase = require("firebase/app")
 const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
@@ -12,48 +14,38 @@ const UpdateTrip = ({ tripObject }) => {
     const [title, setTitle] = useState(tripObject.title)
     const [description, setDescription] = useState(tripObject.description)
     const [image, setImage] = useState(tripObject.image)
-    const [experiences, setExperiences] = useState([])
+    const [experiences, setExperiences] = useState(tripObject.experiences)
 
-    const [allExperiences, setAllExperiences] = useState([]);
+    const [favoriteExperiences, setFavoriteExperiences] = useState([]);
 
     const navigate = useNavigate()
 
     const fb_app = firebase.initializeApp(firebaseConfig);
     const storage = getStorage(fb_app);
 
+    if (!localStorage.getItem("id")) {
+        navigate("/login")
+    }
+
+    const id = localStorage.getItem("id")
+
+    const getFavoriteExperiences = async () => {
+        try {
+            const data = await fetch(`http://localhost:5000/my-favorites/${id}`)
+            const favoriteExperiences = await data.json()
+            let filterExperiences = []
+
+            for (let i = 0; i <= favoriteExperiences.length; i++) {
+                filterExperiences = favoriteExperiences.filter(exp => !tripObject.experiences.includes(exp));
+            }
+
+            setFavoriteExperiences(filterExperiences)
+            console.log(filterExperiences)
+        } catch (error) { console.error('Error fetching data:', error) }
+    }
+
     useEffect(() => {
-        if (!localStorage.getItem("id")) {
-            // localStorage.setItem("path", "trips/trip/update-trip")
-            navigate("/login")
-        }
-
-        const id = localStorage.getItem("id")
-
-        const getExperiences = async () => {
-            try {
-                const data = await fetch(`http://localhost:5000/my-experiences/${id}`)
-                const experiences = await data.json()
-                const exp_ids  = []
-
-                for (let i = 0; i < experiences.length; i++) {
-                    exp_ids.push(experiences[i]._id)
-                }
-
-                console.log(tripObject.experiences)
-                for (let i = 0; i < tripObject.experiences.length; i++) {
-                    if (exp_ids.indexOf(tripObject.experiences[i]) < 0) {
-                        let expData = await fetch(`http://localhost:5000/experiences/${tripObject.experiences[i]}`)
-                        let exp = await expData.json()
-                        experiences.push(exp)
-                    }
-                }
-
-                setAllExperiences(experiences)
-                console.log(experiences)
-            } catch (error) { console.error('Error fetching data:', error) }
-        }
-
-        getExperiences()
+        getFavoriteExperiences()
     }, [])
 
     /* UpdateTrip Done */
@@ -84,12 +76,9 @@ const UpdateTrip = ({ tripObject }) => {
         setImage(downloadURL);
     }
 
-    /* Navigation */
-
-
     return (
         <Container>
-            <Card>
+            <Paper>
                 <form>
                     <FormControl>
                         <Grid container>
@@ -111,24 +100,58 @@ const UpdateTrip = ({ tripObject }) => {
                                     onChange={(e) => addImage(e.target.value)}
                                 />
                             </Grid>
+                            <Grid item xs={12}>
+                                <Button type="submit" onClick={SaveTrip}>Update</Button>
+                            </Grid>
                         </Grid>
-                        <Button type="submit" onClick={SaveTrip}>Update</Button>
-                        Add some of your experiences to the trip!
-                        <Grid container spacing={3}>
-                            {allExperiences.map((exp, index) => (
-                                <Grid item key={index} xs={4}>
-                                    <Card variant="experience" style={{
-                                        backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7)), url(${exp.images[0]})`
-                                    }}>
-                                        <Container><h3>{exp.title}</h3></Container>
-                                        <Button onClick={() => { setExperiences([...experiences, exp]) }}>+</Button>
-                                    </Card>
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <h2>Experiences</h2>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <h3>The Trip's Experiences<br />
+                                    (preselected ones)</h3>
+                                <Grid container spacing={3}>
+                                    {experiences.map((exp, index) => (
+                                        <Grid item key={index} xs={4}>
+                                            <Card variant="experience" style={{
+                                                backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7))`
+                                            }}>
+                                                <Container><h3>{exp.title}</h3></Container>
+                                                <Button onClick={() => {
+                                                    setExperiences(experiences.filter(experience => experience !== exp))
+                                                    setFavoriteExperiences([...favoriteExperiences, exp])
+                                                }} style={{
+                                                    transform: 'scale(0.5)'
+                                                }}>Remove</Button>
+                                            </Card>
+                                        </Grid>
+                                    ))}
                                 </Grid>
-                            ))}
+                            </Grid>
+                            <Grid item xs={6}>
+                                <h3>Add new ones from your favorite<br />
+                                    experiences to the trip!</h3>
+                                <Grid container spacing={3}>
+                                    {favoriteExperiences.map((exp, index) => (
+                                        <Grid item key={index} xs={4}>
+                                            <Card variant="experience" style={{
+                                                // backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7)), url(${exp.images[0]})`
+                                            }}>
+                                                <Container><h3>{exp.title}</h3></Container>
+                                                <Button onClick={() => {
+                                                    setExperiences([...experiences, exp]);
+                                                    setFavoriteExperiences(favoriteExperiences.filter(experience => experience !== exp))                                                    
+                                                }}>Add</Button>
+                                            </Card>
+                                        </Grid>
+                                    ))}
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </FormControl>
                 </form>
-            </Card>
+            </Paper>
         </Container>
     )
 }

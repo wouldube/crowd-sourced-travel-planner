@@ -21,7 +21,7 @@ const Trip = ({ tripObject, setExpId }) => {
         getExperiences()
     }, [])
 
-    const deleteTrip = async () => {
+    const deleteTrip = async (tripObject) => {
         try {
             await fetch(`http://localhost:5000/delete-trip/${tripObject._id}`, {
                 method: "DELETE",
@@ -47,7 +47,7 @@ const Trip = ({ tripObject, setExpId }) => {
                     </Button>
                 </Tooltip>
                 <Tooltip title="Delete Trip" followCursor>
-                    <Button onClick={() => { deleteTrip }}>
+                    <Button onClick={() => { deleteTrip(tripObject) }}>
                         <DeleteForeverIcon />
                     </Button>
                 </Tooltip>
