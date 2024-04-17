@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
     FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
-    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider, 
+    Slider, Typography, InputLabel } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search'
 
 const Search = ({ setExpId }) => {
@@ -10,6 +11,9 @@ const Search = ({ setExpId }) => {
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    // Filter & Sort
+    const [minRating, setMinRating] = useState(0);
+    const [sortOrder, setSortOrder] = useState('');
 
     const navigate = useNavigate()
 
@@ -18,7 +22,7 @@ const Search = ({ setExpId }) => {
         setIsLoading(true);
         setError(null);
 
-        fetch(`http://localhost:5000/search?query=${encodeURIComponent(query)}`)
+        fetch(`http://localhost:5000/search?query=${encodeURIComponent(query)}&rating=${minRating}&sort=${sortOrder}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -36,6 +40,15 @@ const Search = ({ setExpId }) => {
                 setIsLoading(false);
             })
     }
+    // Filter & Sort
+    const handleRatingChange = (event, newValue) => {
+        setMinRating(newValue);
+    };
+
+    const handleSortChange = (event) => {
+        setSortOrder(event.target.value);
+    };
+
 
     const goToExperience = (expId) => {
         setExpId(expId)
@@ -63,6 +76,46 @@ const Search = ({ setExpId }) => {
                                     {isLoading ? 'Searching...' : 'Search'}
                                 </Button>
                             </Grid>
+                            <Grid item xs={12}>
+                                <Typography gutterBottom>Minimum Rating</Typography>
+                                <Slider
+                                    value={minRating}
+                                    onChange={handleRatingChange}
+                                    aria-labelledby="minimum-rating-slider"
+                                    valueLabelDisplay="auto"
+                                    step={1}
+                                    marks
+                                    min={0}
+                                    max={5}
+                                />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <FormControl fullWidth>
+                                    <InputLabel>Sort By Rating</InputLabel>
+                                    <Select
+                                        value={sortOrder.includes('rating') ? sortOrder : ''}
+                                        onChange={handleSortChange}
+                                        displayEmpty
+                                    >
+                                        <MenuItem value="averageRating_asc">Rating: Low to High</MenuItem>
+                                        <MenuItem value="averageRating_desc">Rating: High to Low</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <FormControl fullWidth>
+                                    <InputLabel>Sort By Title</InputLabel>
+                                    <Select
+                                        value={sortOrder.includes('title') ? sortOrder : ''}
+                                        onChange={handleSortChange}
+                                        displayEmpty
+                                    >
+                                        <MenuItem value="title_asc">Title: A to Z</MenuItem>
+                                        <MenuItem value="title_desc">Title: Z to A</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+
                         </Grid>
                     </FormControl>
                 </form>

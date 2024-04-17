@@ -230,18 +230,28 @@ router.delete('/delete-exp/:experience_id', async (req, res) => {
 
 // Route to handle search requests
 router.get('/search', async (req, res) => {
-    const { query } = req.query;
+    const { query, sort } = req.query;
     let longitude = parseFloat(req.query.longitude);
     let latitude = parseFloat(req.query.latitude);
     let maxDistance = parseFloat(req.query.maxDistance);
+    let rating = parseInt(req.query.rating);
 
     // Check if the query parameters for longitude and latitude are provided before parsing
     longitude = !isNaN(longitude) ? longitude : undefined;
     latitude = !isNaN(latitude) ? latitude : undefined;
     maxDistance = !isNaN(maxDistance) ? maxDistance : undefined;
+    rating = !isNaN(rating) ? rating : undefined;
+    
+    let sortField = undefined;
+    let sortOrder = undefined;
+    if (sort) {
+        const sortSplitted = sort.split('_')
+        sortField = sortSplitted[0];
+        sortOrder = sortSplitted[1];
+    }
 
     try {
-        const results = await searchExperiences(query, longitude, latitude, maxDistance);
+        const results = await searchExperiences(query, longitude, latitude, maxDistance, rating, sortField, sortOrder);
         res.json(results);
     } catch (error) {
         console.error("Error in GET /search:", error);
