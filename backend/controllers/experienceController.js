@@ -14,7 +14,6 @@ const getAllExperiences = async () => {
 
 // Retrieve a specific experience by ID
 const getExperienceById = async (id) => {
-    console.log(`Fetching experience with ID: ${id}`);
     const experience = await Experience.findById(id);
     return experience;
 }

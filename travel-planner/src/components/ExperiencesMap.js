@@ -7,8 +7,6 @@ import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
 const ExperiencesMap = ({ setExpId }) => {
   /* The Experiences & Randomization */
   const [randomizedExperiences, setRandomizedExperiences] = useState([])
-  const [curveA, setCurveA] = useState({ x: 0, y: 0 })
-  const [curveB, setCurveB] = useState({ x: 1, y: 1 })
 
   const getExperiences = async () => {
     try {
