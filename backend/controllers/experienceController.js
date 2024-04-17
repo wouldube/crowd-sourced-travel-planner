@@ -63,7 +63,8 @@ const deleteExperience = async(id) => {
 }
 
 // Search
-const searchExperiences = async (textQuery, longitude, latitude, maxDistance) => {
+const searchExperiences = async (textQuery, longitude, latitude, maxDistance, rating, sortField, sortOrder) => {
+    console.log(rating);
     let searchCriteria = {
         $or: [
             { title: { $regex: textQuery, $options: 'i' } },
@@ -81,7 +82,19 @@ const searchExperiences = async (textQuery, longitude, latitude, maxDistance) =>
         };
     }
 
-    return await Experience.find(searchCriteria);
+    if (rating >= 0) {
+        searchCriteria['averageRating'] = {
+            $gte: rating
+        }
+    }
+    let sort = {
+        title: 1
+    }
+    if (sortField && sortOrder) {
+        sort = {};
+        sort[sortField] = sortOrder === 'asc'? 1:-1
+    }
+    return await Experience.find(searchCriteria).collation({locale:'en'}).sort(sort);
 };
 
 
