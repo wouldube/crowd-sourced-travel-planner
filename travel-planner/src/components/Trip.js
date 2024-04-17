@@ -6,7 +6,7 @@ import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 
-const Trip = ({ tripObject }) => {
+const Trip = ({ tripObject, setExpId }) => {
     const [experiences, setExperiences] = useState([]);
     const navigate = useNavigate()
 
@@ -32,6 +32,10 @@ const Trip = ({ tripObject }) => {
         navigate(`/trips`)
     }
 
+    const goToExperience = (expId) => {
+        setExpId(expId)
+        navigate(`/experience`)
+    }
 
     return (
         <Container>
@@ -43,7 +47,7 @@ const Trip = ({ tripObject }) => {
                     </Button>
                 </Tooltip>
                 <Tooltip title="Delete Trip" followCursor>
-                    <Button onClick={() => { navigate(`update-trip`) }}>
+                    <Button onClick={() => { deleteTrip }}>
                         <DeleteForeverIcon />
                     </Button>
                 </Tooltip>
@@ -52,7 +56,7 @@ const Trip = ({ tripObject }) => {
                         <>
                             {(exp) && (
                                 <Grid item key={index} xs={4}>
-                                    <Card variant="experience" style={{
+                                    <Card variant="experience" onClick={()=>{goToExperience(exp._id)}} style={{
                                         backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7)), url(${exp.images[0]})`
                                     }}>
                                         <Container><h3>{exp.title}</h3></Container>

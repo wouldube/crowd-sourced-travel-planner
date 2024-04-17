@@ -5,7 +5,7 @@ import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
     Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-function Favorites() {
+function Favorites({ setExpId }) {
 
     const [favId, setFavId] = useState([]);
     const [favorites, setFavorite] = useState([]);
@@ -52,6 +52,11 @@ function Favorites() {
             .catch(error => console.error('Error fetching data:', error));
     }
 
+    const goToExperience = (expId) => {
+        setExpId(expId)
+        navigate(`/experience`)
+    }
+        
     useEffect(() => {
         loadFavorites();
     }, []);
@@ -65,9 +70,7 @@ function Favorites() {
                         <>
                             {(fav) && (
                                 <Grid item key={index} xs={3}>
-
-                                {/* // <Card key={fav._id} onClick={() => { goToExperience(fav._id) }}> */}
-                                        <Card>
+                                        <Card onClick={() => { goToExperience(fav._id) }}>
                                             <Grid container spacing={3}>
                                                 <Grid item xs={12}>
                                                     <strong>{fav.title}</strong>

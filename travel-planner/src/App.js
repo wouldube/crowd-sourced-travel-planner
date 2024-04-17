@@ -45,10 +45,10 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="UserExperiences" element={<UserExperiences setExperienceToUpdate={setExperienceToUpdate} />} />
               <Route path="update-exp" element={<UpdateExperience experienceToUpdate={experienceToUpdate} />} />
-              <Route path="favorites" element={<Favorites favoriteToUpdate={favoriteToUpdate} setUserFavorites={setUserFavorites} />} />
+              <Route path="favorites" element={<Favorites favoriteToUpdate={favoriteToUpdate} setUserFavorites={setUserFavorites} setExpId={setExpId} />} />
               <Route path="reviews" element={<Reviews />} />
               <Route path="trips" element={<Trips setTripObject={setTripObject} />} />
-              <Route path="trips/trip" element={<Trip tripObject={tripObject} />} />
+              <Route path="trips/trip" element={<Trip tripObject={tripObject} setExpId={setExpId} />} />
               <Route path="trips/create-trip" element={<CreateTrip initialExp={initialExp} />} />
               <Route path="trips/trip/update-trip" element={<UpdateTrip tripObject={tripObject} />} />
               <Route path="search" element={<Search setExpId={setExpId} />} />
