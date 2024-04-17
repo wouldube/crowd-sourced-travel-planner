@@ -119,14 +119,14 @@ const UpdateTrip = ({ tripObject }) => {
                                             <Card variant="experience" style={{
                                                 // backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7)), url(${exp.images[0]})`
                                             }}>
-                                                <CardContent style={{ height: "150vh", transform: "scale(0.9)" }}>
-                                                    <h2 style={{ display: "block", width: "100%", height: "100px" }}>{exp.title}</h2>
+                                                <CardContent>
+                                                    <p>{exp.title}</p>
                                                     <Tooltip title="Remove from Trip" followCursor>
                                                         <Button onClick={() => {
                                                             setExperiences(experiences.filter(experience => experience !== exp))
                                                             setFavoriteExperiences([...favoriteExperiences, exp])
                                                         }}>
-                                                            Remove
+                                                            -
                                                         </Button>
                                                     </Tooltip>
                                                 </CardContent>
@@ -141,20 +141,22 @@ const UpdateTrip = ({ tripObject }) => {
                                 <Grid container spacing={3}>
                                     {favoriteExperiences.map((exp, index) => (
                                         <Grid item key={index} xs={4}>
-                                            <Card variant="experience" style={{
-                                                // backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7)), url(${exp.images[0]})`
-                                            }}>
-                                                <CardContent style={{ height: "150vh", transform: "scale(0.9)" }}>
-                                                    <h2 style={{ display: "block", width: "100%", height: "100px" }}>{exp.title}</h2>
-                                                    <Tooltip title="Add to Trip" followCursor>
-                                                        <Button onClick={() => {
-                                                            setExperiences([...experiences, exp]);
-                                                            setFavoriteExperiences(favoriteExperiences.filter(experience => experience !== exp))
-                                                        }}>
-                                                            Add
-                                                        </Button>
-                                                    </Tooltip>
-                                                </CardContent>
+                                            <Card variant="experience">
+                                                <Grid container>
+                                                    <Grid item xs={12}>
+                                                        <p>{exp.title}</p>
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <Tooltip title="Add to Trip" followCursor>
+                                                            <Button onClick={() => {
+                                                                setExperiences([...experiences, exp]);
+                                                                setFavoriteExperiences(favoriteExperiences.filter(experience => experience !== exp))
+                                                            }}>
+                                                                <AddIcon />
+                                                            </Button>
+                                                        </Tooltip>
+                                                    </Grid>
+                                                </Grid>
                                             </Card>
                                         </Grid>
                                     ))}
