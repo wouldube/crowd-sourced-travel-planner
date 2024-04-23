@@ -62,8 +62,8 @@ const deleteExperience = async(id) => {
 }
 
 // Search
-const searchExperiences = async (textQuery, longitude, latitude, maxDistance, rating, sortField, sortOrder) => {
-    console.log(rating);
+const searchExperiences = async (textQuery, longitude, latitude, rating, sortField, sortOrder) => {
+
     let searchCriteria = {
         $or: [
             { title: { $regex: textQuery, $options: 'i' } },
@@ -76,7 +76,7 @@ const searchExperiences = async (textQuery, longitude, latitude, maxDistance, ra
         searchCriteria['location'] = {
             $near: {
                 $geometry: { type: "Point", coordinates: [longitude, latitude] },
-                $maxDistance: maxDistance
+                $maxDistance: 20000
             }
         };
     }
@@ -94,6 +94,17 @@ const searchExperiences = async (textQuery, longitude, latitude, maxDistance, ra
         sort[sortField] = sortOrder === 'asc'? 1:-1
     }
     return await Experience.find(searchCriteria).collation({locale:'en'}).sort(sort);
+
+    // if (longitude && latitude) {
+    //     db.places.find({
+    //         location: {
+    //             $near: {
+    //                 $geometry: { type: "Point", coordinates: [longitude, latitude] },
+    //                 $maxDistance: 7000
+    //             }
+    //         }
+    //     })
+    // }
 };
 
 
