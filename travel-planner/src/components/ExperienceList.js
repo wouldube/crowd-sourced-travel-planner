@@ -94,9 +94,7 @@ const ExperienceList = ({ setExpId }) => {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <strong>Posted By </strong><br />
-                                    <>
-                                        {usernames[index]}
-                                    </>
+                                    <>{usernames[index]}</>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Rating
