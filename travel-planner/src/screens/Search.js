@@ -8,6 +8,7 @@ import SearchIcon from '@mui/icons-material/Search'
 
 const Search = ({ setExpId }) => {
     const [query, setQuery] = useState('');
+    const [location, setLocation] = useState('');
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -17,12 +18,20 @@ const Search = ({ setExpId }) => {
 
     const navigate = useNavigate()
 
-    const handleSearch = (event) => {
+    const handleSearch = async (event) => {
         event.preventDefault();
         setIsLoading(true);
         setError(null);
 
-        fetch(`http://localhost:5000/search?query=${encodeURIComponent(query)}&rating=${minRating}&sort=${sortOrder}`)
+        let coordinates = "";
+
+        if (location != "") {
+            const content = await fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(location)}&format=json&apiKey=abce6a14428f49d49ef299b1016bf4b2`)
+            const data = await content.json()
+            coordinates = [data.results[0].lon, data.results[0].lat]
+        }
+
+        fetch(`http://localhost:5000/search?query=${encodeURIComponent(query)}&coordinates=${coordinates}&rating=${minRating}&sort=${sortOrder}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -69,6 +78,12 @@ const Search = ({ setExpId }) => {
                                     value={query}
                                     onChange={(e) => setQuery(e.target.value)}
                                     placeholder="Enter search keywords"
+                                />
+                                <TextField
+                                    type="text"
+                                    value={location}
+                                    onChange={(e) => setLocation(e.target.value)}
+                                    placeholder="Enter location"
                                 />
                             </Grid>
                             <Grid item xs={12}>

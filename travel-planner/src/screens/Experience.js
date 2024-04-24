@@ -52,8 +52,8 @@ const Experience = (props) => {
             setShowEdit(true);
         }
 
-        let coord1 = data.location.coordinates[0]
-        let coord2 = data.location.coordinates[1]
+        let coord1 = data.location.coordinates[1]
+        let coord2 = data.location.coordinates[0]
 
         let url = `https://api.geoapify.com/v1/geocode/reverse?lat=${coord1}&lon=${coord2}&type=amenity&lang=en&limit=1&format=json&apiKey=abce6a14428f49d49ef299b1016bf4b2`
         
