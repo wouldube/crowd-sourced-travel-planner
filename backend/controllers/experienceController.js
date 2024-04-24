@@ -7,7 +7,6 @@ const { createReview } = require('./reviewController');
 
 // Retrieve all experiences
 const getAllExperiences = async () => {
-    console.log("Fetching all experiences");
     const experiences = await Experience.find();
     return experiences;
 }

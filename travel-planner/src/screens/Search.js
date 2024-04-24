@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
-    FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
-    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider, 
-    Slider, Typography, InputLabel } from '@mui/material';
+    FormControl, FormGroup, FormLabel, TextField, Select, MenuItem, Button, 
+    ButtonGroup, Tooltip, Rating, Divider, Slider, Typography, InputLabel } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search'
 
 const Search = ({ setExpId }) => {
@@ -15,10 +14,31 @@ const Search = ({ setExpId }) => {
     // Filter & Sort
     const [minRating, setMinRating] = useState(0);
     const [sortOrder, setSortOrder] = useState('');
+    // Display username
+    const [usernames, setUsernames] = useState([]);
 
     const navigate = useNavigate()
 
-    const handleSearch = async (event) => {
+    // Username display functions
+    const getUsername = async (owner) => {
+        try {
+            const response = await fetch(`http://localhost:5000/user-info/${owner}`)
+            const userInfo = await response.json();
+            return userInfo.username
+        } catch (error) { console.error('Error fetching username:', error) }
+    }
+
+    let usernamesArr = [];
+    const fillNameArr = async (data) => {
+        try {
+            for(let i = 0; i < data.length; i++) {
+                usernamesArr.push(await getUsername(data[i].owner))
+            }
+            setUsernames(usernamesArr)
+        } catch (error) { console.error('Error fetching username:', error) }
+    }
+
+    const handleSearch = (event) => {
         event.preventDefault();
         setIsLoading(true);
         setError(null);
@@ -26,8 +46,8 @@ const Search = ({ setExpId }) => {
         let coordinates = "";
 
         if (location != "") {
-            const content = await fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(location)}&format=json&apiKey=abce6a14428f49d49ef299b1016bf4b2`)
-            const data = await content.json()
+            const content = fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(location)}&format=json&apiKey=abce6a14428f49d49ef299b1016bf4b2`)
+            const data = content.json()
             coordinates = [data.results[0].lon, data.results[0].lat]
         }
 
@@ -40,6 +60,7 @@ const Search = ({ setExpId }) => {
             })
             .then((data) => {
                 setResults(data);
+                fillNameArr(data);
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
@@ -58,10 +79,8 @@ const Search = ({ setExpId }) => {
         setSortOrder(event.target.value);
     };
 
-
     const goToExperience = (expId) => {
         setExpId(expId)
-        console.log(expId)
         navigate(`/experience`)
     }
 
@@ -146,6 +165,8 @@ const Search = ({ setExpId }) => {
                             <Grid item key={index} xs={4}>
                                 <Card key={result._id} onClick={() => { goToExperience(result._id) }}>
                                     <h3>{result.title}</h3>
+                                    <img src={result.images} style={{ borderRadius: "50px", maxWidth: "100%" }}/>
+                                    <p><strong>Posted By </strong> <>{usernames[index]}</></p>
                                     <Rating id="rating" value={result.averageRating || 0} precision={0.1}
                                         readOnly />
                                     <p>{result.description}</p>

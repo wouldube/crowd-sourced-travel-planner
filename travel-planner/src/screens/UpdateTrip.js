@@ -171,8 +171,3 @@ const UpdateTrip = ({ tripObject }) => {
 }
 
 export default UpdateTrip;
-
-
-
-
-

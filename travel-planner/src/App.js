@@ -29,6 +29,7 @@ function App() {
   const [experienceToUpdate, setExperienceToUpdate] = useState([])
   const [favoriteToUpdate, setUserFavorites] = useState([])
   const [tripObject, setTripObject] = useState()
+  const [usernames, setUsernames] = useState();
 
   return (
     <main>
@@ -43,7 +44,7 @@ function App() {
               <Route path="account" element={<Account />} />
               <Route path="register" element={<Register />} />
               <Route path="login" element={<Login />} />
-              <Route path="UserExperiences" element={<UserExperiences setExperienceToUpdate={setExperienceToUpdate} />} />
+              <Route path="UserExperiences" element={<UserExperiences setExpId={setExpId} setExperienceToUpdate={setExperienceToUpdate} setUsernames={setUsernames} />} />
               <Route path="update-exp" element={<UpdateExperience experienceToUpdate={experienceToUpdate} />} />
               <Route path="favorites" element={<Favorites favoriteToUpdate={favoriteToUpdate} setUserFavorites={setUserFavorites} setExpId={setExpId} />} />
               <Route path="reviews" element={<Reviews />} />
@@ -51,7 +52,7 @@ function App() {
               <Route path="trips/trip" element={<Trip tripObject={tripObject} setExpId={setExpId} />} />
               <Route path="trips/create-trip" element={<CreateTrip initialExp={initialExp} />} />
               <Route path="trips/trip/update-trip" element={<UpdateTrip tripObject={tripObject} />} />
-              <Route path="search" element={<Search setExpId={setExpId} />} />
+              <Route path="search" element={<Search setExpId={setExpId} setUsernames={setUsernames} />} />
               <Route path="experience" element={<Experience expId={expId} setExperienceToUpdate={setExperienceToUpdate} setInitialExp={setInitialExp} />} />
             </Routes>
           </Container>
