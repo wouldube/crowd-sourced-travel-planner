@@ -7,7 +7,6 @@ const { createReview } = require('./reviewController');
 
 // Retrieve all experiences
 const getAllExperiences = async () => {
-    console.log("Fetching all experiences");
     const experiences = await Experience.find();
     return experiences;
 }
@@ -63,7 +62,7 @@ const deleteExperience = async(id) => {
 
 // Search
 const searchExperiences = async (textQuery, longitude, latitude, maxDistance, rating, sortField, sortOrder) => {
-    console.log(rating);
+    //console.log(rating);
     let searchCriteria = {
         $or: [
             { title: { $regex: textQuery, $options: 'i' } },

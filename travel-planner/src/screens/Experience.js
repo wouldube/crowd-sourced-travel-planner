@@ -88,13 +88,10 @@ const Experience = (props) => {
     // favorite an experience
     const favoriteExp = async () => {
         if (id) {
-            console.log('fav')
-            console.log(id)
+
             const data = await fetch(`http://localhost:5000/user-info/${id}`)
             const user = await data.json()
             const favList = user.favorites
-
-            console.log(favList)
 
             if (favList.indexOf(experience._id) < 0) {
                 favList.push(experience._id)
@@ -106,8 +103,6 @@ const Experience = (props) => {
                         "Content-Type": "application/json",
                     },
                 });
-
-                console.log(updateUser)
 
                 favoriteButton()
             }
