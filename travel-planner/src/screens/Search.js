@@ -38,7 +38,7 @@ const Search = ({ setExpId }) => {
         } catch (error) { console.error('Error fetching username:', error) }
     }
 
-    const handleSearch = (event) => {
+    const handleSearch = async (event) => {
         event.preventDefault();
         setIsLoading(true);
         setError(null);
@@ -46,8 +46,8 @@ const Search = ({ setExpId }) => {
         let coordinates = "";
 
         if (location != "") {
-            const content = fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(location)}&format=json&apiKey=abce6a14428f49d49ef299b1016bf4b2`)
-            const data = content.json()
+            const content = await fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(location)}&format=json&apiKey=abce6a14428f49d49ef299b1016bf4b2`)
+            const data = await content.json()
             coordinates = [data.results[0].lon, data.results[0].lat]
         }
 
