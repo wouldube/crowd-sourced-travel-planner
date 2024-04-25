@@ -50,12 +50,18 @@ const Search = ({ setExpId }) => {
 
         let coordinates = "";
 
-        if (location != "") {
+        if (location) {
             const content = await fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(location)}&format=json&apiKey=abce6a14428f49d49ef299b1016bf4b2`)
-            const data = await content.json()
-            coordinates = [data.results[0].lon, data.results[0].lat]
+            const data = await content.json();
+            if (data.results && data.results.length > 0) {
+                coordinates = [data.results[0].lon, data.results[0].lat];
+            } else {
+                setError("No location found. Please enter a more specific location.");
+                setIsLoading(false);
+                return;
+            }
         }
-
+    
         fetch(`http://localhost:5000/search?query=${encodeURIComponent(query)}&coordinates=${coordinates}&rating=${minRating}&sort=${sortOrder}`)
             .then((response) => {
                 if (!response.ok) {
@@ -88,6 +94,11 @@ const Search = ({ setExpId }) => {
         setExpId(expId)
         navigate(`/experience`)
     }
+
+    // Summary of results
+    const searchSummary = location || query || minRating > 0
+    ? `Searching for: "${query}", at location "${location}", minimum rating: ${minRating}`
+    : '';
 
     return (
         <Container style={{display: "flex", alignItems: "center", flexDirection:"column"}}>
@@ -163,6 +174,11 @@ const Search = ({ setExpId }) => {
                     </FormControl>
                 </form>
             </Paper>
+            {searchSummary && (
+                <Typography style={{ marginTop: 20 }}>
+                    {searchSummary}
+                </Typography>
+            )}
             {displayMode === 'list' ? (
                 <Paper style={{ width: "100%" }}>
                 {error && <p className="error">{error}</p>}
