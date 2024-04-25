@@ -18,6 +18,8 @@ const Search = ({ setExpId }) => {
     const [sortOrder, setSortOrder] = useState('');
     // Map
     const [displayMode, setDisplayMode] = useState('list');
+    const [lastSearch, setLastSearch] = useState({ query: '', location: '', minRating: 0, resultsCount: 0 });
+
 
     // Display username
     const [usernames, setUsernames] = useState([]);
@@ -51,7 +53,7 @@ const Search = ({ setExpId }) => {
         let coordinates = "";
 
         if (location) {
-            const content = await fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(location)}&format=json&apiKey=abce6a14428f49d49ef299b1016bf4b2`)
+            const content = await fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(location)}&format=json&apiKey=abce6a14428f49d49ef299b1016bf4b2`);
             const data = await content.json();
             if (data.results && data.results.length > 0) {
                 coordinates = [data.results[0].lon, data.results[0].lat];
@@ -71,6 +73,12 @@ const Search = ({ setExpId }) => {
             })
             .then((data) => {
                 setResults(data);
+                setLastSearch({
+                    query: query,
+                    location: location,
+                    minRating: minRating,
+                    resultsCount: data.length
+                });
                 fillNameArr(data);
             })
             .catch((error) => {
@@ -96,9 +104,9 @@ const Search = ({ setExpId }) => {
     }
 
     // Summary of results
-    const searchSummary = location || query || minRating > 0
-    ? `Searching for: "${query}", at location "${location}", minimum rating: ${minRating}`
-    : '';
+    const searchSummary = lastSearch.query || lastSearch.location || lastSearch.minRating > 0
+        ? `Searching for: "${lastSearch.query}", at location "${lastSearch.location}", minimum rating: ${lastSearch.minRating}, found entries: ${lastSearch.resultsCount}`
+        : '';
 
     return (
         <Container style={{display: "flex", alignItems: "center", flexDirection:"column"}}>
@@ -179,38 +187,46 @@ const Search = ({ setExpId }) => {
                     {searchSummary}
                 </Typography>
             )}
-            {displayMode === 'list' ? (
-                <Paper style={{ width: "100%" }}>
-                {error && <p className="error">{error}</p>}
-                <Grid container justifyContent="center" spacing={3}>
-                    {isLoading ? (
-                        <p>Loading...</p>
-                    ) : (results.length > 0 ? (
-                        results.map((result, index) => (
+            {displayMode === 'list' && (
+            <Paper style={{ width: "100%" }}>
+                {isLoading ? (
+                    <Typography>Loading...</Typography>
+                ) : results.length > 0 ? (
+                    <Grid container spacing={3}>
+                        {results.map((result, index) => (
                             <Grid item key={result._id} xs={12} sm={6} md={4}>
-                                <Card onClick={() => goToExperience(result._id)} style={{ cursor: 'pointer' }}>
-                                    <h3>{result.title}</h3>
-                                    <img src={result.images} style={{ borderRadius: "50px", maxWidth: "100%" }}/>
-                                    <p><strong>Posted By </strong> <>{usernames[index]}</></p>
-                                    <Rating id="rating" value={result.averageRating || 0} precision={0.1}
-                                        readOnly />
-                                    <p>{result.description}</p>
+                                <Card >
+                                    <CardMedia
+                                        component="img"
+                                        height="160"
+                                        image={result.images[0]}
+                                        alt={result.title}
+                                        onClick={() => goToExperience(result._id)} style={{ cursor: 'pointer' }}
+                                    />
+                                    <CardContent>
+                                        <h3>{result.title}</h3>
+                                        <p><strong>Posted By </strong> <>{usernames[index]}</></p>
+                                        <Rating id="rating" value={result.averageRating || 0} precision={0.1}
+                                            readOnly 
+                                            />
+                                        <p>{result.description}</p>
+                                    </CardContent>
                                 </Card>
-                                <br />
                             </Grid>
-                        ))
-                    ) : (
-                        <Typography >No results found. Try adjusting your search criteria.</Typography>
-                    )
-                    )}
-                </Grid>
+                        ))}
+                    </Grid>
+                ) : (
+                    <Typography>No results found. Try adjusting your search criteria.</Typography>
+                )}
+                {error && <Typography color="error">{error}</Typography>}
             </Paper>
+        )}
 
-            ) : (
-                <div style={{ height: '500px', width: '100%' }}>
-                    <SearchMap experiences={results} setExpId={setExpId} />
-                </div>
-            )}
+        {displayMode === 'map' && (
+            <div style={{ height: '500px', width: '100%' }}>
+                <SearchMap experiences={results} setExpId={setExpId} />
+            </div>
+        )}
         </Container>
     )
 }
