@@ -105,8 +105,8 @@ const Search = ({ setExpId }) => {
             <Paper style={{ width: "100%" }}>
                 <h2>Search Experiences</h2>
                 <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                    <Button onClick={() => setDisplayMode('list')}>List View</Button>
-                    <Button onClick={() => setDisplayMode('map')}>Map View</Button>
+                    <Button style={{width: "250px", height: "50px"}} onClick={() => setDisplayMode('list')}>List View</Button>
+                    <Button style={{width: "250px", height: "50px"}} onClick={() => setDisplayMode('map')}>Map View</Button>
                 </ButtonGroup>
                 <form onSubmit={handleSearch}>
                     <FormControl>
