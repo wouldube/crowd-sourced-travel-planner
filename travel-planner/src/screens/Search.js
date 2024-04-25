@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
     FormControl, FormGroup, FormLabel, TextField, Select, MenuItem, Button, 
     ButtonGroup, Tooltip, Rating, Divider, Slider, Typography, InputLabel } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search'
+import SearchIcon from '@mui/icons-material/Search';
+import SearchMap from '../components/SearchMap';
+
 
 const Search = ({ setExpId }) => {
     const [query, setQuery] = useState('');
@@ -14,6 +16,9 @@ const Search = ({ setExpId }) => {
     // Filter & Sort
     const [minRating, setMinRating] = useState(0);
     const [sortOrder, setSortOrder] = useState('');
+    // Map
+    const [displayMode, setDisplayMode] = useState('list');
+
     // Display username
     const [usernames, setUsernames] = useState([]);
 
@@ -88,6 +93,10 @@ const Search = ({ setExpId }) => {
         <Container style={{display: "flex", alignItems: "center", flexDirection:"column"}}>
             <Paper style={{ width: "100%" }}>
                 <h2>Search Experiences</h2>
+                <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                    <Button onClick={() => setDisplayMode('list')}>List View</Button>
+                    <Button onClick={() => setDisplayMode('map')}>Map View</Button>
+                </ButtonGroup>
                 <form onSubmit={handleSearch}>
                     <FormControl>
                         <Grid container>
@@ -153,17 +162,17 @@ const Search = ({ setExpId }) => {
                         </Grid>
                     </FormControl>
                 </form>
-
             </Paper>
-            <Paper style={{ width: "100%" }}>
+            {displayMode === 'list' ? (
+                <Paper style={{ width: "100%" }}>
                 {error && <p className="error">{error}</p>}
                 <Grid container justifyContent="center" spacing={3}>
                     {isLoading ? (
                         <p>Loading...</p>
                     ) : (results.length > 0 ? (
                         results.map((result, index) => (
-                            <Grid item key={index} xs={4}>
-                                <Card key={result._id} onClick={() => { goToExperience(result._id) }}>
+                            <Grid item key={result._id} xs={12} sm={6} md={4}>
+                                <Card onClick={() => goToExperience(result._id)} style={{ cursor: 'pointer' }}>
                                     <h3>{result.title}</h3>
                                     <img src={result.images} style={{ borderRadius: "50px", maxWidth: "100%" }}/>
                                     <p><strong>Posted By </strong> <>{usernames[index]}</></p>
@@ -175,13 +184,17 @@ const Search = ({ setExpId }) => {
                             </Grid>
                         ))
                     ) : (
-                        <Grid itemxs={12}>
-                            <p>No results found</p>
-                        </Grid>
+                        <Typography >No results found. Try adjusting your search criteria.</Typography>
                     )
                     )}
                 </Grid>
             </Paper>
+
+            ) : (
+                <div style={{ height: '500px', width: '100%' }}>
+                    <SearchMap experiences={results} setExpId={setExpId} />
+                </div>
+            )}
         </Container>
     )
 }
