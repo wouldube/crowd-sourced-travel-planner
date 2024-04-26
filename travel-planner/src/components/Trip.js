@@ -56,7 +56,7 @@ const Trip = ({ tripObject, setExpId }) => {
                         <>
                             {(exp) && (
                                 <Grid item key={index} xs={4}>
-                                    <Card variant="experience" style={{
+                                    <Card variant="experience" onClick={() => { goToExperience(exp._id) }} style={{
                                         backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7)), url(${exp.images[0]})`}}>
                                         <CardContent style={{ height: "150vh", transform: "scale(0.9)" }}>
                                             <h3 style={{ display:"block", width:"100%", height:"100px" }}>{exp.title}</h3>
