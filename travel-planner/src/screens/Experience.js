@@ -52,8 +52,8 @@ const Experience = (props) => {
             setShowEdit(true);
         }
 
-        let coord1 = data.location.coordinates[0]
-        let coord2 = data.location.coordinates[1]
+        let coord1 = data.location.coordinates[1]
+        let coord2 = data.location.coordinates[0]
 
         let url = `https://api.geoapify.com/v1/geocode/reverse?lat=${coord1}&lon=${coord2}&type=amenity&lang=en&limit=1&format=json&apiKey=abce6a14428f49d49ef299b1016bf4b2`
         
@@ -88,13 +88,10 @@ const Experience = (props) => {
     // favorite an experience
     const favoriteExp = async () => {
         if (id) {
-            console.log('fav')
-            console.log(id)
+
             const data = await fetch(`http://localhost:5000/user-info/${id}`)
             const user = await data.json()
             const favList = user.favorites
-
-            console.log(favList)
 
             if (favList.indexOf(experience._id) < 0) {
                 favList.push(experience._id)
@@ -106,8 +103,6 @@ const Experience = (props) => {
                         "Content-Type": "application/json",
                     },
                 });
-
-                console.log(updateUser)
 
                 favoriteButton()
             }

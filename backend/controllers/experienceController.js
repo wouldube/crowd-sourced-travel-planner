@@ -7,7 +7,6 @@ const { createReview } = require('./reviewController');
 
 // Retrieve all experiences
 const getAllExperiences = async () => {
-    console.log("Fetching all experiences");
     const experiences = await Experience.find();
     return experiences;
 }
@@ -62,7 +61,8 @@ const deleteExperience = async(id) => {
 }
 
 // Search
-const searchExperiences = async (textQuery, longitude, latitude, maxDistance) => {
+const searchExperiences = async (textQuery, longitude, latitude, rating, sortField, sortOrder) => {
+
     let searchCriteria = {
         $or: [
             { title: { $regex: textQuery, $options: 'i' } },
@@ -75,12 +75,35 @@ const searchExperiences = async (textQuery, longitude, latitude, maxDistance) =>
         searchCriteria['location'] = {
             $near: {
                 $geometry: { type: "Point", coordinates: [longitude, latitude] },
-                $maxDistance: maxDistance
+                $maxDistance: 20000
             }
         };
     }
 
-    return await Experience.find(searchCriteria);
+    if (rating >= 0) {
+        searchCriteria['averageRating'] = {
+            $gte: rating
+        }
+    }
+    let sort = {
+        title: 1
+    }
+    if (sortField && sortOrder) {
+        sort = {};
+        sort[sortField] = sortOrder === 'asc'? 1:-1
+    }
+    return await Experience.find(searchCriteria).collation({locale:'en'}).sort(sort);
+
+    // if (longitude && latitude) {
+    //     db.places.find({
+    //         location: {
+    //             $near: {
+    //                 $geometry: { type: "Point", coordinates: [longitude, latitude] },
+    //                 $maxDistance: 7000
+    //             }
+    //         }
+    //     })
+    // }
 };
 
 

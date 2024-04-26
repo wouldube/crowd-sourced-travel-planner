@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
-    FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
-    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
+import { Container, Paper, Grid, Box, Card, Button, Tooltip, Rating } from '@mui/material';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import ReviewModal from './ReviewModal.js';
 
@@ -12,21 +10,38 @@ const ExperienceList = ({ setExpId }) => {
     const [visibleReviewModal, setVisibleReviewModal] = useState(false);
     const [reviewExpId, setReviewExpId] = useState();
     const [modalStyle, setModalStyle] = useState({});
-
-
+    const [usernames, setUsernames] = useState([]);
 
     const navigate = useNavigate()
 
+    let usernamesArr = []
+    const getExperiences = async () => {
+        try {
+          const data = await fetch("http://localhost:5000/experiences")
+          let experiences = await data.json()
+          experiences = experiences.slice(-8)
+          for(let i = 0; i < 8; i++) {
+            usernamesArr.push(await getUsername(experiences[i].owner))
+          }
+          setUsernames(usernamesArr)
+          setAllExperiences(experiences)
+        } catch (error) { console.error('Error fetching data:', error) }
+    }
+
     useEffect(() => {
-        fetch("http://localhost:5000/experiences")
-            .then(response => response.json())
-            .then(experiences => setAllExperiences(experiences))
-            .catch(error => console.error('Error fetching data:', error));
+        getExperiences();
     }, [])
+
+    const getUsername = async (owner) => {
+        try {
+            const response = await fetch(`http://localhost:5000/user-info/${owner}`)
+            const userInfo = await response.json();
+            return userInfo.username
+        } catch (error) { console.error('Error fetching username:', error) }
+    }
 
     const goToExperience = (expId) => {
         setExpId(expId)
-        //console.log(expId)
         navigate(`/experience`)
     }
 
@@ -34,7 +49,6 @@ const ExperienceList = ({ setExpId }) => {
     const handleReviewModal = (event, expId) => {
         event.stopPropagation();
         const { clientY } = event;
-
         const modalY = clientY - 150;
 
         // Set the modal style
@@ -58,7 +72,6 @@ const ExperienceList = ({ setExpId }) => {
         <Container>
             <strong>More Experiences to Explore...</strong>
             {!!visibleReviewModal &&
-            
                     <ReviewModal
                         expId={reviewExpId}
                         onClose={handleCloseReviewModal}
@@ -79,10 +92,10 @@ const ExperienceList = ({ setExpId }) => {
                                     <strong>Location</strong><br />
                                     {allexp.location.coordinates[0]}, {allexp.location.coordinates[1]}
                                 </Grid>
-                                {/* <Grid item xs={12}>
-                                    <strong>Posted By</strong><br />
-                                    {allexp.owner}
-                                </Grid> */}
+                                <Grid item xs={12}>
+                                    <strong>Posted By </strong><br />
+                                    <>{usernames[index]}</>
+                                </Grid>
                                 <Grid item xs={12}>
                                     <Rating
                                         value={allexp.averageRating}
