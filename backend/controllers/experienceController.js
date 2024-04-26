@@ -93,17 +93,7 @@ const searchExperiences = async (textQuery, longitude, latitude, rating, sortFie
         sort[sortField] = sortOrder === 'asc'? 1:-1
     }
     return await Experience.find(searchCriteria).collation({locale:'en'}).sort(sort);
-
-    // if (longitude && latitude) {
-    //     db.places.find({
-    //         location: {
-    //             $near: {
-    //                 $geometry: { type: "Point", coordinates: [longitude, latitude] },
-    //                 $maxDistance: 7000
-    //             }
-    //         }
-    //     })
-    // }
+    
 };
 
 

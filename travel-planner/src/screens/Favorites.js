@@ -79,7 +79,7 @@ function Favorites({ setExpId }) {
                                                     <img src={fav.images} style={{ borderRadius: "50px", maxWidth: "100%" }} />
                                                 </Grid>
                                                 <Grid item xs={12}>
-                                                    <strong>Location: </strong> {fav.location.coordinates[0]}, {fav.location.coordinates[1]}
+                                                    <strong>Location: </strong> {fav.location.coordinates[1]}, {fav.location.coordinates[0]}
                                                 </Grid>
                                                 <Grid item xs={12}>
                                                     <strong>Posted By: </strong>{fav.owner}
