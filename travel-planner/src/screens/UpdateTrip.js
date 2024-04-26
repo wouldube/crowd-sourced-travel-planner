@@ -140,25 +140,29 @@ const UpdateTrip = ({ tripObject }) => {
                                     experiences to the trip!</h3>
                                 <Grid container spacing={3}>
                                     {favoriteExperiences.map((exp, index) => (
-                                        <Grid item key={index} xs={4}>
-                                            <Card variant="experience">
-                                                <Grid container>
-                                                    <Grid item xs={12}>
-                                                        <p>{exp.title}</p>
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <Tooltip title="Add to Trip" followCursor>
-                                                            <Button onClick={() => {
-                                                                setExperiences([...experiences, exp]);
-                                                                setFavoriteExperiences(favoriteExperiences.filter(experience => experience !== exp))
-                                                            }}>
-                                                                <AddIcon />
-                                                            </Button>
-                                                        </Tooltip>
-                                                    </Grid>
+                                        <>
+                                            {(exp) && (
+                                                <Grid item key={index} xs={4}>
+                                                    <Card variant="experience">
+                                                        <Grid container>
+                                                            <Grid item xs={12}>
+                                                                <p>{exp.title}</p>
+                                                            </Grid>
+                                                            <Grid item xs={12}>
+                                                                <Tooltip title="Add to Trip" followCursor>
+                                                                    <Button onClick={() => {
+                                                                        setExperiences([...experiences, exp]);
+                                                                        setFavoriteExperiences(favoriteExperiences.filter(experience => experience !== exp))
+                                                                    }}>
+                                                                        <AddIcon />
+                                                                    </Button>
+                                                                </Tooltip>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Card>
                                                 </Grid>
-                                            </Card>
-                                        </Grid>
+                                            )}
+                                        </>
                                     ))}
                                 </Grid>
                             </Grid>

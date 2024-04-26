@@ -111,9 +111,8 @@ const CreateTrip = (initialExp) => {
                                     <Card variant="experience" style={{
                                         backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7)), url(${exp.images[0]})`
                                     }}>
-                                        <CardContent style={{ height: "150vh", transform: "scale(0.9)" }}>
-                                            {/* //<Container></Container> */}
-                                            <h2 style={{ display:"block", width:"100%", height:"100px" }}>{exp.title}</h2>
+                                        <CardContent>
+                                            <h2>{exp.title}</h2>
                                             <Tooltip title="Add to Trip" followCursor>
                                                 <Button>
                                                     <AddIcon onClick={() => { setExperiences([...experiences, exp]) }}/>

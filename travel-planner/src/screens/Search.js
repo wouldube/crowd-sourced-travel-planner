@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
     FormControl, FormGroup, FormLabel, TextField, Select, MenuItem, Button, 
     ButtonGroup, Tooltip, Rating, Divider, Slider, Typography, InputLabel } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import Lottie from 'react-lottie'
+import searchIcon from "../UX/search-icon.json"
 import SearchMap from '../components/SearchMap';
-
 
 const Search = ({ setExpId }) => {
     const [query, setQuery] = useState('');
@@ -13,6 +13,7 @@ const Search = ({ setExpId }) => {
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [isHover, setIsHover] = useState(0);
     // Filter & Sort
     const [minRating, setMinRating] = useState(0);
     const [sortOrder, setSortOrder] = useState('');
@@ -109,7 +110,7 @@ const Search = ({ setExpId }) => {
         : '';
 
     return (
-        <Container style={{display: "flex", alignItems: "center", flexDirection:"column"}}>
+        <Container style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
             <Paper style={{ width: "100%" }}>
                 <h2>Search Experiences</h2>
                 <ButtonGroup variant="contained" aria-label="outlined primary button group">
@@ -134,8 +135,26 @@ const Search = ({ setExpId }) => {
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <Button type="submit" disabled={isLoading}>
-                                    {isLoading ? 'Searching...' : 'Search'}
+                                <Button type="submit" disabled={isLoading}
+                                    onMouseEnter={() => setIsHover(1)}
+                                    onMouseLeave={() => setIsHover(0)}>
+                                    {isLoading ?
+                                        'Searching...'
+                                        :
+                                        <> {
+                                            isHover ?
+                                                <Lottie options={{
+                                                    loop: true, autoplay: true,
+                                                    animationData: searchIcon
+                                                }}
+                                                    height={'90%'}
+                                                    width={'90%'}
+                                                />
+                                                :
+                                                "Search"
+                                        }
+                                        </>
+                                    }
                                 </Button>
                             </Grid>
                             <Grid item xs={12}>
