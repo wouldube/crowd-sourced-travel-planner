@@ -1,35 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Container,
-  Paper,
-  Grid,
-  Box,
-  Card,
-  CardHeader,
-  CardContent,
-  CardMedia,
-  FormControl,
-  FormGroup,
-  FormLabel,
-  TextField,
-  Select,
-  MenuItem,
-  Button,
-  ButtonGroup,
-  IconButton,
-  Tooltip,
-  Rating,
-  Divider,
-} from "@mui/material";
+import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+  FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
+  Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
 
-const firebase = require("firebase/app");
-const {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} = require("firebase/storage");
+const firebase = require("firebase/app")
+const { getStorage, ref, uploadBytesResumable, getDownloadURL } = require("firebase/storage");
 const { firebaseConfig } = require("../firebase/firebase-config");
 
 export const UpdateExperience = ({ experienceToUpdate }) => {
