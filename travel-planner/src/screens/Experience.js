@@ -280,7 +280,7 @@ const Experience = (props) => {
                             </Grid>
                             <Grid item xs={12}>
                                 <span><strong>Location</strong><br />
-                                    {experience.location.coordinates[0]}, {experience.location.coordinates[1]}<br/>
+                                    {experience.location.coordinates[1]}, {experience.location.coordinates[0]}<br/>
                                     <br/>{address}</span>
                             </Grid>
                             <Grid item xs={12}>

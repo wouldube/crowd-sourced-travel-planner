@@ -125,7 +125,7 @@ function UserExperiences(props) {
                                         <img src={exp.images} style={{ borderRadius: "50px", maxWidth: "100%" }} />
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <strong>Location: </strong>{exp.location.coordinates[0]}, {exp.location.coordinates[1]}
+                                        <strong>Location: </strong>{exp.location.coordinates[1]}, {exp.location.coordinates[0]}
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Rating id="rating" value={exp.averageRating || 0} precision={0.1}
