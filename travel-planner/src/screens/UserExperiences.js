@@ -16,6 +16,7 @@ function UserExperiences(props) {
 
     // const experienceId = props.expId
     const setExperienceToUpdate = props.setExperienceToUpdate
+    const setExpId = props.setExpId
 
     const navigate = useNavigate();
 
@@ -100,6 +101,11 @@ function UserExperiences(props) {
             .catch(error => console.error('Error fetching data:', error));
     }
 
+    const goToExperience = (expId) => {
+        setExpId(expId)
+        navigate(`/experience`)
+    }
+
     useEffect(() => {
         loadExperience();
     }, []);
@@ -121,7 +127,7 @@ function UserExperiences(props) {
                                     <Grid item xs={16}>
                                         <strong>{exp.title}</strong>
                                     </Grid>
-                                    <Grid item xs={12}>
+                                    <Grid item xs={12} onClick={() => goToExperience(exp._id)} style={{ cursor: 'pointer' }}>
                                         <img src={exp.images} style={{ borderRadius: "50px", maxWidth: "100%" }} />
                                     </Grid>
                                     <Grid item xs={12}>
