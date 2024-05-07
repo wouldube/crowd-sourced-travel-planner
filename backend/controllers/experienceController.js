@@ -1,4 +1,4 @@
-const { Experience, User } = require('../models/schema');
+const { Experience, Review, User, Trip } = require('../models/schema');
 const { createReview } = require('./reviewController');
 
 // experience CRUD functions
@@ -52,13 +52,26 @@ const updateExperience = async(filter, update) => {
 
 //Delete
 const deleteExperience = async(id) => {
+    // Step 1: Delete all reviews associated with the experience
+    const deleteReviews = await Review.deleteMany({ experience: id });
 
-    // returns 0 if delete fails, 1 if delete succeeds
-    
-    const result = await Experience.deleteOne({"_id": id});
+    // Step 2: Remove experience from users' experiences list
+    await User.updateMany(
+        { experiences: id },
+        { $pull: { experiences: id } }
+    );
+
+    // Step 3: Remove experience from trips
+    await Trip.updateMany(
+        { experiences: id },
+        { $pull: { experiences: id } }
+    );
+
+    // Step 4: Finally delete the experience
+    const result = await Experience.deleteOne({ _id: id });
     return result.deletedCount;
-
 }
+
 
 // Search
 const searchExperiences = async (textQuery, longitude, latitude, rating, sortField, sortOrder) => {

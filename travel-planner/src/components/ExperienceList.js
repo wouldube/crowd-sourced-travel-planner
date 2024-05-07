@@ -9,6 +9,7 @@ const ExperienceList = ({ setExpId }) => {
 
     const [visibleReviewModal, setVisibleReviewModal] = useState(false);
     const [reviewExpId, setReviewExpId] = useState();
+    const [reviewExpTitle, setReviewExpTitle] = useState('');
     const [modalStyle, setModalStyle] = useState({});
     const [usernames, setUsernames] = useState([]);
 
@@ -17,14 +18,14 @@ const ExperienceList = ({ setExpId }) => {
     let usernamesArr = []
     const getExperiences = async () => {
         try {
-          const data = await fetch("http://localhost:5000/experiences")
-          let experiences = await data.json()
-          experiences = experiences.slice(-8)
-          for(let i = 0; i < 8; i++) {
-            usernamesArr.push(await getUsername(experiences[i].owner))
-          }
-          setUsernames(usernamesArr)
-          setAllExperiences(experiences)
+            const data = await fetch("http://localhost:5000/experiences")
+            let experiences = await data.json()
+            experiences = experiences.slice(-8)
+            const usernames = await Promise.all(
+            experiences.map(exp => getUsername(exp.owner))
+        );
+            setUsernames(usernames);
+            setAllExperiences(experiences);
         } catch (error) { console.error('Error fetching data:', error) }
     }
 
@@ -34,10 +35,13 @@ const ExperienceList = ({ setExpId }) => {
 
     const getUsername = async (owner) => {
         try {
-            const response = await fetch(`http://localhost:5000/user-info/${owner}`)
+            const response = await fetch(`http://localhost:5000/user-info/${owner}`);
             const userInfo = await response.json();
-            return userInfo.username
-        } catch (error) { console.error('Error fetching username:', error) }
+            return userInfo.username || 'Unknown User';
+        } catch (error) {
+            console.error('Error fetching username:', error);
+            return 'Unknown User';  // Default
+        }    
     }
 
     const goToExperience = (expId) => {
@@ -46,21 +50,25 @@ const ExperienceList = ({ setExpId }) => {
     }
 
     // Review
-    const handleReviewModal = (event, expId) => {
+    const handleReviewModal = (event, expId, title) => {
         event.stopPropagation();
         const { clientY } = event;
         const modalY = clientY - 150;
 
         // Set the modal style
         setModalStyle({
-            top: `50%`,
             position: 'fixed',
-            // left: '50%',
-            // transform: 'translateX(-50%)',
-            zIndex: "3"
+            top: '20%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '30%',
+            maxHeight: '60%',
+            overflowY: 'auto',
+            zIndex: 1000,
         });
 
         setReviewExpId(expId)
+        setReviewExpTitle(title)
         setVisibleReviewModal(true)
     }
 
@@ -74,6 +82,7 @@ const ExperienceList = ({ setExpId }) => {
             {!!visibleReviewModal &&
                     <ReviewModal
                         expId={reviewExpId}
+                        title={reviewExpTitle}
                         onClose={handleCloseReviewModal}
                         style={modalStyle}
                     ></ReviewModal>}
@@ -93,7 +102,7 @@ const ExperienceList = ({ setExpId }) => {
                                     {allexp.location.coordinates[1]}, {allexp.location.coordinates[0]}
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <strong>Posted By </strong><>{usernames[index]}</>
+                                     <strong>Posted By </strong>{usernames[index] || 'Loading...'}
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Rating
@@ -106,9 +115,9 @@ const ExperienceList = ({ setExpId }) => {
                                     {allexp.description}
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Tooltip title="Leave a review!" followCursor>
-                                        <Button onClick={(event) => { handleReviewModal(event, allexp._id) }}>
-                                        <RateReviewIcon/>
+                                    <Tooltip title="Write a review!" followCursor>
+                                        <Button onClick={(event) => handleReviewModal(event, allexp._id, allexp.title)}>
+                                            <RateReviewIcon/>
                                         </Button>
                                     </Tooltip>
                                 </Grid>
