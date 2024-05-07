@@ -9,6 +9,7 @@ const ExperienceList = ({ setExpId }) => {
 
     const [visibleReviewModal, setVisibleReviewModal] = useState(false);
     const [reviewExpId, setReviewExpId] = useState();
+    const [reviewExpTitle, setReviewExpTitle] = useState('');
     const [modalStyle, setModalStyle] = useState({});
     const [usernames, setUsernames] = useState([]);
 
@@ -46,21 +47,25 @@ const ExperienceList = ({ setExpId }) => {
     }
 
     // Review
-    const handleReviewModal = (event, expId) => {
+    const handleReviewModal = (event, expId, title) => {
         event.stopPropagation();
         const { clientY } = event;
         const modalY = clientY - 150;
 
         // Set the modal style
         setModalStyle({
-            top: `50%`,
             position: 'fixed',
-            // left: '50%',
-            // transform: 'translateX(-50%)',
-            zIndex: "3"
+            top: '20%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '30%',
+            maxHeight: '60%',
+            overflowY: 'auto',
+            zIndex: 1000,
         });
 
         setReviewExpId(expId)
+        setReviewExpTitle(title)
         setVisibleReviewModal(true)
     }
 
@@ -74,6 +79,7 @@ const ExperienceList = ({ setExpId }) => {
             {!!visibleReviewModal &&
                     <ReviewModal
                         expId={reviewExpId}
+                        title={reviewExpTitle}
                         onClose={handleCloseReviewModal}
                         style={modalStyle}
                     ></ReviewModal>}
@@ -106,9 +112,9 @@ const ExperienceList = ({ setExpId }) => {
                                     {allexp.description}
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Tooltip title="Leave a review!" followCursor>
-                                        <Button onClick={(event) => { handleReviewModal(event, allexp._id) }}>
-                                        <RateReviewIcon/>
+                                    <Tooltip title="Write a review!" followCursor>
+                                        <Button onClick={(event) => handleReviewModal(event, allexp._id, allexp.title)}>
+                                            <RateReviewIcon/>
                                         </Button>
                                     </Tooltip>
                                 </Grid>

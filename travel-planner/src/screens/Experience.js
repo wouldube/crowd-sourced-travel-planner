@@ -180,11 +180,16 @@ const Experience = (props) => {
 
             const modalY = clientY - 150;
 
+            // Set the modal style
             setModalStyle({
-                top: `${modalY}px`,
                 position: 'fixed',
+                top: '20%',
                 left: '50%',
                 transform: 'translateX(-50%)',
+                width: '30%',
+                maxHeight: '60%',
+                overflowY: 'auto',
+                zIndex: 1000,
             });
         }
 
@@ -286,9 +291,9 @@ const Experience = (props) => {
 
     const ReviewButton = () => (
         <Tooltip title="Write a Review" followCursor>
-            <IconButton onClick={handleOpenReviewModal}>
-                <RateReviewIcon id="removeFav"/>
-            </IconButton>
+            <Button onClick={handleOpenReviewModal}>
+                <RateReviewIcon/>
+            </Button>
         </Tooltip>
     );
 
@@ -326,6 +331,9 @@ const Experience = (props) => {
                                     </Button>
                                 </Tooltip>
                             </Grid>
+                            <Grid item xs={2}>
+                                        <ReviewButton />
+                            </Grid>
                             {showEdit ?
                                 <>
                                     <Grid item xs={2}>
@@ -345,15 +353,6 @@ const Experience = (props) => {
                                 {inFavs ? <Unfavorite /> : <Favorite />}
                             </Grid>
                         </Grid>
-                        {visibleReviewModal && (
-                            <Grid item xs={2}>
-                                <ReviewModal
-                                    expId={experienceId}
-                                    onClose={handleCloseReviewModal}
-                                    style={modalStyle}
-                                />
-                            </Grid>
-                        )}
                         <Card style={{ height: "100vh", overflowY: "scroll" }}>
                             <h3>Reviews</h3>
                             {reviews.length > 0 ? (
@@ -369,6 +368,16 @@ const Experience = (props) => {
                                 <p>No reviews found.</p>
                             )}
                         </Card>
+                        {visibleReviewModal && (
+                            <Grid item xs={2}>
+                                <ReviewModal
+                                    expId={experienceId}
+                                    title={experience.title} 
+                                    onClose={handleCloseReviewModal}
+                                    style={modalStyle}
+                                />
+                            </Grid>
+                        )}
                     </Grid>
                 </Grid>
             </Paper>
