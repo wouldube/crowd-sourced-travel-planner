@@ -93,8 +93,7 @@ const ExperienceList = ({ setExpId }) => {
                                     {allexp.location.coordinates[1]}, {allexp.location.coordinates[0]}
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <strong>Posted By </strong><br />
-                                    <>{usernames[index]}</>
+                                    <strong>Posted By </strong><>{usernames[index]}</>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Rating
