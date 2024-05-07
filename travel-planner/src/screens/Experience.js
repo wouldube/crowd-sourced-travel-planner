@@ -15,6 +15,7 @@ const Experience = (props) => {
     const [showEdit, setShowEdit] = useState(false);
     const [inFavs, setInFavs] = useState(false);
     const [showTrips, setShowTrips] = useState(false);
+    const [reviews, setReviews] = useState([]);
 
     // TODO: make page usable when user not logged in
 
@@ -37,12 +38,34 @@ const Experience = (props) => {
     })
     const [trips, setTrips] = useState([])
     const [address, setAddress] = useState("")
+    const [usernames, setUsernames] = useState([]);
 
+    // Username display functions
+    const getUsername = async (owner) => {
+        try {
+            const response = await fetch(`http://localhost:5000/user-info/${owner}`)
+            const userInfo = await response.json();
+            return userInfo.username
+        } catch (error) { console.error('Error fetching username:', error) }
+    }
+
+    let usernamesArr = [];
+    const fillNameArr = async (data) => {
+        try {
+            usernamesArr.push(await getUsername(data.owner))
+            setUsernames(usernamesArr)
+        } catch (error) { console.error('Error fetching username:', error) }
+    }
 
     const onLoad = async () => {
         const response = await fetch(`http://localhost:5000/experiences/${experienceId}`)
         const data = await response.json()
         setExperience(data)
+        fillNameArr(data)
+
+        const rev_response = await fetch(`http://localhost:5000/experiences/${experienceId}/reviews`)
+        const rev_data = await rev_response.json()
+        setReviews(rev_data)
 
         if (id) {
             favoriteButton()
@@ -279,12 +302,15 @@ const Experience = (props) => {
                                 <strong><h2>{experience.title}</h2></strong>
                             </Grid>
                             <Grid item xs={12}>
-                                <span><strong>Location</strong><br />
-                                    {experience.location.coordinates[1]}, {experience.location.coordinates[0]}<br/>
-                                    <br/>{address}</span>
+                                <img src={experience.images[0]} style={{ width: "100%", borderRadius: "50px" }}></img>
                             </Grid>
                             <Grid item xs={12}>
-                                <img src={experience.images[0]} style={{ width: "100%", borderRadius: "50px" }}></img>
+                                <span><strong>Location</strong><br />
+                                    {address}<br/>
+                                    {experience.location.coordinates[1]}, {experience.location.coordinates[0]}<br/></span>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <strong>Posted By </strong><>{usernames}</>
                             </Grid>
                             <Grid item xs={12}>
                                 <span>{experience.description}</span>
@@ -295,8 +321,8 @@ const Experience = (props) => {
                         <Grid container justifyContent="space-evenly">
                             <Grid item xs={2}>
                                 <Tooltip title="Add to Trip" followCursor>
-                                    <Button>
-                                        <AddBoxOutlinedIcon onClick={addToTrip} />
+                                    <Button onClick={addToTrip}>
+                                        <AddBoxOutlinedIcon/>
                                     </Button>
                                 </Tooltip>
                             </Grid>
@@ -328,8 +354,20 @@ const Experience = (props) => {
                                 />
                             </Grid>
                         )}
-                        <Card style={{ height: "50vh", overflowY: "scroll" }}>
-                            <h3>reviews?</h3>
+                        <Card style={{ height: "100vh", overflowY: "scroll" }}>
+                            <h3>Reviews</h3>
+                            {reviews.length > 0 ? (
+                                reviews.map((review, index) => (
+                                    <Grid item xs={5} container spacing={1} key={review._id}>
+                                        <Card>
+                                            <Rating id="rating" value={review.rating} precision={0.1} readOnly />
+                                            <p><b>{review.description}</b></p>
+                                        </Card>
+                                    </Grid>
+                                ))
+                            ) : (
+                                <p>No reviews found.</p>
+                            )}
                         </Card>
                     </Grid>
                 </Grid>

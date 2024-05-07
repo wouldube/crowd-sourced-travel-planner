@@ -46,14 +46,14 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="UserExperiences" element={<UserExperiences setExpId={setExpId} setExperienceToUpdate={setExperienceToUpdate} setUsernames={setUsernames} />} />
               <Route path="update-exp" element={<UpdateExperience experienceToUpdate={experienceToUpdate} />} />
-              <Route path="favorites" element={<Favorites favoriteToUpdate={favoriteToUpdate} setUserFavorites={setUserFavorites} setExpId={setExpId} />} />
+              <Route path="favorites" element={<Favorites favoriteToUpdate={favoriteToUpdate} setUserFavorites={setUserFavorites} setExpId={setExpId} setUsernames={setUsernames} />} />
               <Route path="reviews" element={<Reviews />} />
               <Route path="trips" element={<Trips setTripObject={setTripObject} />} />
               <Route path="trips/trip" element={<Trip tripObject={tripObject} setExpId={setExpId} />} />
               <Route path="trips/create-trip" element={<CreateTrip initialExp={initialExp} />} />
               <Route path="trips/trip/update-trip" element={<UpdateTrip tripObject={tripObject} />} />
               <Route path="search" element={<Search setExpId={setExpId} setUsernames={setUsernames} />} />
-              <Route path="experience" element={<Experience expId={expId} setExperienceToUpdate={setExperienceToUpdate} setInitialExp={setInitialExp} />} />
+              <Route path="experience" element={<Experience expId={expId} setExperienceToUpdate={setExperienceToUpdate} setInitialExp={setInitialExp} setUsernames={setUsernames} />} />
             </Routes>
           </Container>
         </BrowserRouter>

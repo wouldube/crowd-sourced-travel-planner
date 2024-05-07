@@ -9,6 +9,7 @@ function Favorites({ setExpId }) {
 
     const [favId, setFavId] = useState([]);
     const [favorites, setFavorite] = useState([]);
+    const [usernames, setUsernames] = useState([]);
     const navigate = useNavigate();
 
 
@@ -39,6 +40,25 @@ function Favorites({ setExpId }) {
     //     navigate(`/experience/`)
     // }
 
+    // Username display functions
+    const getUsername = async (owner) => {
+        try {
+            const response = await fetch(`http://localhost:5000/user-info/${owner}`)
+            const userInfo = await response.json();
+            return userInfo.username
+        } catch (error) { console.error('Error fetching username:', error) }
+    }
+
+    let usernamesArr = [];
+    const fillNameArr = async (favorites) => {
+        try {
+            for(let i = 0; i < favorites.length; i++) {
+                usernamesArr.push(await getUsername(favorites[i].owner))
+            }
+            setUsernames(usernamesArr)
+        } catch (error) { console.error('Error fetching username:', error) }
+    }
+
     const loadFavorites = () => {
         if (!localStorage.getItem("id")) {
             navigate("/login")
@@ -49,6 +69,7 @@ function Favorites({ setExpId }) {
         fetch(`http://localhost:5000/my-favorites/${id}`)
             .then(response => response.json())
             .then(favorites => setFavorite(favorites))
+            .then(usernames => fillNameArr(favorites))
             .catch(error => console.error('Error fetching data:', error));
     }
 
@@ -82,7 +103,7 @@ function Favorites({ setExpId }) {
                                                     <strong>Location: </strong> {fav.location.coordinates[1]}, {fav.location.coordinates[0]}
                                                 </Grid>
                                                 <Grid item xs={12}>
-                                                    <strong>Posted By: </strong>{fav.owner}
+                                                    <strong>Posted By </strong><>{usernames[index]}</>
                                                 </Grid>
                                                 <Grid item xs={12}>
                                                     <Rating id="rating" value={fav.averageRating} precision={0.1}
