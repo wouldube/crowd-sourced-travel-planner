@@ -18,14 +18,14 @@ const ExperienceList = ({ setExpId }) => {
     let usernamesArr = []
     const getExperiences = async () => {
         try {
-          const data = await fetch("http://localhost:5000/experiences")
-          let experiences = await data.json()
-          experiences = experiences.slice(-8)
-          for(let i = 0; i < 8; i++) {
-            usernamesArr.push(await getUsername(experiences[i].owner))
-          }
-          setUsernames(usernamesArr)
-          setAllExperiences(experiences)
+            const data = await fetch("http://localhost:5000/experiences")
+            let experiences = await data.json()
+            experiences = experiences.slice(-8)
+            const usernames = await Promise.all(
+            experiences.map(exp => getUsername(exp.owner))
+        );
+            setUsernames(usernames);
+            setAllExperiences(experiences);
         } catch (error) { console.error('Error fetching data:', error) }
     }
 
@@ -35,10 +35,13 @@ const ExperienceList = ({ setExpId }) => {
 
     const getUsername = async (owner) => {
         try {
-            const response = await fetch(`http://localhost:5000/user-info/${owner}`)
+            const response = await fetch(`http://localhost:5000/user-info/${owner}`);
             const userInfo = await response.json();
-            return userInfo.username
-        } catch (error) { console.error('Error fetching username:', error) }
+            return userInfo.username || 'Unknown User';
+        } catch (error) {
+            console.error('Error fetching username:', error);
+            return 'Unknown User';  // Default
+        }    
     }
 
     const goToExperience = (expId) => {
@@ -99,7 +102,7 @@ const ExperienceList = ({ setExpId }) => {
                                     {allexp.location.coordinates[1]}, {allexp.location.coordinates[0]}
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <strong>Posted By </strong><>{usernames[index]}</>
+                                     <strong>Posted By </strong>{usernames[index] || 'Loading...'}
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Rating
