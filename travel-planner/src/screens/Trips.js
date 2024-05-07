@@ -40,7 +40,8 @@ const Trips = ({ setTripObject }) => {
                 <Grid container spacing={3}>
                     {trips.map((trip, index) => (
                         <Grid item key={index} xs={4}>
-                            <Card onClick={() => { TripClick(trip) }}>
+                            <Card onClick={() => { TripClick(trip) }} style={{
+                                backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.3), rgba(117, 207, 235, 0.7)), url(${trip.image})`}}>
                                 <CardContent><h3>{trip.title}</h3>
                                     {/* <CardMedia image={trip.images[0]}></CardMedia> */}
                                     {trip.description}</CardContent>
