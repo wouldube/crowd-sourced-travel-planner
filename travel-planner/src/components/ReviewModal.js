@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
     FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
     Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
-const ReviewModal = ({ onClose, expId, style }) => {
+const ReviewModal = ({ onClose, expId, title, style }) => {
     const [rating, setRating] = useState(3);
     const [description, setDescription] = useState('');
 
@@ -23,44 +24,56 @@ const ReviewModal = ({ onClose, expId, style }) => {
             },
             body: JSON.stringify(reviewData),
         })
-            .then(response => response.json())
-            .then(() => onClose())
-            .catch(error => console.error('Error posting review:', error));
+        .then(response => response.json())
+        .then(() => onClose())
+        .catch(error => console.error('Error posting review:', error));
     };
 
     return (
-        <Card style={{
-            position: "fixed", zIndex: "3",
-            bottom: "10%", width: "40%", height: "50%"
-        }}>
-                <Grid container justifyContent="center" spacing={1}>
-                    <form onSubmit={handleSubmit}>
-                        <FormControl>
-                            <Grid item xs={12}>
-                                <Button onClick={onClose}>X</Button>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormLabel>Review Experience</FormLabel>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Rating id="rating" value={rating} precision={0.1}
-                                    onChange={(e) => setRating(e.target.value)}
-                                />
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <TextField
-                                    id="description" label="Description" variant="filled"
-                                    multiline rows={2}
-                                    value={description} onChange={(e) => setDescription(e.target.value)}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Button type="submit">Submit Review</Button>
-                            </Grid>
-                        </FormControl>
-                    </form>
+        <Card style={style}>
+            <Grid container alignItems="center" justifyContent="space-between">
+                <Grid item xs={8}>
+                    <h2 style={{ overflowWrap: 'break-word' }}>{`Review ${title || "Experience"}`}</h2>
                 </Grid>
+                <Grid item xs={1} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Button onClick={onClose}>
+                        <CloseIcon />
+                    </Button>
+                </Grid>
+            </Grid>
+            <Grid container spacing={2} justifyContent="center" style={{ padding: '20px' }}>
+                <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+                    <FormControl fullWidth>
+                        <Rating
+                            id="rating"
+                            value={rating}
+                            precision={0.1}
+                            onChange={(e) => setRating(e.target.value)}
+                            style={{ marginBottom: '20px', marginLeft: "40px" }}
+                        />
+                        <TextField
+                            id="description"
+                            label="Description"
+                            variant="outlined"
+                            multiline
+                            rows={4}
+                            fullWidth
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            margin="normal"
+                            style={{ marginBottom: '20px' }}
+                        />
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            style={{ marginTop: '20px' }}
+                        >
+                            Submit Review
+                        </Button>
+                    </FormControl>
+                </form>
+            </Grid>
         </Card>
     );
 };
