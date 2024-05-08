@@ -1,9 +1,15 @@
 import { React, useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
-import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+import {
+    Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
     FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
-    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider,
+    Icon
+} from '@mui/material';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import RateReviewIcon from '@mui/icons-material/RateReview';
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -37,34 +43,56 @@ const Profile = () => {
                                 <p>{username}</p>
                             </Button>
                         </Grid>
-                        <Grid item xs={12} style={{ display:"flex", alignItems: "center",}}>
+                        <Grid item xs={12} style={{ display: "flex", alignItems: "center" }}>
                             <Card onClick={() => { navigate("/UserExperiences") }}
-                                style={{ height: "30vh", 
+                                style={{
+                                    height: "30vh",
                                     backgroundImage: `url("../components/ExperiencesMap.png")`
                                 }}>
-                                My Experiences
+                                <Grid container spacing={15}>
+                                    <Grid item xs={12}>
+                                        My Experiences
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <AddBoxOutlinedIcon style={{ "transform": "scale(3)" }} />
+                                    </Grid>
+                                </Grid>
                             </Card>
                         </Grid>
-                        <Grid item xs={6} style={{ display:"flex", alignItems: "center",}}>
+                        <Grid item xs={6} style={{ display: "flex", alignItems: "center", }}>
                             <Card onClick={() => { navigate("/favorites") }}
                                 style={{
                                     height: "25vh",
                                 }}>
-                                Favorites
+                                <Grid container spacing={15}>
+                                    <Grid item xs={12}>
+                                        Favorites
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <FavoriteIcon style={{ "transform": "scale(3)" }} />
+                                    </Grid>
+                                </Grid>
                             </Card>
                         </Grid>
-                        <Grid item xs={6} style={{ display:"flex", alignItems: "center",}}>
+                        <Grid item xs={6} style={{ display: "flex", alignItems: "center", }}>
                             <Card onClick={() => { navigate("/reviews") }}
                                 style={{
                                     height: "25vh",
                                 }}>
-                                Reviews
+                                <Grid container spacing={15}>
+                                    <Grid item xs={12}>
+                                        Reviews
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <RateReviewIcon style={{ "transform": "scale(3)" }} />
+                                    </Grid>
+                                </Grid>
                             </Card>
                         </Grid>
                     </Grid>
                 </Container>
-            </Paper>
-        </Container>
+            </Paper >
+        </Container >
     )
 }
 
