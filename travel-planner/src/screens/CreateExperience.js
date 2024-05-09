@@ -86,7 +86,7 @@ export const CreateExperience = () => {
                   />
                   <h3>Geolocation</h3>
                   <TextField
-                      type="number" id="lat" label="lat" required value={latitude}
+                      type="number" id="lat" label="long" required value={latitude}
                       onChange={(e) => setLatitude(e.target.value) }
                   />
                   <TextField
