@@ -8,9 +8,9 @@ import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
 const Welcome = () => {
   return (
     <Container>
-      <h1>Welcome to Travel-Planner!</h1>
+      <h1>Welcome to Curio!</h1>
       <p>A platform where travelers can share and discover unique, authentic travel experiences.</p>
-      <p>focusing especially on lesser-known "hidden gems".</p>
+      <p>Focusing especially on lesser-known "hidden gems".</p>
       <div style={{ display: 'flex', justifyContent: 'center'}}>
         <ImageCarousel />
       </div>
