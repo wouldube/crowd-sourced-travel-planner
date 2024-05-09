@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+import {
+    Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
     FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
-    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider
+} from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
-const Reviews = () => {
+const Reviews = ({ setExpId }) => {
     const [reviews, setReviews] = useState([]);
     const [experiences, setExperiences] = useState([]);
     const [newReview, setNewReview] = useState({ experienceId: '', rating: 5, description: "" });
@@ -51,40 +53,45 @@ const Reviews = () => {
             .catch(error => console.error('Error:', error));
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        fetch(`http://localhost:5000/reviews`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                rating: newReview.rating,
-                description: newReview.description,
-                owner: localStorage.getItem("id"),
-                experience: newReview.experienceId
-            }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                setReviews([...reviews, data]);
-                setNewReview({ ...newReview, description: '' });
-            })
-            .catch(error => console.error('Error posting review:', error));
-    };
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     fetch(`http://localhost:5000/reviews`, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //             rating: newReview.rating,
+    //             description: newReview.description,
+    //             owner: localStorage.getItem("id"),
+    //             experience: newReview.experienceId
+    //         }),
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             setReviews([...reviews, data]);
+    //             setNewReview({ ...newReview, description: '' });
+    //         })
+    //         .catch(error => console.error('Error posting review:', error));
+    // };
 
-    const adjustTextareaHeight = (e) => {
-        e.target.style.height = 'inherit';
-        e.target.style.height = `${e.target.scrollHeight}px`;
-        setNewReview({ ...newReview, description: e.target.value });
-    };
+    // const adjustTextareaHeight = (e) => {
+    //     e.target.style.height = 'inherit';
+    //     e.target.style.height = `${e.target.scrollHeight}px`;
+    //     setNewReview({ ...newReview, description: e.target.value });
+    // };
+
+    const goToExperience = (expId) => {
+        setExpId(expId)
+        navigate(`/experience`)
+    }
 
 
     return (
-        <Container style={{display: "flex", alignItems: "center", flexDirection:"column"}}>
+        <Container style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
             <Paper>
                 <h2>My Reviews</h2>
-                <form onSubmit={handleSubmit}>
+                {/* <form onSubmit={handleSubmit}>
                     <FormControl>
                         <select label="Experience"
                             value={newReview.experienceId}
@@ -106,10 +113,7 @@ const Reviews = () => {
                         />
                         <Button type="submit">Add Review</Button>
                     </FormControl>
-                </form>
-                <br />
-                <Divider />
-                <br />
+                </form> */}
                 <Grid container spacing={3}>
                     {reviews.length > 0 ? (
                         reviews.map(review => {
@@ -118,7 +122,11 @@ const Reviews = () => {
                             const experienceTitle = matchingExperience ? matchingExperience.title : "Unknown Experience";
                             return (
                                 <Grid item xs={4}>
-                                    <Card key={review._id}>
+                                    <Card onClick={() => {
+                                        if (matchingExperience) {
+                                            goToExperience(matchingExperience._id)
+                                        }
+                                    }}>
                                         <p>{experienceTitle}</p>
                                         <Rating id="rating" value={review.rating} precision={0.1}
                                             readOnly />

@@ -30,8 +30,8 @@ let Theme = createTheme({
             },
             styleOverrides: {
                 root: {
+                    borderRadius: "100px", maxHeight: "100px", maxWdigh: "100px",
                     aspectRatio: "1 / 1",
-                    borderRadius: "100px", maxHeight: "100px", maxWeight: "100px",
                     boxShadow: '0px 0px 10px 5px rgba(255, 255, 255, 0.3)',
                     background: 'radial-gradient(#D7F0F8, #75CFEB)',
                     '&:hover': {

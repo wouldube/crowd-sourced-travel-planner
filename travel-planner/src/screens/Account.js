@@ -216,10 +216,6 @@ const Account = () => {
                     </Paper>
                 </Grid>
             </Grid>
-
-            <Divider />
-
-
         </Container >
     )
 }

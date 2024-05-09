@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import UserSetup from '../components/UserSetup.js';
-import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+import {
+    Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
     FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
-    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider
+} from '@mui/material';
 const Register = () => {
 
     const [email, setEmail] = useState("");
@@ -29,6 +31,7 @@ const Register = () => {
     return (
         <Container>
             <Paper>
+                <h2>Create an Account</h2>
                 <div id="sign-up">
                     <div id="password-error" style={{ display: "none" }}>
                         <span>Passwords do not match.</span>
@@ -36,7 +39,6 @@ const Register = () => {
                     <div id="inputs">
                         <form>
                             <FormControl>
-                                <FormLabel>Create Account</FormLabel>
                                 <Grid container>
                                     <Grid item xs={12}>
                                         <TextField name="email" id="email"

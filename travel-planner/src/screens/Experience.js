@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, useNavigate } from "react-router-dom";
-import { Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
+import {
+    Container, Paper, Grid, Box, Card, CardHeader, CardContent, CardMedia,
     FormControl, FormGroup, FormLabel, TextField, Select, MenuItem,
-    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider } from '@mui/material';
+    Button, ButtonGroup, IconButton, Tooltip, Rating, Divider
+} from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -35,6 +37,7 @@ const Experience = (props) => {
         images: [''],
         location: { coordinates: ["", ""] },
         description: '',
+        averageRating: 0
     })
     const [trips, setTrips] = useState([])
     const [address, setAddress] = useState("")
@@ -45,15 +48,14 @@ const Experience = (props) => {
         try {
             const response = await fetch(`http://localhost:5000/user-info/${owner}`)
             const userInfo = await response.json();
-            return userInfo.username
+            setUsernames(userInfo.username)
         } catch (error) { console.error('Error fetching username:', error) }
     }
 
-    let usernamesArr = [];
     const fillNameArr = async (data) => {
         try {
-            usernamesArr.push(await getUsername(data.owner))
-            setUsernames(usernamesArr)
+            username = await getUsername(data.owner)
+            setUsernames(username)
         } catch (error) { console.error('Error fetching username:', error) }
     }
 
@@ -79,11 +81,11 @@ const Experience = (props) => {
         let coord2 = data.location.coordinates[0]
 
         let url = `https://api.geoapify.com/v1/geocode/reverse?lat=${coord1}&lon=${coord2}&type=amenity&lang=en&limit=1&format=json&apiKey=abce6a14428f49d49ef299b1016bf4b2`
-        
+
         const location_json = await fetch(url);
         const location_data = await location_json.json();
         if (location_data.results.length != 0)
-            setAddress(location_data.results[0].formatted)  
+            setAddress(location_data.results[0].formatted)
 
     }
 
@@ -160,16 +162,37 @@ const Experience = (props) => {
     const addToTrip = async () => {
         const data = await fetch(`http://localhost:5000/trips/${id}`)
         const trips = await data.json()
-        console.log(trips)
 
         setTrips(trips)
-
         if (id) {
             setShowTrips(true);
         }
         else {
             navigate('/login')
         }
+    }
+
+    const pickTrip = async (trip) => {
+        const expList = trip.experiences
+
+        if (expList.indexOf(experience._id) < 0) {
+            expList.push(experience._id)
+
+            const updateTrip = await fetch(`http://localhost:5000/update-trip/${trip._id}`, {
+                method: "PUT",
+                body: JSON.stringify({ "experiences": expList }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+        }
+
+        setShowTrips(false);
+    }
+
+    const createTrip = () => {
+        setInitialExp(experience)
+        navigate("/trips/create-trip");
     }
 
     // add review
@@ -201,30 +224,6 @@ const Experience = (props) => {
         setVisibleReviewModal(false);
     };
 
-
-    const pickTrip = async (trip) => {
-        const expList = trip.experiences
-
-        if (expList.indexOf(experience._id) < 0) {
-            expList.push(experience._id)
-
-            const updateTrip = await fetch(`http://localhost:5000/update-trip/${trip._id}`, {
-                method: "PUT",
-                body: JSON.stringify({ "experiences": expList }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-        }
-
-        setShowTrips(false);
-    }
-
-    const createTrip = () => {
-        setInitialExp(experience)
-        navigate("/trips/create-trip");
-    }
-
     // if owner update experience
     const updateExp = () => {
         setExperienceToUpdate(experience._id);
@@ -249,7 +248,7 @@ const Experience = (props) => {
     const EditButton = () => (
         <Tooltip title="Edit Experience" followCursor>
             <Button onClick={updateExp}>
-                <EditNoteIcon/>
+                <EditNoteIcon />
             </Button>
         </Tooltip>
     )
@@ -263,20 +262,24 @@ const Experience = (props) => {
     )
 
     const UserTrips = () => (
-        <Tooltip>
-            {trips.map((trip, index) => (
-                <div key={index}>
-                    <Button onClick={() => { pickTrip(trip) }}>{trip.title}</Button>
-                </div>
-            ))}
-            <Button onClick={createTrip}>Create New Trip</Button>
-        </Tooltip>
+        <Grid container spacing={1}>
+            <Tooltip>
+                <Grid item xs={2}>
+                    <Button onClick={createTrip}>Create New Trip</Button>
+                </Grid>
+                {trips.map((trip, index) => (
+                    <Grid item xs={2} key={index}>
+                        <Button onChange={() => { pickTrip(trip) }}>{trip.title}</Button>
+                    </Grid>
+                ))}
+            </Tooltip>
+        </Grid>
     )
 
     const Favorite = () => (
         <Tooltip title="Add to Favorites" followCursor>
             <Button onClick={favoriteExp}>
-                <FavoriteBorderOutlinedIcon/>
+                <FavoriteBorderOutlinedIcon />
             </Button>
         </Tooltip>
     )
@@ -284,7 +287,7 @@ const Experience = (props) => {
     const Unfavorite = () => (
         <Tooltip title="Remove Favorite" followCursor>
             <Button onClick={unfavoriteExp}>
-                <FavoriteIcon id="removeFav"/>
+                <FavoriteIcon id="removeFav" />
             </Button>
         </Tooltip>
     )
@@ -292,7 +295,7 @@ const Experience = (props) => {
     const ReviewButton = () => (
         <Tooltip title="Write a Review" followCursor>
             <Button onClick={handleOpenReviewModal}>
-                <RateReviewIcon/>
+                <RateReviewIcon />
             </Button>
         </Tooltip>
     );
@@ -300,88 +303,114 @@ const Experience = (props) => {
     return (
         <Container>
             <Paper>
-                <Grid container spacing={3}>
-                    <Grid item xs={4}>
+                <Grid container spacing={1}>
+                    <Grid item xs={6}>
                         <Grid container spacing={1}>
                             <Grid item xs={12}>
                                 <strong><h2>{experience.title}</h2></strong>
                             </Grid>
                             <Grid item xs={12}>
-                                <img src={experience.images[0]} style={{ width: "100%", borderRadius: "50px" }}></img>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <span><strong>Location</strong><br />
-                                    {address}<br/>
-                                    {experience.location.coordinates[1]}, {experience.location.coordinates[0]}<br/></span>
+                                <Rating
+                                    value={experience.averageRating}
+                                    precision={0.1}
+                                    readOnly
+                                />
                             </Grid>
                             <Grid item xs={12}>
                                 <strong>Posted By </strong><>{usernames}</>
                             </Grid>
                             <Grid item xs={12}>
-                                <span>{experience.description}</span>
+                                <img src={experience.images[0]} style={{ height: "20vh", borderRadius: "30px" }}></img>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <span><strong>Location</strong><br />
+                                    {address}<br />
+                                    <b>{experience.location.coordinates[1]}, {experience.location.coordinates[0]}<br /></b></span>
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item xs={8}>
+                    <Grid item xs={6}>
                         <Grid container justifyContent="space-evenly">
-                            <Grid item xs={2}>
-                                <Tooltip title="Add to Trip" followCursor>
-                                    <Button onClick={addToTrip}>
-                                        <AddBoxOutlinedIcon/>
-                                    </Button>
-                                </Tooltip>
+                            <Grid item xs={3}>
+                                {inFavs ? <Unfavorite /> : <Favorite />}
                             </Grid>
                             <Grid item xs={2}>
-                                        <ReviewButton />
+                                <ReviewButton />
                             </Grid>
                             {showEdit ?
                                 <>
-                                    <Grid item xs={2}>
+                                    <Grid item xs={3}>
                                         <EditButton />
                                     </Grid>
-                                    <Grid item xs={2}>
+                                    <Grid item xs={3}>
                                         <DeleteButton />
                                     </Grid>
                                 </>
                                 : null}
+                            <Grid item xs={3}>
+                                <Tooltip title="Add to Trip" followCursor>
+                                    <Button onClick={addToTrip}>
+                                        <AddBoxOutlinedIcon />
+                                    </Button>
+                                </Tooltip>
+                            </Grid>
                             {showTrips ?
-                                <Grid item xs={2}>
+                                <Grid item xs={10}>
                                     <UserTrips />
                                 </Grid>
                                 : null}
-                            <Grid item xs={2}>
-                                {inFavs ? <Unfavorite /> : <Favorite />}
-                            </Grid>
                         </Grid>
-                        <Card style={{ height: "100vh", overflowY: "scroll" }}>
-                            <h3>Reviews</h3>
-                            {reviews.length > 0 ? (
-                                reviews.map((review, index) => (
-                                    <Grid item xs={5} container spacing={1} key={review._id}>
-                                        <Card>
-                                            <Rating id="rating" value={review.rating} precision={0.1} readOnly />
-                                            <p><b>{review.description}</b></p>
-                                        </Card>
+                        <Divider /><Divider /><Divider />
+                        <Grid item xs={12}>
+                            <Card style={{
+                                height: '20vh',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}>
+                                <CardContent>{experience.description}</CardContent>
+                            </Card>
+                        </Grid>
+                        <Divider /><Divider /><Divider />
+                    </Grid >
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <Paper style={{ overflowY: "scroll" }}>
+                                <Grid container spacing={5}>
+                                    <Grid item xs={12}>
+                                        <h3>Reviews</h3>
                                     </Grid>
-                                ))
-                            ) : (
-                                <p>No reviews found.</p>
+                                    {reviews.length > 0 ? (
+                                        reviews.map((review, index) => (
+                                            <Grid item xs={6} key={index}>
+                                                <Card>
+                                                    <Rating id="rating" value={review.rating} precision={0.1} readOnly />
+                                                    <p><b>{review.description}</b></p>
+                                                </Card>
+                                            </Grid>
+                                        ))
+                                    ) : (
+                                        <Grid item xs={12}>
+                                            <p>No reviews found.</p>
+                                        </Grid>
+                                    )}
+                                </Grid>
+                            </Paper>
+                            {visibleReviewModal && (
+                                <Grid item xs={2}>
+                                    <ReviewModal
+                                        expId={experienceId}
+                                        title={experience.title}
+                                        onClose={handleCloseReviewModal}
+                                        style={modalStyle}
+                                    />
+                                </Grid>
                             )}
-                        </Card>
-                        {visibleReviewModal && (
-                            <Grid item xs={2}>
-                                <ReviewModal
-                                    expId={experienceId}
-                                    title={experience.title} 
-                                    onClose={handleCloseReviewModal}
-                                    style={modalStyle}
-                                />
-                            </Grid>
-                        )}
+                        </Grid>
                     </Grid>
-                </Grid>
-            </Paper>
-        </Container>
+                </Grid >
+            </Paper >
+        </Container >
     )
 }
 
