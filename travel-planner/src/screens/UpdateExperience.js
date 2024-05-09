@@ -72,7 +72,9 @@ export const UpdateExperience = ({ experienceToUpdate }) => {
   const updateExperience = async (event) => {
     event.preventDefault();
 
-    const location = { type: "Point", coordinates: [latitude, longitude] };
+    const location = { type: "Point", coordinates: [longitude, latitude] };
+    // console.log(longitude)
+    // console.log(location)
 
     let exp = { title, description, location, images };
 
@@ -88,6 +90,10 @@ export const UpdateExperience = ({ experienceToUpdate }) => {
         body: JSON.stringify(exp),
       }
     );
+
+    if (response.status == 200) {
+      navigate(`/UserExperiences`)
+    }
   };
 
   return (

@@ -54,7 +54,7 @@ const Experience = (props) => {
 
     const fillNameArr = async (data) => {
         try {
-            username = await getUsername(data.owner)
+            let username = await getUsername(data.owner)
             setUsernames(username)
         } catch (error) { console.error('Error fetching username:', error) }
     }
@@ -80,7 +80,7 @@ const Experience = (props) => {
         let coord1 = data.location.coordinates[1]
         let coord2 = data.location.coordinates[0]
 
-        let url = `https://api.geoapify.com/v1/geocode/reverse?lat=${coord1}&lon=${coord2}&type=amenity&lang=en&limit=1&format=json&apiKey=abce6a14428f49d49ef299b1016bf4b2`
+        let url = `https://api.geoapify.com/v1/geocode/reverse?lat=${coord1}&lon=${coord2}&lang=en&limit=1&format=json&apiKey=abce6a14428f49d49ef299b1016bf4b2`
 
         const location_json = await fetch(url);
         const location_data = await location_json.json();

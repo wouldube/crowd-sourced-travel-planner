@@ -36,7 +36,7 @@ export const CreateExperience = () => {
 
   const createExperience = async () => {
     try {
-      const coordinates = { latitude, longitude };
+      const coordinates = { longitude, latitude };
 
     const fb_app = firebase.initializeApp(firebaseConfig);
     const storage = getStorage(fb_app)
