@@ -41,7 +41,7 @@ const Experience = (props) => {
     })
     const [trips, setTrips] = useState([])
     const [address, setAddress] = useState("")
-    const [usernames, setUsernames] = useState([]);
+    const [username, setUsernames] = useState([]);
 
     // Username display functions
     const getUsername = async (owner) => {
@@ -317,7 +317,7 @@ const Experience = (props) => {
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <strong>Posted By </strong><>{usernames}</>
+                                <strong>Posted By </strong><>{username}</>
                             </Grid>
                             <Grid item xs={12}>
                                 <img src={experience.images[0]} style={{ height: "20vh", borderRadius: "30px" }}></img>
