@@ -201,11 +201,11 @@ const Search = ({ setExpId }) => {
                     </FormControl>
                 </form>
             </Paper>
-            {searchSummary && (
+            {/* {searchSummary && (
                 <Typography style={{ marginTop: 20 }}>
                     {searchSummary}
                 </Typography>
-            )}
+            )} */}
             {displayMode === 'list' && (
             <Paper style={{ width: "100%" }}>
                 {isLoading ? (

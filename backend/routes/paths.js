@@ -160,7 +160,7 @@ router.post("/create-exp", async (req, res) => {
 
 router.put('/update-exp/:experience_id', async (req, res) => {
     //console.log("updating")
-    //console.log(req.body)
+    console.log(req.body)
     const experience_id = req.params.experience_id;
     const filter = {"_id": experience_id};
     const update = req.body;
