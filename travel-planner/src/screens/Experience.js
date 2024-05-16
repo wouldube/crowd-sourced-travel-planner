@@ -44,26 +44,20 @@ const Experience = (props) => {
     const [username, setUsernames] = useState([]);
 
     // Username display functions
-    const getUsername = async (owner) => {
+    const getUsername = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/user-info/${owner}`)
+            const response = await fetch(`http://localhost:5000/user-info/${id}`)
             const userInfo = await response.json();
-            setUsernames(userInfo.username)
-        } catch (error) { console.error('Error fetching username:', error) }
-    }
-
-    const fillNameArr = async (data) => {
-        try {
-            let username = await getUsername(data.owner)
-            setUsernames(username)
+            return userInfo.username
         } catch (error) { console.error('Error fetching username:', error) }
     }
 
     const onLoad = async () => {
         const response = await fetch(`http://localhost:5000/experiences/${experienceId}`)
         const data = await response.json()
+        const username = await getUsername(data.owner)
         setExperience(data)
-        fillNameArr(data)
+        setUsernames(username);
 
         const rev_response = await fetch(`http://localhost:5000/experiences/${experienceId}/reviews`)
         const rev_data = await rev_response.json()
