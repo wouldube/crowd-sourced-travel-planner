@@ -59,18 +59,20 @@ function Favorites({ setExpId }) {
         } catch (error) { console.error('Error fetching username:', error) }
     }
 
-    const loadFavorites = () => {
+    const loadFavorites = async () => {
         if (!localStorage.getItem("id")) {
             navigate("/login")
         }
 
         const id = localStorage.getItem("id")
-
-        fetch(`http://localhost:5000/my-favorites/${id}`)
-            .then(response => response.json())
-            .then(favorites => setFavorite(favorites))
-            .then(usernames => fillNameArr(favorites))
-            .catch(error => console.error('Error fetching data:', error));
+        try {
+            const data = await fetch(`http://localhost:5000/my-favorites/${id}`)
+            let favorites = await data.json()
+            const usernames = await Promise.all(favorites.map(fav => getUsername(fav.owner))
+        );
+            setFavorite(favorites);
+            setUsernames(usernames);
+        } catch (error) {console.error('Error fetching data:', error)}
     }
 
     const goToExperience = (expId) => {
